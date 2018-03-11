@@ -11,6 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
+import {RouterStack} from "./js/routers/index"
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -24,21 +25,13 @@ export default class App extends Component<Props> {
 
   constructor(props) {
     super(props);
+    // 暂时关闭警告
+    console.disableYellowBox = true;
   }
   
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
+      <RouterStack/>
     );
   }
 }
