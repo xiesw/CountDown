@@ -12,6 +12,7 @@ import {
   View
 } from 'react-native';
 import {RouterStack} from "./js/routers/index"
+import {Theme} from "./js/common/Theme";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -27,6 +28,11 @@ export default class App extends Component<Props> {
     super(props);
     // 暂时关闭警告
     console.disableYellowBox = true;
+    this.init();
+  }
+
+  init() {
+    global.theme = Theme;
   }
   
   render() {

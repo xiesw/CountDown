@@ -16,3 +16,14 @@
         时间选择组件:  
         重复性组件:  
         图标上架  
+        
+数据结构:
+```
+{
+    name: 'new year',       //string
+    date: '1516322747974',  //number
+    repeat: 'week',         //enum{'once','everyDay','everyWeek','everyMouth','everyYear'}
+    top: 'false',           //boolean
+    "color":"#000000" 
+}
+```

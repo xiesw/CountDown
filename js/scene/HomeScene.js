@@ -8,9 +8,12 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import BaseScene from "./BaseScene";
+import data from '../data.json';
+import HomeItem from "../component/HomeItem";
 
 export default class HomeScene extends BaseScene {
 
@@ -20,20 +23,29 @@ export default class HomeScene extends BaseScene {
 
   constructor(props) {
     super(props);
+    this.state = ({
+      sourceData: data
+    })
+    this.testTime();
+  }
+
+  testTime() {
+
+  }
+
+  renderItem(itemData) {
+    return <HomeItem data={itemData.item}/>
   }
 
   render() {
     return (
-       <View style={styles.container}>
-         <TouchableOpacity
-           onPress={() => {
-             this.props.navigation.navigate('AboutScene');
-           }}
-         >
-            <Text>hello</Text>
-
-         </TouchableOpacity>
-       </View>
+      <FlatList
+        ref='list'
+        style={styles.list}
+        data={this.state.sourceData}
+        keyExtractor={(itemData, index) => index}
+        renderItem={(itemData) => this.renderItem(itemData)}
+      />
     );
   }
 }
@@ -41,5 +53,9 @@ export default class HomeScene extends BaseScene {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  list: {
+    flex: 1,
+    marginTop: 20,
   },
 });
