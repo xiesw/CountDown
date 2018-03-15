@@ -20,10 +20,10 @@
 数据结构:
 ```
 {
-    name: 'new year',       //string
-    date: '1516322747974',  //number
-    repeat: 'week',         //enum{'once','everyDay','everyWeek','everyMouth','everyYear'}
-    top: 'false',           //boolean
+    "name": 'new year',       //string
+    "timestamp": '1516322747974',  //number
+    "repeat": 'week',         //enum{'once','everyDay','everyWeek','everyMouth','everyYear'}
+    "top": 'false',           //boolean
     "color":"#000000" 
 }
 ```

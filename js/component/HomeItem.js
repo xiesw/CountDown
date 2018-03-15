@@ -7,10 +7,11 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 import {getWidth} from "../common/Global"
-import DateUtil from "../DateUtil";
+import DateUtil from "../util/DateUtil";
 
 
 export default class HomeItem extends Component {
@@ -25,7 +26,7 @@ export default class HomeItem extends Component {
    */
   handleData(props) {
     this.data = props.data;
-    let date = this.data.date;
+    let date = this.data.timestamp;
     let isOverdue = DateUtil.isOverdue(date);
     this.stateColor = isOverdue ?
       global.theme.color.lightCyan : global.theme.color.orange;
@@ -36,9 +37,19 @@ export default class HomeItem extends Component {
     this.unit = DateUtil.getBiggestTimeUnit(date);
   }
 
+  /**
+   * 点击条目
+   */
+  onPressItem() {
+    this.props.navigation.navigate('DetailScene',{data: this.data});
+  }
+
   render() {
     return (
-      <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => this.onPressItem()}
+        style={styles.container}
+      >
         <View style={[styles.dot, {backgroundColor: this.data.color}]}/>
         <View style={styles.midContainer}>
           <Text style={styles.date}>{this.date}</Text>
@@ -50,7 +61,7 @@ export default class HomeItem extends Component {
         </View>
         <View style={[styles.state, {backgroundColor: this.stateColor}]}/>
         <View/>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

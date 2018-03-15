@@ -32,11 +32,11 @@ export default class DateUtil {
     let second = Math.floor(time / 1000);
     if (day > 0) {
       return day;
-    } else if(hour > 0) {
+    } else if (hour > 0) {
       return hour;
-    } else if(minute > 0) {
+    } else if (minute > 0) {
       return minute;
-    } else if(second > 0) {
+    } else if (second > 0) {
       return second;
     } else {
       return 0;
@@ -56,11 +56,11 @@ export default class DateUtil {
     let second = Math.floor(time / 1000);
     if (day > 0) {
       return '天';
-    } else if(hour > 0) {
+    } else if (hour > 0) {
       return '时';
-    } else if(minute > 0) {
+    } else if (minute > 0) {
       return '分';
-    } else if(second > 0) {
+    } else if (second > 0) {
       return '秒';
     } else {
       return '';
@@ -73,18 +73,53 @@ export default class DateUtil {
    * @returns {string}
    */
   static getDaysCount(timestamp) {
-
-    return 'dfa'
+    let time = Math.abs(timestamp - Date.now());
+    let day = Math.floor(time / 1000 / 60 / 60 / 24);
+    return day;
   }
 
   /**
-   * 返回时间
+   * 返回小时
    * @param timestamp
    * @returns {string}
    */
-  static getTime(timestamp) {
+  static getHour(timestamp) {
+    let time = Math.abs(timestamp - Date.now());
+    let hour = Math.floor((time / (1000 * 60 * 60)) % 24);
+    return hour;
+  }
 
-    return 'hah';
+  /**
+   * 返回分钟
+   * @param timestamp
+   * @returns {string}
+   */
+  static getMinute(timestamp) {
+    let time = Math.abs(timestamp - Date.now());
+    let minute = Math.floor((time / (1000 * 60)) % 60);
+    return minute;
+  }
+
+  /**
+   * 返回秒
+   * @param timestamp
+   * @returns {string}
+   */
+  static getSecond(timestamp) {
+    let time = Math.abs(timestamp - Date.now());
+    let second = Math.floor((time / 1000) % 60);
+    return second;
+  }
+
+  /**
+   * 返回毫秒
+   * @param timestamp
+   * @returns {string}
+   */
+  static getMillisecond(timestamp) {
+    let time = Math.abs(timestamp - Date.now());
+    let millisecond = Math.floor((time % 1000) / 10);
+    return millisecond ;
   }
 
   /**

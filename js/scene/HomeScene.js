@@ -34,7 +34,7 @@ export default class HomeScene extends BaseScene {
   }
 
   renderItem(itemData) {
-    return <HomeItem data={itemData.item}/>
+    return <HomeItem data={itemData.item} {...this.props}/>
   }
 
   render() {
