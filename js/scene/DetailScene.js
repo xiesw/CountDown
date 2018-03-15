@@ -10,6 +10,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image
 } from 'react-native';
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
@@ -45,6 +46,10 @@ export default class DetailScene extends BaseScene {
     this.dateText = DateUtil.getDataAndWeek(timestamp);
   }
 
+  edit() {
+    this.props.navigation.navigate('AddScene');
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -73,8 +78,15 @@ export default class DetailScene extends BaseScene {
           <View style={styles.dateContainer}>
             <Text style={styles.dateText}>{this.dateText}</Text>
           </View>
-          <View/>
         </View>
+        <TouchableOpacity
+          style={styles.imageContainer}
+          onPress={() => this.edit()}
+        >
+          <Image
+            source={require('../../res/image/edit.png')}
+          />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -153,9 +165,19 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: getWidth(8),
     borderBottomRightRadius: getWidth(8),
   },
-  dateText:{
-    fontSize:getWidth(18),
-    color:'#4A4A4A',
-  }
+  dateText: {
+    fontSize: getWidth(18),
+    color: '#4A4A4A',
+  },
 
+  imageContainer: {
+    position: 'absolute',
+    right: getWidth(36),
+    bottom: getWidth(54),
+    elevation: 2,
+    shadowColor: '#666666',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: getWidth(2),
+  }
 });
