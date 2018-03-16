@@ -40,5 +40,12 @@
     "repeat": "everyYear",
     "top": false,
     "color":"#FBBF0F"
+  },
+  {
+    "name": "我爱你爱我",
+    "timestamp": 1641225600000,
+    "repeat": "once",
+    "top": false,
+    "color":"#FBBF0F"
   }
 ]
