@@ -5,6 +5,13 @@
 
 export const Theme = {
   color: {
+    textDefault: '#333333',
+    textBlack: '#000000',
+    textGray: '#999999',
+    textDanger: '#FF4E4E',
+    placeholder: '#D9D9D9',
+    highLight: '#b3b3b3',
+
     lightOrange: '#FA876B',
     lightGreen: '#8DC64A',
     lightBlue: '#B0D3F6',
