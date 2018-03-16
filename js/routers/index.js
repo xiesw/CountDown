@@ -72,7 +72,7 @@ const RouterStack = StackNavigator(
     DetailScene: {screen: DetailScene},
     AddScene: {screen: AddScene},
     SettingScene: {screen: SettingScene},
-    AboutScene: {screen: AboutScene}
+    AboutScene: {screen: AboutScene},
   },
   {
     navigationOptions: ({ navigation }) => getNavigationOptions(navigation),
