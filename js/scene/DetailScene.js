@@ -15,6 +15,7 @@ import {
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
 import BaseScene from "./BaseScene";
+import {Theme} from "../common/Theme";
 
 
 export default class DetailScene extends BaseScene {
@@ -27,7 +28,6 @@ export default class DetailScene extends BaseScene {
     super(props);
     this.data = this.props.navigation.state.params.data;
     this.sourceData = this.props.navigation.state.params.sourceData;
-    console.log('pain.xie', this.data);
     this.handleData();
   }
 
@@ -36,7 +36,7 @@ export default class DetailScene extends BaseScene {
     let isOverdue = DateUtil.isOverdue(timestamp);
     this.title = isOverdue ?
       this.data.name + ' 已经' : '距离 ' + this.data.name + ' 还有';
-    this.color = this.data.color;
+    this.color = this.data.color || Theme.color.lightBlue;
 
     this.day = DateUtil.getDaysCount(timestamp);
     this.hour = DateUtil.getHour(timestamp);

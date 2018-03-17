@@ -19,6 +19,8 @@ import PickInput from '../component/PickInput';
 import ColorPickInput from '../component/ColorPickInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import DataDao from "../dao/DataDao";
+import { NavigationActions } from 'react-navigation'
+import Utils from "../util/Utils";
 
 export default class EditScene extends BaseScene {
 
@@ -32,7 +34,25 @@ export default class EditScene extends BaseScene {
     this.sourceData = this.props.navigation.state.params.sourceData;
     this.state = {
       isDatePickerVisible: false,
-      color: ''
+      color: '',
+      date: ''
+    };
+
+    this.handleData();
+  }
+
+  handleData() {
+    this.top = false;
+    this.repeat = 'once';
+    this.timestamp = DateUtil.getTodayTimeStamp();
+    this.date = DateUtil.getDataAndWeek(this.timestamp);
+    if (this.data) {
+      this.name = this.data.name;
+      this.timestamp = this.data.timestamp;
+      this.top = this.data.top;
+      this.repeat = this.data.repeat;
+      this.date = DateUtil.getDataAndWeek(this.timestamp);
+      this.state.color = this.data.color;
     }
   }
 
@@ -46,7 +66,8 @@ export default class EditScene extends BaseScene {
 
   handleDatePicked(date) {
     let d = new Date(date);
-    console.log('pain.xie', DateUtil.getDataAndWeek(d.getTime()));
+    this.timestamp = d.getTime();
+    this.refs.date.setValue(DateUtil.getDataAndWeek(this.timestamp));
     this.hideDatePicker();
   };
 
@@ -63,34 +84,73 @@ export default class EditScene extends BaseScene {
   }
 
   onChangeColor(color) {
-    let c = this.state.color === color ? '' : color
+    let c = this.state.color === color ? '' : color;
     this.setState({
       color: c
     });
   }
 
   delete() {
-
+    if(this.data) {
+      Utils.removeArrayItem(this.sourceData, this.data);
+      DataDao.save(this.sourceData);
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({routeName: 'HomeScene'})
+        ]
+      });
+      this.props.navigation.dispatch(resetAction);
+    } {
+      this.props.navigation.goBack();
+    }
   }
 
   ok() {
+    if(!this.validateAll()) {
+      return;
+    }
+
+    if (this.data) {
+      this.data.timestamp = this.timestamp;
+      this.data.color = this.state.color;
+      this.data.top = this.top;
+      this.data.repeat = this.repeat;
+      this.data.name = this.refs.title.getValue();
+    } else {
+      let data = {};
+      data.timestamp = this.timestamp;
+      data.color = this.state.color;
+      data.top = this.top;
+      data.repeat = this.repeat;
+      data.name = this.refs.title.getValue();
+      this.sourceData.push(data);
+
+    }
     DataDao.save(this.sourceData);
+    this.props.navigation.goBack();
   }
 
+
+  validateAll() {
+    return this.refs.title.validate();
+  }
 
   editRender() {
     return (
       <View style={styles.editContainer}>
         <NormalEditText
           ref='title'
+          value={this.name}
           placeholder={'标题'}
-          validate='notnull'
+          validate='title'
           source={require('../../res/image/title.png')}
         />
 
         <PickInput
           ref='date'
           editable={false}
+          value={this.date}
           placeholder={'选择日期'}
           onPress={() => this.onPickDate()}
           source={require('../../res/image/time.png')}

@@ -26,6 +26,10 @@ export default class EditText extends BaseComponent {
   componentWillReceiveProps(nextProps) {
   }
 
+  setValue(value) {
+    this.state.value = value;
+  }
+
   getValue() {
     if (this.state.value === '') {
       return '';

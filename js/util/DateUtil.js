@@ -130,6 +130,18 @@ export default class DateUtil {
   static isOverdue(timestamp) {
     return timestamp < Date.now();
   }
+
+  /**
+   * 获取今天零点时间戳
+   */
+  static getTodayTimeStamp() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let newDate = new Date(year + '-' + month + '-' + day);
+    return newDate.getTime();
+  }
 }
 
 const weekArray = ['日', '一', '二', '三', '四', '五', '六',];

@@ -12,11 +12,11 @@ export const Theme = {
     placeholder: '#D9D9D9',
     highLight: '#b3b3b3',
 
-    red: '#fb565a',
-    yellow: '#f7a538',
-    blue: '#51b7f4',
+    red: '#FB565A',
+    yellow: '#F7A538',
+    blue: '#51B7F4',
     purple: '#CF81E1',
-    green: '#73cf4b',
+    green: '#73CF4B',
     gray: '#A5A5A5',
 
     lightOrange: '#FA876B',

@@ -3,6 +3,10 @@
  */
 
 export const regs = {
+  'title': {
+    'reg': /^\S+$/,
+    'errorMessage': '请输入标题'
+  },
   'mobile': {
     'reg': /^1[3|4|5|7|8][0-9]\d{8}$/,
     'errorMessage': '请输入正确的手机号码'
@@ -156,10 +160,7 @@ export const regs = {
     'reg': /^\S+$/,
     'errorMessage': '请选择车辆付款形式'
   },
-  'notnull': {
-    'reg': /^\S+$/,
-    'errorMessage': '请输入内容'
-  }
+
 };
 
 export class Validate {
@@ -167,7 +168,7 @@ export class Validate {
     let validateResult = {result: true, errorMessage: ""};
     let reg = global.validaterRegs[name] || regs[name];
     if (reg) {
-      let result = null !== value && value !== '' && reg['reg'].test(value);
+      let result = null !== value && undefined !== value && value !== '' && reg['reg'].test(value);
       let errorMessage = reg['errorMessage'];
       validateResult = {result: result, errorMessage: errorMessage};
     }

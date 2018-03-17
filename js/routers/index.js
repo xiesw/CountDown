@@ -47,7 +47,6 @@ function getRouteParams(navigation){
 
 function getNavigationOptions(navigation) {
   const { params = {}, routeName } = navigation.state;
-  console.log('pain.xie', navigation);
   const {
     rightCom,
     headerTitleStyle = {},

@@ -49,7 +49,7 @@ export default class HomeScene extends BaseScene {
 
   renderItem(itemData) {
     return <HomeItem
-      sourcdData={this.state.sourceData}
+      sourceData={this.state.sourceData}
       data={itemData.item}
       {...this.props}
     />
