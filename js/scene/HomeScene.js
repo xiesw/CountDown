@@ -10,12 +10,14 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  Image
+  Image,
+  AsyncStorage
 } from 'react-native';
 import BaseScene from "./BaseScene";
 import data from '../data.json';
 import HomeItem from "../component/HomeItem";
 import {getWidth} from "../common/Global";
+import DataDao from "../dao/DataDao";
 
 export default class HomeScene extends BaseScene {
 
@@ -26,19 +28,31 @@ export default class HomeScene extends BaseScene {
   constructor(props) {
     super(props);
     this.state = ({
-      sourceData: data
+      sourceData: []
     });
+  }
+
+  componentDidMount() {
+    DataDao.load().then(result => {
+      this.setState({
+        sourceData: result
+      })
+    })
   }
 
   /**
    * 添加新条目
    */
   add() {
-    this.props.navigation.navigate('EditScene');
+    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
   }
 
   renderItem(itemData) {
-    return <HomeItem data={itemData.item} {...this.props}/>
+    return <HomeItem
+      sourcdData={this.state.sourceData}
+      data={itemData.item}
+      {...this.props}
+    />
   }
 
   render() {

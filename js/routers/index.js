@@ -60,8 +60,6 @@ function getNavigationOptions(navigation) {
     headerBackTitle:null,
   };
 
-  console.log('pain.xie',options.headerTitleStyle);
-
   return options;
 
 }

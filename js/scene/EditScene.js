@@ -18,6 +18,7 @@ import NormalEditText from '../component/NormalEditText';
 import PickInput from '../component/PickInput';
 import ColorPickInput from '../component/ColorPickInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import DataDao from "../dao/DataDao";
 
 export default class EditScene extends BaseScene {
 
@@ -27,6 +28,8 @@ export default class EditScene extends BaseScene {
 
   constructor(props) {
     super(props);
+    this.data = this.props.navigation.state.params.data;
+    this.sourceData = this.props.navigation.state.params.sourceData;
     this.state = {
       isDatePickerVisible: false,
       color: ''
@@ -71,7 +74,7 @@ export default class EditScene extends BaseScene {
   }
 
   ok() {
-
+    DataDao.save(this.sourceData);
   }
 
 

@@ -41,7 +41,10 @@ export default class HomeItem extends Component {
    * 点击条目
    */
   onPressItem() {
-    this.props.navigation.navigate('DetailScene',{data: this.data});
+    this.props.navigation.navigate('DetailScene', {
+      sourceData: this.props.sourceData,
+      data: this.data
+    });
   }
 
   render() {
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
   rightContainer: {
     flex: 4,
     flexDirection: 'row',
-    justifyContent:'center'
+    justifyContent: 'center'
   },
   time: {
     fontSize: getWidth(36),

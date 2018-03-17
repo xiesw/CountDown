@@ -26,6 +26,7 @@ export default class DetailScene extends BaseScene {
   constructor(props) {
     super(props);
     this.data = this.props.navigation.state.params.data;
+    this.sourceData = this.props.navigation.state.params.sourceData;
     console.log('pain.xie', this.data);
     this.handleData();
   }
@@ -47,7 +48,7 @@ export default class DetailScene extends BaseScene {
   }
 
   edit() {
-    this.props.navigation.navigate('EditScene');
+    this.props.navigation.navigate('EditScene', {sourceData: this.sourceData, data: this.data});
   }
 
   render() {
@@ -135,25 +136,25 @@ const styles = StyleSheet.create({
     marginTop: getWidth(45)
   },
 
-  timeContainer:{
+  timeContainer: {
     marginTop: getWidth(5),
-    flexDirection:'row'
+    flexDirection: 'row'
   },
-  number:{
-    fontSize:getWidth(24),
-    color:'#4A4A4A',
+  number: {
+    fontSize: getWidth(24),
+    color: '#4A4A4A',
   },
-  unit:{
-    fontSize:getWidth(12),
-    marginHorizontal:getWidth(4),
+  unit: {
+    fontSize: getWidth(12),
+    marginHorizontal: getWidth(4),
     marginTop: getWidth(12)
   },
 
-  divide:{
+  divide: {
     width: '100%',
     height: 0.5,
-    marginTop:getWidth(55),
-    backgroundColor:'#C3C3C3'
+    marginTop: getWidth(55),
+    backgroundColor: '#C3C3C3'
   },
 
   dateContainer: {
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     height: getWidth(60),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'#F7F6F5',
+    backgroundColor: '#F7F6F5',
     borderBottomLeftRadius: getWidth(8),
     borderBottomRightRadius: getWidth(8),
   },
