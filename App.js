@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {RouterStack} from "./js/routers/index"
 import {Theme} from "./js/common/Theme";
+import {regs} from './js/component/validate/Validate';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -26,8 +27,9 @@ export default class App extends Component<Props> {
 
   init() {
     global.theme = Theme;
+    global.validaterRegs = regs;
   }
-  
+
   render() {
     return (
       <RouterStack/>

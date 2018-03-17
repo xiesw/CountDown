@@ -41,7 +41,7 @@ export class ErrorComponent extends BaseComponent {
     return {
       continer: {},
       text: {
-        color: global.theme.color.contentTextColor_danger,
+        color: global.theme.color.textDanger,
         marginBottom: 5
       }
     };

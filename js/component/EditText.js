@@ -7,7 +7,8 @@ import {
   Text,
   TextInput,
   View,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native';
 
 import {BaseComponent} from './BaseComponent'
@@ -15,7 +16,7 @@ import {ErrorComponent} from './ErrorComponent'
 import {Validate} from './validate/Validate'
 import {KeyboardUtil} from '../util/KeyboardUtil'
 
-export class EditText extends BaseComponent {
+export default class EditText extends BaseComponent {
   constructor(props) {
     super(props);
     this.state.value = this.getText(props.value);
@@ -23,9 +24,6 @@ export class EditText extends BaseComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: this.getText(nextProps.value),
-    });
   }
 
   getValue() {
@@ -77,19 +75,20 @@ export class EditText extends BaseComponent {
     return {
       container: {
         height: 49,
+        width: "100%",
+        marginHorizontal:32,
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
       },
       text: {
-        fontSize: 14,
+        fontSize: 18,
         width: 105,
         paddingLeft: 16,
         color: global.theme.color.textDefault
       },
       input: {
-        width: Dimensions.get('window').width - 105,
-        fontSize: 14,
+        flex: 1,
+        fontSize: 18,
         color: global.theme.color.textDefault,
         borderWidth: 0,
         paddingLeft: 0,
@@ -100,10 +99,20 @@ export class EditText extends BaseComponent {
     };
   }
 
-  textRender() {
+  iconRender() {
+    let style = {
+      marginRight: 20
+    };
     return (
-      <Text style={this.state.style.text}>{this.props.title}</Text>
+      <Image
+        style={style}
+        source={this.props.source}
+      />
     );
+  }
+
+  textRender() {
+    return (null);
   }
 
   editRender() {
@@ -126,7 +135,12 @@ export class EditText extends BaseComponent {
   }
 
   extendRender() {
-    return (null);
+    let style = {
+      marginRight:64
+    };
+    return(
+      <View style={style}/>
+    )
   }
 
   pickerRender() {
@@ -142,16 +156,29 @@ export class EditText extends BaseComponent {
     return (<ErrorComponent ref='errorComponent' style={errorStyle}/>);
   }
 
+  divideRender() {
+    let style = {
+      height: 0.5,
+      backgroundColor:'#C1C1C1',
+      marginLeft:75,
+      marginRight:32
+    };
+
+    return <View style={style}/>
+  }
+
   render() {
     return (
-      <View>
+      <View style={{width: '100%'}}>
         <View style={this.state.style.container}>
+          {this.iconRender()}
           {this.textRender()}
           {this.editRender()}
           {this.extendRender()}
         </View>
         {this.errorRender()}
         {this.pickerRender()}
+        {this.divideRender()}
       </View>
     );
   }

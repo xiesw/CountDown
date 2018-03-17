@@ -2,7 +2,7 @@
  * Created by pain.xie on 2018/3/16.
  */
 
-const regs = {
+export const regs = {
   'mobile': {
     'reg': /^1[3|4|5|7|8][0-9]\d{8}$/,
     'errorMessage': '请输入正确的手机号码'
@@ -155,6 +155,10 @@ const regs = {
   'car_type': {
     'reg': /^\S+$/,
     'errorMessage': '请选择车辆付款形式'
+  },
+  'notnull': {
+    'reg': /^\S+$/,
+    'errorMessage': '请输入内容'
   }
 };
 

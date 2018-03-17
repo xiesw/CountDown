@@ -6,7 +6,7 @@
 import {StackNavigator, SafeAreaView} from 'react-navigation'
 import { View, Text, StatusBar, Platform, Easing,Animated} from 'react-native';
 import HomeScene from '../scene/HomeScene';
-import AddScene from "../scene/AddScene";
+import EditScene from "../scene/EditScene";
 import DetailScene from "../scene/DetailScene";
 import SettingScene from "../scene/SettingScene";
 import AboutScene from "../scene/AboutScene";
@@ -70,7 +70,7 @@ const RouterStack = StackNavigator(
   {
     HomeScene: {screen: HomeScene},
     DetailScene: {screen: DetailScene},
-    AddScene: {screen: AddScene},
+    EditScene: {screen: EditScene},
     SettingScene: {screen: SettingScene},
     AboutScene: {screen: AboutScene},
   },

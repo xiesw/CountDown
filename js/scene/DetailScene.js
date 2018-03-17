@@ -47,7 +47,7 @@ export default class DetailScene extends BaseScene {
   }
 
   edit() {
-    this.props.navigation.navigate('AddScene');
+    this.props.navigation.navigate('EditScene');
   }
 
   render() {
