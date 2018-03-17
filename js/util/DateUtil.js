@@ -139,7 +139,7 @@ export default class DateUtil {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
-    let newDate = new Date(year + '-' + month + '-' + day);
+    let newDate = new Date(year + '/' + month + '/' + day);
     return newDate.getTime();
   }
 }
