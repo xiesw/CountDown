@@ -22,12 +22,23 @@ export default class DetailScene extends BaseScene {
 
   static navigationOptions = {
     headerTitle: '倒计时',
+
   };
 
   constructor(props) {
     super(props);
     this.data = this.props.navigation.state.params.data;
     this.sourceData = this.props.navigation.state.params.sourceData;
+    this.state = {
+      title: '',
+      color: '',
+      day: '',
+      hour: '',
+      minute: '',
+      second: '',
+      millisecond: '',
+      dateText: ''
+    };
     this.handleData();
   }
 
@@ -45,6 +56,27 @@ export default class DetailScene extends BaseScene {
     this.millisecond = DateUtil.getMillisecond(timestamp);
 
     this.dateText = DateUtil.getDataAndWeek(timestamp);
+
+    this.setState({
+      title: this.title,
+      color: this.color,
+      day: this.day,
+      hour: this.hour,
+      minute: this.minute,
+      second: this.second,
+      millisecond: this.millisecond,
+      dateText: this.dateText
+    })
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.handleData();
+    }, 57)
+  }
+
+  componentWillUnmount() {
+    this.timer && clearInterval(this.timer)
   }
 
   edit() {
@@ -55,29 +87,29 @@ export default class DetailScene extends BaseScene {
     return (
       <View style={styles.container}>
         <View style={styles.card}>
-          <View style={[styles.titleContainer, {backgroundColor: this.color}]}>
-            <Text style={styles.title}>{this.title}</Text>
+          <View style={[styles.titleContainer, {backgroundColor: this.state.color}]}>
+            <Text style={styles.title}>{this.state.title}</Text>
           </View>
 
           <View style={styles.dayContainer}>
-            <Text style={styles.day}>{this.day}</Text>
+            <Text style={styles.day}>{this.state.day}</Text>
             <Text style={styles.dayUnit}>天</Text>
           </View>
 
           <View style={styles.timeContainer}>
-            <Text style={styles.number}>{this.hour}</Text>
+            <Text style={styles.number}>{this.state.hour}</Text>
             <Text style={styles.unit}>时</Text>
-            <Text style={styles.number}>{this.minute}</Text>
+            <Text style={styles.number}>{this.state.minute}</Text>
             <Text style={styles.unit}>分</Text>
-            <Text style={styles.number}>{this.second}</Text>
+            <Text style={styles.number}>{this.state.second}</Text>
             <Text style={styles.unit}>秒</Text>
-            <Text style={styles.number}>{this.millisecond}</Text>
+            <Text style={styles.number}>{this.state.millisecond}</Text>
           </View>
 
           <View style={styles.divide}/>
 
           <View style={styles.dateContainer}>
-            <Text style={styles.dateText}>{this.dateText}</Text>
+            <Text style={styles.dateText}>{this.state.dateText}</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -128,6 +160,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   day: {
+    color:'black',
     fontSize: getWidth(72),
     marginRight: getWidth(12)
   },
@@ -138,11 +171,14 @@ const styles = StyleSheet.create({
 
   timeContainer: {
     marginTop: getWidth(5),
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   number: {
+    textAlign: 'center',
     fontSize: getWidth(24),
     color: '#4A4A4A',
+    width: getWidth(30)
   },
   unit: {
     fontSize: getWidth(12),

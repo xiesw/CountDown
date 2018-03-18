@@ -19,7 +19,7 @@ import PickInput from '../component/PickInput';
 import ColorPickInput from '../component/ColorPickInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import DataDao from "../dao/DataDao";
-import { NavigationActions } from 'react-navigation'
+import {NavigationActions} from 'react-navigation'
 import Utils from "../util/Utils";
 
 export default class EditScene extends BaseScene {
@@ -91,7 +91,7 @@ export default class EditScene extends BaseScene {
   }
 
   delete() {
-    if(this.data) {
+    if (this.data) {
       Utils.removeArrayItem(this.sourceData, this.data);
       DataDao.save(this.sourceData);
       const resetAction = NavigationActions.reset({
@@ -101,13 +101,14 @@ export default class EditScene extends BaseScene {
         ]
       });
       this.props.navigation.dispatch(resetAction);
-    } {
+    }
+    {
       this.props.navigation.goBack();
     }
   }
 
   ok() {
-    if(!this.validateAll()) {
+    if (!this.validateAll()) {
       return;
     }
 
@@ -128,9 +129,22 @@ export default class EditScene extends BaseScene {
 
     }
     DataDao.save(this.sourceData);
-    this.props.navigation.goBack();
+    if(this.data) {
+      this.props.navigation.goBack();
+    } else {
+      const resetAction = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({routeName: 'HomeScene'})
+        ]
+      });
+      this.props.navigation.dispatch(resetAction);
+    }
   }
 
+  clear() {
+    DataDao.clear();
+  }
 
   validateAll() {
     return this.refs.title.validate();
@@ -212,6 +226,12 @@ export default class EditScene extends BaseScene {
 
         {this.btnRender()}
 
+        <TouchableOpacity
+          onPress={() => this.clear()}
+          style={{backgroundColor: '#2cc693', width: 100, height: 48, alignSelf:'center',marginTop: 58}}
+        >
+          <Text style={styles.btnText}>清除</Text>
+        </TouchableOpacity>
         <DateTimePicker
           isVisible={this.state.isDatePickerVisible}
           onConfirm={(date) => this.handleDatePicked(date)}

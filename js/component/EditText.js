@@ -1,5 +1,6 @@
 /**
  * Created by pain.xie on 2018/3/16.
+ * 输入组价基类
  */
 
 import React, {Component} from 'react';

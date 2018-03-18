@@ -86,7 +86,7 @@ export default class DateUtil {
   static getHour(timestamp) {
     let time = Math.abs(timestamp - Date.now());
     let hour = Math.floor((time / (1000 * 60 * 60)) % 24);
-    return hour;
+    return hour < 10 ? '0' + hour : hour;
   }
 
   /**
@@ -97,7 +97,7 @@ export default class DateUtil {
   static getMinute(timestamp) {
     let time = Math.abs(timestamp - Date.now());
     let minute = Math.floor((time / (1000 * 60)) % 60);
-    return minute;
+    return minute < 10 ? '0' + minute : minute;
   }
 
   /**
@@ -108,7 +108,7 @@ export default class DateUtil {
   static getSecond(timestamp) {
     let time = Math.abs(timestamp - Date.now());
     let second = Math.floor((time / 1000) % 60);
-    return second;
+    return second < 10 ? '0' + second : second;
   }
 
   /**
@@ -119,7 +119,7 @@ export default class DateUtil {
   static getMillisecond(timestamp) {
     let time = Math.abs(timestamp - Date.now());
     let millisecond = Math.floor((time % 1000) / 10);
-    return millisecond ;
+    return millisecond < 10 ? '0' + millisecond : millisecond;
   }
 
   /**

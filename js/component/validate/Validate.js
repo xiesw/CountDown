@@ -1,5 +1,6 @@
 /**
  * Created by pain.xie on 2018/3/16.
+ * 正则校验类
  */
 
 export const regs = {

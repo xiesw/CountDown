@@ -1,6 +1,6 @@
 /**
  * Created by pain.xie on 2018/3/16.
- * 深度合并
+ * 组件基类
  */
 
 import React, {Component} from 'react';

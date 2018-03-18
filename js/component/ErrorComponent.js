@@ -1,5 +1,6 @@
 /**
  * Created by pain.xie on 2018/3/16.
+ * 错误提示组件
  */
 
 import React, {Component} from 'react';

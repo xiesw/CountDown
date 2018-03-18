@@ -48,6 +48,7 @@ export default class HomeItem extends Component {
   }
 
   render() {
+    console.log('pain.xie', 'renderItem');
     return (
       <TouchableOpacity
         onPress={() => this.onPressItem()}
