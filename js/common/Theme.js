@@ -10,7 +10,10 @@ export const Theme = {
     textGray: '#999999',
     textDanger: '#FF4E4E',
     placeholder: '#D9D9D9',
-    highLight: '#b3b3b3',
+    highLight: '#B3B3B3',
+    textSelect: '#1296DB',
+
+    divide: '#979797',
 
     red: '#FB565A',
     yellow: '#F7A538',

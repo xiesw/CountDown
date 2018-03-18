@@ -21,6 +21,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import DataDao from "../dao/DataDao";
 import {NavigationActions} from 'react-navigation'
 import Utils from "../util/Utils";
+import TopOptionDialog from "../component/TopOptionDialog";
 
 export default class EditScene extends BaseScene {
 
@@ -35,7 +36,8 @@ export default class EditScene extends BaseScene {
     this.state = {
       isDatePickerVisible: false,
       color: '',
-      date: ''
+      date: '',
+      top: false
     };
 
     this.handleData();
@@ -53,6 +55,8 @@ export default class EditScene extends BaseScene {
       this.repeat = this.data.repeat;
       this.date = DateUtil.getDataAndWeek(this.timestamp);
       this.state.color = this.data.color;
+
+      this.state.top = this.top
     }
   }
 
@@ -80,7 +84,16 @@ export default class EditScene extends BaseScene {
   }
 
   showTopDialog() {
+    this.refs.topDialog.setVisible(true);
+  }
 
+  onChangeTopValue(value) {
+    console.log('pain.xie', 111111, value)
+    this.state.top = value;
+    this.setState({
+      top: value
+    });
+    console.log('pain.xie', 222222, this.state.top);
   }
 
   onChangeColor(color) {
@@ -115,21 +128,21 @@ export default class EditScene extends BaseScene {
     if (this.data) {
       this.data.timestamp = this.timestamp;
       this.data.color = this.state.color;
-      this.data.top = this.top;
+      this.data.top = this.state.top;
       this.data.repeat = this.repeat;
       this.data.name = this.refs.title.getValue();
     } else {
       let data = {};
       data.timestamp = this.timestamp;
       data.color = this.state.color;
-      data.top = this.top;
+      data.top = this.state.top;
       data.repeat = this.repeat;
       data.name = this.refs.title.getValue();
       this.sourceData.push(data);
 
     }
     DataDao.save(this.sourceData);
-    if(this.data) {
+    if (this.data) {
       this.props.navigation.goBack();
     } else {
       const resetAction = NavigationActions.reset({
@@ -181,6 +194,7 @@ export default class EditScene extends BaseScene {
         <PickInput
           ref='top'
           editable={false}
+          value={this.state.top ? '置顶' : '不置顶'}
           placeholder={'置顶'}
           onPress={() => this.showTopDialog()}
           source={require('../../res/image/top.png')}
@@ -217,6 +231,27 @@ export default class EditScene extends BaseScene {
     )
   }
 
+  renderDialog() {
+    return (
+      <View style={{position: 'absolute'}}>
+        <DateTimePicker
+          isVisible={this.state.isDatePickerVisible}
+          onConfirm={(date) => this.handleDatePicked(date)}
+          onCancel={() => this.hideDatePicker()}
+        />
+
+        <TopOptionDialog
+          ref='topDialog'
+          options={topMap}
+          value={this.state.top}
+          onChange={(value = {}) => this.onChangeTopValue(value)}
+        />
+
+      </View>
+
+    )
+  }
+
   render() {
 
     return (
@@ -228,20 +263,28 @@ export default class EditScene extends BaseScene {
 
         <TouchableOpacity
           onPress={() => this.clear()}
-          style={{backgroundColor: '#2cc693', width: 100, height: 48, alignSelf:'center',marginTop: 58}}
+          style={{
+            backgroundColor: '#2cc693',
+            width: 100,
+            height: 48,
+            alignSelf: 'center',
+            marginTop: 58
+          }}
         >
           <Text style={styles.btnText}>清除</Text>
         </TouchableOpacity>
-        <DateTimePicker
-          isVisible={this.state.isDatePickerVisible}
-          onConfirm={(date) => this.handleDatePicked(date)}
-          onCancel={() => this.hideDatePicker()}
-        />
+
+        {this.renderDialog()}
 
       </View>
     );
   }
 }
+
+const topMap = new Map([
+  [true, '置顶'],
+  [false, '不置顶']
+]);
 
 const styles = StyleSheet.create({
   container: {

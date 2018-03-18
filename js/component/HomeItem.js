@@ -49,14 +49,14 @@ export default class HomeItem extends Component {
     this.time = DateUtil.getBiggestTime(date);
     this.unit = DateUtil.getBiggestTimeUnit(date);
     this.top = this.data.top;
-    
-    this.state.name= this.name;
-    this.state.color= this.color;
-    this.state.stateColor= this.stateColor;
-    this.state.date= this.date;
-    this.state.time= this.time;
-    this.state.unit= this.unit;
-    this.state.top= this.top;
+
+    this.state.name = this.name;
+    this.state.color = this.color;
+    this.state.stateColor = this.stateColor;
+    this.state.date = this.date;
+    this.state.time = this.time;
+    this.state.unit = this.unit;
+    this.state.top = this.top;
 
     this.setState({
       name: this.name,
@@ -116,6 +116,12 @@ export default class HomeItem extends Component {
         </View>
         <View style={[styles.state, {backgroundColor: this.state.stateColor}]}/>
         <View/>
+
+        {this.state.top
+          ?<View style={styles.topContainer}>
+          <Text style={styles.top}>置顶</Text>
+        </View>
+          : null}
       </TouchableOpacity>
     );
   }
@@ -177,6 +183,22 @@ const styles = StyleSheet.create({
     width: getWidth(10),
     borderTopRightRadius: getWidth(8),
     borderBottomRightRadius: getWidth(8),
+  },
+
+  topContainer: {
+    position: 'absolute',
+    width: getWidth(28),
+    height: getWidth(15),
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: getWidth(4),
+    right: getWidth(28),
+    borderRadius: getWidth(2),
+    borderWidth: 0.5,
+    borderColor:'#979797'
+  },
+  top: {
+    fontSize: getWidth(9)
   }
 });
 
