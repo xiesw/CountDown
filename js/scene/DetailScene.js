@@ -31,7 +31,7 @@ export default class DetailScene extends BaseScene {
     this.data = this.props.navigation.state.params.data;
     this.sourceData = this.props.navigation.state.params.sourceData;
     this.state = {
-      title: '',
+      name: '',
       color: '',
       day: '',
       hour: '',
@@ -47,7 +47,7 @@ export default class DetailScene extends BaseScene {
     // pain.todo 刷新优化
     let timestamp = this.data.timestamp;
     let isOverdue = DateUtil.isOverdue(timestamp);
-    this.title = isOverdue ?
+    this.name = isOverdue ?
       this.data.name + ' 已经' : '距离 ' + this.data.name + ' 还有';
     this.color = this.data.color || Theme.color.lightBlue;
 
@@ -60,7 +60,7 @@ export default class DetailScene extends BaseScene {
     this.dateText = DateUtil.getDataAndWeek(timestamp);
 
     this.setState({
-      title: this.title,
+      name: this.name,
       color: this.color,
       day: this.day,
       hour: this.hour,
@@ -100,7 +100,7 @@ export default class DetailScene extends BaseScene {
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={[styles.titleContainer, {backgroundColor: this.state.color}]}>
-            <Text style={styles.title}>{this.state.title}</Text>
+            <Text style={styles.name}>{this.state.name}</Text>
           </View>
 
           <View style={styles.dayContainer}>
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: getWidth(8),
     borderTopLeftRadius: getWidth(8),
   },
-  title: {
+  name: {
     fontSize: getWidth(18),
     color: 'white',
   },

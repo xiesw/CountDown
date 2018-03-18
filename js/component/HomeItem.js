@@ -9,25 +9,38 @@ import {
   View,
   Text,
   TouchableOpacity,
+  AppState,
+  DeviceEventEmitter,
 } from 'react-native';
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
 
-
+const REFRESH_TIME = 1000;
 export default class HomeItem extends Component {
   constructor(props) {
     super(props);
-    this.handleData(props);
+    this.state = {
+      name: '',
+      color: '',
+      stateColor: '',
+      date: '',
+      time: '',
+      unit: '',
+      top: false
+    };
+    this.handleData();
   }
 
   /**
    * 处理显示的数据
    * @param props
    */
-  handleData(props) {
-    this.data = props.data;
+  handleData() {
+    // pain.todo 刷新优化
+    this.data = this.props.data;
     let date = this.data.timestamp;
     let isOverdue = DateUtil.isOverdue(date);
+    this.color = this.data.color;
     this.stateColor = isOverdue ?
       global.theme.color.lightCyan : global.theme.color.orange;
     this.date = DateUtil.getDataAndWeek(date);
@@ -35,6 +48,45 @@ export default class HomeItem extends Component {
       this.data.name + ' 已经' : '距离 ' + this.data.name + ' 还有';
     this.time = DateUtil.getBiggestTime(date);
     this.unit = DateUtil.getBiggestTimeUnit(date);
+    this.top = this.data.top;
+    
+    this.state.name= this.name;
+    this.state.color= this.color;
+    this.state.stateColor= this.stateColor;
+    this.state.date= this.date;
+    this.state.time= this.time;
+    this.state.unit= this.unit;
+    this.state.top= this.top;
+
+    this.setState({
+      name: this.name,
+      color: this.color,
+      stateColor: this.stateColor,
+      date: this.date,
+      time: this.time,
+      unit: this.unit,
+      top: this.top,
+    });
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.handleData();
+    }, REFRESH_TIME);
+    AppState.addEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
+    this.timer && clearInterval(this.timer)
+  }
+
+  handleAppStateChange(nextAppState) {
+    if (nextAppState === 'active') {
+      this.timer = setInterval(() => this.handleData(), REFRESH_TIME)
+    } else {
+      this.timer && clearInterval(this.timer);
+    }
   }
 
   /**
@@ -48,22 +100,21 @@ export default class HomeItem extends Component {
   }
 
   render() {
-    console.log('pain.xie', 'renderItem');
     return (
       <TouchableOpacity
         onPress={() => this.onPressItem()}
         style={styles.container}
       >
-        <View style={[styles.dot, {backgroundColor: this.data.color}]}/>
+        <View style={[styles.dot, {backgroundColor: this.state.color}]}/>
         <View style={styles.midContainer}>
-          <Text style={styles.date}>{this.date}</Text>
-          <Text style={styles.name}>{this.name}</Text>
+          <Text style={styles.date}>{this.state.date}</Text>
+          <Text style={styles.name}>{this.state.name}</Text>
         </View>
         <View style={styles.rightContainer}>
-          <Text style={styles.time}>{this.time}</Text>
-          <Text style={styles.unit}>{this.unit}</Text>
+          <Text style={styles.time}>{this.state.time}</Text>
+          <Text style={styles.unit}>{this.state.unit}</Text>
         </View>
-        <View style={[styles.state, {backgroundColor: this.stateColor}]}/>
+        <View style={[styles.state, {backgroundColor: this.state.stateColor}]}/>
         <View/>
       </TouchableOpacity>
     );
