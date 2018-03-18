@@ -3,21 +3,22 @@
  * 详情页
  */
 
-
 import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  AppState,
+  DeviceEventEmitter,
 } from 'react-native';
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
 import BaseScene from "./BaseScene";
 import {Theme} from "../common/Theme";
 
-
+const REFRESH_TIME = 57;
 export default class DetailScene extends BaseScene {
 
   static navigationOptions = {
@@ -43,6 +44,7 @@ export default class DetailScene extends BaseScene {
   }
 
   handleData() {
+    // pain.todo 刷新优化
     let timestamp = this.data.timestamp;
     let isOverdue = DateUtil.isOverdue(timestamp);
     this.title = isOverdue ?
@@ -70,13 +72,23 @@ export default class DetailScene extends BaseScene {
   }
 
   componentDidMount() {
+    AppState.addEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
     this.timer = setInterval(() => {
       this.handleData();
-    }, 57)
+    }, REFRESH_TIME)
   }
 
   componentWillUnmount() {
+    AppState.removeEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
     this.timer && clearInterval(this.timer)
+  }
+
+  handleAppStateChange(nextAppState) {
+    if (nextAppState === 'active') {
+      this.timer = setInterval(() => this.handleData(), REFRESH_TIME)
+    } else {
+      this.timer && clearInterval(this.timer);
+    }
   }
 
   edit() {
