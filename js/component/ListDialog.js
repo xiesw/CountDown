@@ -26,6 +26,10 @@ export default class ListDialog extends BaseComponent {
     }
   }
 
+  /**
+   * 设置显示
+   * @param value
+   */
   setVisible(value) {
     this.setState({
       dialogVisible: value

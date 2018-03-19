@@ -9,7 +9,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
   DeviceEventEmitter
 } from 'react-native';
 import {getWidth} from "../common/Global"
@@ -24,6 +23,7 @@ import {NavigationActions} from 'react-navigation'
 import Utils from "../util/Utils";
 import ListDialog from "../component/ListDialog";
 import {appEvent} from "../common/Constants";
+import {Theme} from "../common/Theme";
 
 export default class EditScene extends BaseScene {
 
@@ -38,7 +38,6 @@ export default class EditScene extends BaseScene {
     this.state = {
       isDatePickerVisible: false,
       color: '',
-      date: '',
       repeat: 'once',
       top: false,
     };
@@ -46,55 +45,57 @@ export default class EditScene extends BaseScene {
     this.handleData();
   }
 
+  /**
+   * 处理数据
+   */
   handleData() {
-    this.top = false;
-    this.repeat = 'once';
     this.timestamp = DateUtil.getTodayTimeStamp();
     this.date = DateUtil.getDataAndWeek(this.timestamp);
+
     if (this.data) {
       this.name = this.data.name;
       this.timestamp = this.data.timestamp;
-      this.top = this.data.top;
-      this.repeat = this.data.repeat;
       this.date = DateUtil.getDataAndWeek(this.timestamp);
-      this.state.color = this.data.color;
 
-      this.state.top = this.top;
-      this.state.repeat = this.repeat;
+      this.state.color = this.data.color;
+      this.state.top = this.data.top;
+      this.state.repeat = this.data.repeat;
       this.setState({
-        top: this.top,
-        repeat: this.repeat
+        color: this.date.color,
+        top: this.data.top,
+        repeat: this.data.repeat
       });
     }
   }
 
-  showDatePicker() {
-    this.setState({isDatePickerVisible: true})
+  /**
+   * 设置时间控件显示/隐藏
+   * @param visible
+   */
+  setDatePickerVisible(visible) {
+    this.setState({isDatePickerVisible: visible})
   }
 
-  hideDatePicker() {
-    this.setState({isDatePickerVisible: false})
-  }
-
+  /**
+   * 处理时间控件选择值
+   */
   handleDatePicked(date) {
     let d = new Date(date);
-    this.timestamp = d.getTime();
+    this.timestamp = DateUtil.getZeroTimeStamp(d.getTime());
     this.refs.date.setValue(DateUtil.getDataAndWeek(this.timestamp));
-    this.hideDatePicker();
+    this.setDatePickerVisible(false);
   };
 
-  onPickDate() {
-    this.showDatePicker();
-  }
-
+  /**
+   * 显示重复弹窗
+   */
   showRepeatDialog() {
     this.refs.repeatDialog.setVisible(true);
   }
 
-  showTopDialog() {
-    this.refs.topDialog.setVisible(true);
-  }
-
+  /**
+   * 处理重复弹窗选择值
+   */
   onChangeRepeatValue(value) {
     this.state.repeat = value;
     this.setState({
@@ -104,14 +105,29 @@ export default class EditScene extends BaseScene {
 
   }
 
+  /**
+   * 显示置顶弹窗
+   */
+  showTopDialog() {
+    this.refs.topDialog.setVisible(true);
+  }
+
+  /**
+   * 处理置顶选择值
+   * @param value
+   */
   onChangeTopValue(value) {
     this.state.top = value;
     this.setState({
       top: value
     });
-    this.refs.top.setValue(this.state.top ? '置顶' : '不置顶');
+    this.refs.top.setValue(topMap.get(value));
   }
 
+  /**
+   * 处理颜色改变值
+   * @param color
+   */
   onChangeColor(color) {
     let c = this.state.color === color ? '' : color;
     this.setState({
@@ -119,24 +135,23 @@ export default class EditScene extends BaseScene {
     });
   }
 
-  delete() {
+  /**
+   * 点击删除按钮
+   */
+  deleteItem() {
     if (this.data) {
       Utils.removeArrayItem(this.sourceData, this.data);
       DataDao.save(this.sourceData);
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({routeName: 'HomeScene'})
-        ]
-      });
-      this.props.navigation.dispatch(resetAction);
-    }
-    {
+      this.resetToHome();
+    } else {
       this.props.navigation.goBack();
     }
   }
 
-  ok() {
+  /**
+   * 点击确定按钮
+   */
+  saveItem() {
     if (!this.validateAll()) {
       return;
     }
@@ -155,27 +170,34 @@ export default class EditScene extends BaseScene {
       data.repeat = this.state.repeat;
       data.name = this.refs.title.getValue();
       this.sourceData.push(data);
-
     }
     DataDao.save(this.sourceData);
+
     if (this.data) {
       DeviceEventEmitter.emit(appEvent.dataChange);
       this.props.navigation.goBack();
     } else {
-      const resetAction = NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({routeName: 'HomeScene'})
-        ]
-      });
-      this.props.navigation.dispatch(resetAction);
+      this.resetToHome();
     }
   }
 
-  clear() {
-    DataDao.clear();
+  /**
+   * 跳转到首页
+   */
+  resetToHome() {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({routeName: 'HomeScene'})
+      ]
+    });
+    this.props.navigation.dispatch(resetAction);
   }
 
+  /**
+   * 校验所有选项
+   * @returns {*}
+   */
   validateAll() {
     return this.refs.title.validate();
   }
@@ -196,7 +218,7 @@ export default class EditScene extends BaseScene {
           editable={false}
           value={this.date}
           placeholder={'选择日期'}
-          onPress={() => this.onPickDate()}
+          onPress={() => this.setDatePickerVisible(true)}
           source={require('../../res/image/time.png')}
         />
 
@@ -211,7 +233,7 @@ export default class EditScene extends BaseScene {
         <PickInput
           ref='top'
           editable={false}
-          value={this.state.top ? '置顶' : '不置顶'}
+          value={topMap.get(this.state.top)}
           placeholder={'置顶'}
           onPress={() => this.showTopDialog()}
           source={require('../../res/image/top.png')}
@@ -233,13 +255,13 @@ export default class EditScene extends BaseScene {
     return (
       <View style={styles.btnContainer}>
         <TouchableOpacity
-          onPress={() => this.delete()}
+          onPress={() => this.deleteItem()}
           style={styles.btnDelete}
         >
           <Text style={styles.btnText}>删除</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => this.ok()}
+          onPress={() => this.saveItem()}
           style={styles.btnOk}
         >
           <Text style={styles.btnText}>确定</Text>
@@ -254,7 +276,7 @@ export default class EditScene extends BaseScene {
         <DateTimePicker
           isVisible={this.state.isDatePickerVisible}
           onConfirm={(date) => this.handleDatePicked(date)}
-          onCancel={() => this.hideDatePicker()}
+          onCancel={() => this.setDatePickerVisible(false)}
         />
 
         <ListDialog
@@ -270,14 +292,11 @@ export default class EditScene extends BaseScene {
           value={this.state.top}
           onChange={(value = {}) => this.onChangeTopValue(value)}
         />
-
       </View>
-
     )
   }
 
   render() {
-
     return (
       <View style={styles.container}>
 
@@ -328,7 +347,7 @@ const styles = StyleSheet.create({
     borderRadius: getWidth(2),
     backgroundColor: '#FE3824',
     elevation: 2,
-    shadowColor: '#666666',
+    shadowColor: Theme.color.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: getWidth(2),
@@ -343,7 +362,7 @@ const styles = StyleSheet.create({
     borderRadius: getWidth(2),
     backgroundColor: '#618FE7',
     elevation: 2,
-    shadowColor: '#666666',
+    shadowColor: Theme.color.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: getWidth(2),

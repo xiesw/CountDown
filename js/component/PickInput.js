@@ -3,18 +3,11 @@
  * 选择组件
  */
 
-
 import React, {Component} from 'react';
 import {
   Image,
   View,
-  Text,
   TouchableWithoutFeedback,
-  Dimensions,
-  Modal,
-  Platform,
-  DeviceEventEmitter,
-  TouchableOpacity
 } from 'react-native';
 import EditText from './EditText';
 
@@ -23,12 +16,11 @@ export default class PickInput extends EditText {
     super(props);
   }
 
-
   extendRender() {
     let style = {
-      marginRight:64
+      marginRight: 64
     };
-    return(
+    return (
       <Image
         style={style}
         source={require('../../res/image/more.png')}

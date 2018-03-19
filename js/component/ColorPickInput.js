@@ -5,14 +5,7 @@
 
 import React, {Component} from 'react';
 import {
-  Image,
   View,
-  Text,
-  TouchableWithoutFeedback,
-  Dimensions,
-  Modal,
-  Platform,
-  DeviceEventEmitter,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
@@ -44,34 +37,33 @@ export default class ColorPickInput extends EditText {
   }
 
   extendRender() {
-    let style = {
-      marginRight: 64,
-      width: getWidth(180),
-      flexDirection: 'row',
-      justifyContent: 'space-between'
-    };
-
     return (
-      <View style={style}>
+      <View style={styles.container}>
         {this.renderOptions()}
       </View>
     )
   }
-
-
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginRight: 64,
+    height:getWidth(30),
+    width: getWidth(180),
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent: 'space-between'
+  },
   dot: {
     width: getWidth(24),
     height: getWidth(24),
     borderRadius: getWidth(24),
   },
   dotSelect: {
-    width: getWidth(24),
-    height: getWidth(24),
+    width: getWidth(30),
+    height: getWidth(30),
     borderRadius: getWidth(24),
-    borderColor: '#000000',
+    borderColor: 'black',
     borderWidth: 2
   }
 });

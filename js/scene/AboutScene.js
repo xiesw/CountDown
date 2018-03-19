@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import BaseScene from "./BaseScene";
 
-
 export default class AboutScene extends BaseScene {
 
   static navigationOptions = {

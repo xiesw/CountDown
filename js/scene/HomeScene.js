@@ -7,21 +7,18 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   TouchableOpacity,
   DeviceEventEmitter,
-  AppState,
   FlatList,
   Image,
-  AsyncStorage
 } from 'react-native';
 import BaseScene from "./BaseScene";
-import data from '../data.json';
 import HomeItem from "../component/HomeItem";
 import {getWidth} from "../common/Global";
 import DataDao from "../dao/DataDao";
 import DateUtil from "../util/DateUtil";
 import {appEvent} from "../common/Constants";
+import {Theme} from "../common/Theme";
 
 export default class HomeScene extends BaseScene {
 
@@ -47,12 +44,19 @@ export default class HomeScene extends BaseScene {
     this.dataChangeListener && this.dataChangeListener.remove();
   }
 
+  /**
+   * 加载数据
+   */
   loadData() {
     DataDao.load().then(result => {
       this.handleData(result);
     })
   }
 
+  /**
+   * 处理数据
+   * @param result
+   */
   handleData(result) {
     let sortFun = (obj1, obj2) => {
       let isOverDue1 = DateUtil.isOverdue(obj1.timestamp);
@@ -100,9 +104,7 @@ export default class HomeScene extends BaseScene {
           style={styles.imageContainer}
           onPress={() => this.add()}
         >
-          <Image
-            source={require('../../res/image/add.png')}
-          />
+          <Image source={require('../../res/image/add.png')}/>
         </TouchableOpacity>
       </View>
     );
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     right: getWidth(36),
     bottom: getWidth(54),
     elevation: 2,
-    shadowColor: '#666666',
+    shadowColor: Theme.color.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: getWidth(2),

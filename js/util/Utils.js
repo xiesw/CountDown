@@ -3,13 +3,6 @@
  * 简单的工具
  */
 
-import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  Dimensions
-} from 'react-native';
-
 export default class Utils {
 
   /**

@@ -5,8 +5,6 @@
 
 import React from 'react';
 import {
-  Text,
-  View,
   AsyncStorage
 } from 'react-native';
 
@@ -17,6 +15,10 @@ export default class DataDao {
   constructor(props) {
   }
 
+  /**
+   * 加载数据
+   * @returns {Promise}
+   */
   static load() {
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(AsyncStorage_Name, (error, result) => {
@@ -26,19 +28,26 @@ export default class DataDao {
           if (result) {
             resolve(JSON.parse(result));
           } else {
-            reject('gesture password is empty');
+            reject('data is empty');
           }
         }
       })
     });
   }
 
+  /**
+   * 保存数据
+   * @param data
+   */
   static save(data) {
     AsyncStorage.setItem(AsyncStorage_Name, JSON.stringify(data));
   }
 
+  /**
+   * 清除所有数据
+   * @returns {*|Promise}
+   */
   static clear() {
-
     return AsyncStorage.clear();
   }
 }

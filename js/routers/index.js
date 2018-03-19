@@ -3,8 +3,7 @@
  * 路由表
  */
 
-import {StackNavigator, SafeAreaView} from 'react-navigation'
-import { View, Text, StatusBar, Platform, Easing,Animated} from 'react-native';
+import {StackNavigator} from 'react-navigation'
 import HomeScene from '../scene/HomeScene';
 import EditScene from "../scene/EditScene";
 import DetailScene from "../scene/DetailScene";
@@ -14,10 +13,10 @@ import AboutScene from "../scene/AboutScene";
 
 // 默认的导航栏样式
 const CommonHeaderStyle = {
-  backgroundColor: '#ffffff',
+  backgroundColor: 'white',
   elevation: 0,
   shadowOpacity: 0,
-  borderBottomWidth:0
+  borderBottomWidth: 0
 };
 
 // 默认的导航栏标题样式
@@ -30,23 +29,22 @@ const CommonHeaderTitleStyle = {
 
 
 //查找导航栏传递的参数
-function getRouteParams(navigation){
-  const {params,index} = navigation.state;
+function getRouteParams(navigation) {
+  const {params, index} = navigation.state;
   const {routes} = navigation.state;
-  if (params){
+  if (params) {
     return params;
-  } else if (Array.isArray(routes)&&index >= 0){
+  } else if (Array.isArray(routes) && index >= 0) {
     let route = routes[index];
-    const { params } = route;
-    return params ? params:{};
+    const {params} = route;
+    return params ? params : {};
   }
   return {};
 }
 
 
-
 function getNavigationOptions(navigation) {
-  const { params = {}, routeName } = navigation.state;
+  const {params = {}, routeName} = navigation.state;
   const {
     rightCom,
     headerTitleStyle = {},
@@ -54,9 +52,9 @@ function getNavigationOptions(navigation) {
   } = getRouteParams(navigation);
 
   let options = {
-    headerStyle : Object.assign({}, CommonHeaderStyle, headerStyle),
-    headerTitleStyle : Object.assign({}, CommonHeaderTitleStyle , headerTitleStyle),
-    headerBackTitle:null,
+    headerStyle: Object.assign({}, CommonHeaderStyle, headerStyle),
+    headerTitleStyle: Object.assign({}, CommonHeaderTitleStyle, headerTitleStyle),
+    headerBackTitle: null,
   };
 
   return options;
@@ -72,7 +70,7 @@ const RouterStack = StackNavigator(
     AboutScene: {screen: AboutScene},
   },
   {
-    navigationOptions: ({ navigation }) => getNavigationOptions(navigation),
+    navigationOptions: ({navigation}) => getNavigationOptions(navigation),
   }
 );
 

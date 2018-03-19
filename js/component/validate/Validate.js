@@ -175,4 +175,4 @@ export class Validate {
     }
     return validateResult;
   }
-};
+}

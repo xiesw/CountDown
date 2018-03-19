@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import {BaseComponent} from './BaseComponent'
+import {Theme} from "../common/Theme";
 
 export class ErrorComponent extends BaseComponent {
   constructor(props) {
@@ -42,7 +43,7 @@ export class ErrorComponent extends BaseComponent {
     return {
       continer: {},
       text: {
-        color: global.theme.color.textDanger,
+        color: Theme.color.textDanger,
         marginBottom: 5
       }
     };

@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import BaseScene from "./BaseScene";
 
-
 export default class SettingScene extends BaseScene {
   constructor(props) {
     super(props);

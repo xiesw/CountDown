@@ -1,6 +1,6 @@
 /**
  * Created by xieshangwu on 2018/3/11.
- * 时间工作类
+ * 时间工具类
  */
 
 export default class DateUtil {
@@ -136,6 +136,19 @@ export default class DateUtil {
    */
   static getTodayTimeStamp() {
     let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let newDate = new Date(year + '/' + month + '/' + day);
+    return newDate.getTime();
+  }
+
+  /**
+   * 获得某天零点的时间戳
+   */
+  static getZeroTimeStamp(timestamp) {
+    let date = new Date();
+    date.setTime(timestamp)
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();

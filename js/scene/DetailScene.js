@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Image,
   AppState,
-  DeviceEventEmitter,
 } from 'react-native';
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
@@ -23,7 +22,6 @@ export default class DetailScene extends BaseScene {
 
   static navigationOptions = {
     headerTitle: '倒计时',
-
   };
 
   constructor(props) {
@@ -47,16 +45,15 @@ export default class DetailScene extends BaseScene {
     // pain.todo 刷新优化
     let timestamp = this.data.timestamp;
     let isOverdue = DateUtil.isOverdue(timestamp);
+
     this.name = isOverdue ?
       this.data.name + ' 已经' : '距离 ' + this.data.name + ' 还有';
     this.color = this.data.color || Theme.color.lightBlue;
-
     this.day = DateUtil.getDaysCount(timestamp);
     this.hour = DateUtil.getHour(timestamp);
     this.minute = DateUtil.getMinute(timestamp);
     this.second = DateUtil.getSecond(timestamp);
     this.millisecond = DateUtil.getMillisecond(timestamp);
-
     this.dateText = DateUtil.getDataAndWeek(timestamp);
 
     this.setState({
@@ -73,22 +70,38 @@ export default class DetailScene extends BaseScene {
 
   componentDidMount() {
     AppState.addEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
-    this.timer = setInterval(() => {
-      this.handleData();
-    }, REFRESH_TIME)
+    this.startTime();
   }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
-    this.timer && clearInterval(this.timer)
+    this.stopTime();
   }
 
+  /**
+   * app 前后台运行时 启动/停止 计时器
+   * @param nextAppState
+   */
   handleAppStateChange(nextAppState) {
     if (nextAppState === 'active') {
-      this.timer = setInterval(() => this.handleData(), REFRESH_TIME)
+      this.startTime();
     } else {
-      this.timer && clearInterval(this.timer);
+      this.stopTime();
     }
+  }
+
+  /**
+   * 启动计算器刷新
+   */
+  startTime() {
+    this.timer = setInterval(() => this.handleData(), REFRESH_TIME)
+  }
+
+  /**
+   * 停止计时器
+   */
+  stopTime() {
+    this.timer && clearInterval(this.timer);
   }
 
   edit() {
@@ -149,7 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: getWidth(8),
     elevation: 2,
-    shadowColor: '#666666',
+    shadowColor: Theme.color.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: getWidth(2),
@@ -202,7 +215,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 0.5,
     marginTop: getWidth(55),
-    backgroundColor: '#C3C3C3'
+    backgroundColor: Theme.color.divide,
   },
 
   dateContainer: {

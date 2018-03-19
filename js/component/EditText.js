@@ -5,10 +5,8 @@
 
 import React, {Component} from 'react';
 import {
-  Text,
   TextInput,
   View,
-  Dimensions,
   Image
 } from 'react-native';
 
@@ -90,12 +88,12 @@ export default class EditText extends BaseComponent {
         fontSize: 18,
         width: 105,
         paddingLeft: 16,
-        color: global.theme.color.textDefault
+        color: Theme.color.textDefault
       },
       input: {
         flex: 1,
         fontSize: 18,
-        color: global.theme.color.textDefault,
+        color: Theme.color.textDefault,
         borderWidth: 0,
         paddingLeft: 0,
         paddingTop: 0,
@@ -127,7 +125,7 @@ export default class EditText extends BaseComponent {
         style={this.state.style.input}
         editable={this.props.editable !== undefined ? this.props.editable : true}
         placeholder={this.props.placeholder}
-        placeholderTextColor={global.theme.color.placeholder}
+        placeholderTextColor={Theme.color.placeholder}
         value={this.state.value}
         onChangeText={(value) => this.setState({value})}
         keyboardType={this.props.keyboardType}
@@ -135,7 +133,7 @@ export default class EditText extends BaseComponent {
         maxLength={this.props.maxLength}
         onBlur={() => this.onBlur()}
         onFocus={() => this.onFocus()}
-        selectionColor={global.theme.color.highLight}
+        selectionColor={Theme.color.highLight}
       />
     );
   }

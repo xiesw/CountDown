@@ -10,10 +10,10 @@ import {
   Text,
   TouchableOpacity,
   AppState,
-  DeviceEventEmitter,
 } from 'react-native';
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
+import {Theme} from "../common/Theme";
 
 const REFRESH_TIME = 1000;
 export default class HomeItem extends Component {
@@ -31,23 +31,59 @@ export default class HomeItem extends Component {
     this.handleData();
   }
 
+  componentDidMount() {
+    this.startTime();
+    AppState.addEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
+    this.stopTime();
+  }
+
+  /**
+   * app 前后台运行时 启动/停止 计时器
+   * @param nextAppState
+   */
+  handleAppStateChange(nextAppState) {
+    if (nextAppState === 'active') {
+      this.startTime();
+    } else {
+      this.stopTime();
+    }
+  }
+
+  /**
+   * 启动计算器刷新
+   */
+  startTime() {
+    this.timer = setInterval(() => this.handleData(), REFRESH_TIME)
+  }
+
+  /**
+   * 停止计时器
+   */
+  stopTime() {
+    this.timer && clearInterval(this.timer);
+  }
+
   /**
    * 处理显示的数据
-   * @param props
    */
   handleData() {
     // pain.todo 刷新优化
     this.data = this.props.data;
-    let date = this.data.timestamp;
-    let isOverdue = DateUtil.isOverdue(date);
+    let timestamp = this.data.timestamp;
+    let isOverdue = DateUtil.isOverdue(timestamp);
+
     this.color = this.data.color || 'white';
     this.stateColor = isOverdue ?
-      global.theme.color.lightCyan : global.theme.color.orange;
-    this.date = DateUtil.getDataAndWeek(date);
+      Theme.color.lightCyan : Theme.color.orange;
     this.name = isOverdue ?
       this.data.name + ' 已经' : '距离 ' + this.data.name + ' 还有';
-    this.time = DateUtil.getBiggestTime(date);
-    this.unit = DateUtil.getBiggestTimeUnit(date);
+    this.date = DateUtil.getDataAndWeek(timestamp);
+    this.time = DateUtil.getBiggestTime(timestamp);
+    this.unit = DateUtil.getBiggestTimeUnit(timestamp);
     this.top = this.data.top;
 
     this.state.name = this.name;
@@ -67,26 +103,6 @@ export default class HomeItem extends Component {
       unit: this.unit,
       top: this.top,
     });
-  }
-
-  componentDidMount() {
-    this.timer = setInterval(() => {
-      this.handleData();
-    }, REFRESH_TIME);
-    AppState.addEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
-    this.timer && clearInterval(this.timer)
-  }
-
-  handleAppStateChange(nextAppState) {
-    if (nextAppState === 'active') {
-      this.timer = setInterval(() => this.handleData(), REFRESH_TIME)
-    } else {
-      this.timer && clearInterval(this.timer);
-    }
   }
 
   /**
@@ -137,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: getWidth(8),
     elevation: 2,
-    shadowColor: '#666666',
+    shadowColor: Theme.color.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: getWidth(8),
