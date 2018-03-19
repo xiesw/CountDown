@@ -13,3 +13,8 @@ export const markColor = [
   Theme.color.green,
   Theme.color.gray,
 ];
+
+// App内广播
+export const appEvent = {
+  dataChange: 'dataChange'
+};

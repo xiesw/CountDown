@@ -19,17 +19,13 @@ export default class DataDao {
 
   static load() {
     return new Promise((resolve, reject) => {
-      console.log('pain.xie', 'start load');
       AsyncStorage.getItem(AsyncStorage_Name, (error, result) => {
         if (error) {
-          console.log('pain.xie', 'load error');
           reject(error);
         } else {
           if (result) {
-            console.log('pain.xie', 'load success');
             resolve(JSON.parse(result));
           } else {
-            console.log('pain.xie', 'load empty');
             reject('gesture password is empty');
           }
         }

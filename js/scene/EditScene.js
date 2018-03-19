@@ -10,6 +10,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  DeviceEventEmitter
 } from 'react-native';
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
@@ -22,6 +23,7 @@ import DataDao from "../dao/DataDao";
 import {NavigationActions} from 'react-navigation'
 import Utils from "../util/Utils";
 import ListDialog from "../component/ListDialog";
+import {appEvent} from "../common/Constants";
 
 export default class EditScene extends BaseScene {
 
@@ -94,7 +96,6 @@ export default class EditScene extends BaseScene {
   }
 
   onChangeRepeatValue(value) {
-    console.log('pain.xie:', 'onChangeRepeatValue:', value);
     this.state.repeat = value;
     this.setState({
       repeat: value
@@ -104,7 +105,6 @@ export default class EditScene extends BaseScene {
   }
 
   onChangeTopValue(value) {
-    console.log('pain.xie:', value);
     this.state.top = value;
     this.setState({
       top: value
@@ -159,6 +159,7 @@ export default class EditScene extends BaseScene {
     }
     DataDao.save(this.sourceData);
     if (this.data) {
+      DeviceEventEmitter.emit(appEvent.dataChange);
       this.props.navigation.goBack();
     } else {
       const resetAction = NavigationActions.reset({
@@ -283,19 +284,6 @@ export default class EditScene extends BaseScene {
         {this.editRender()}
 
         {this.btnRender()}
-
-        <TouchableOpacity
-          onPress={() => this.clear()}
-          style={{
-            backgroundColor: '#2cc693',
-            width: 100,
-            height: 48,
-            alignSelf: 'center',
-            marginTop: 58
-          }}
-        >
-          <Text style={styles.btnText}>清除</Text>
-        </TouchableOpacity>
 
         {this.renderDialog()}
 
