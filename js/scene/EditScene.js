@@ -21,7 +21,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import DataDao from "../dao/DataDao";
 import {NavigationActions} from 'react-navigation'
 import Utils from "../util/Utils";
-import TopOptionDialog from "../component/TopOptionDialog";
+import ListDialog from "../component/ListDialog";
 
 export default class EditScene extends BaseScene {
 
@@ -37,7 +37,8 @@ export default class EditScene extends BaseScene {
       isDatePickerVisible: false,
       color: '',
       date: '',
-      top: false
+      repeat: 'once',
+      top: false,
     };
 
     this.handleData();
@@ -56,7 +57,12 @@ export default class EditScene extends BaseScene {
       this.date = DateUtil.getDataAndWeek(this.timestamp);
       this.state.color = this.data.color;
 
-      this.state.top = this.top
+      this.state.top = this.top;
+      this.state.repeat = this.repeat;
+      this.setState({
+        top: this.top,
+        repeat: this.repeat
+      });
     }
   }
 
@@ -80,20 +86,30 @@ export default class EditScene extends BaseScene {
   }
 
   showRepeatDialog() {
-
+    this.refs.repeatDialog.setVisible(true);
   }
 
   showTopDialog() {
     this.refs.topDialog.setVisible(true);
   }
 
+  onChangeRepeatValue(value) {
+    console.log('pain.xie:', 'onChangeRepeatValue:', value);
+    this.state.repeat = value;
+    this.setState({
+      repeat: value
+    });
+    this.refs.repeat.setValue(repeatMap.get(value));
+
+  }
+
   onChangeTopValue(value) {
-    console.log('pain.xie', 111111, value)
+    console.log('pain.xie:', value);
     this.state.top = value;
     this.setState({
       top: value
     });
-    console.log('pain.xie', 222222, this.state.top);
+    this.refs.top.setValue(this.state.top ? '置顶' : '不置顶');
   }
 
   onChangeColor(color) {
@@ -129,14 +145,14 @@ export default class EditScene extends BaseScene {
       this.data.timestamp = this.timestamp;
       this.data.color = this.state.color;
       this.data.top = this.state.top;
-      this.data.repeat = this.repeat;
+      this.data.repeat = this.state.repeat;
       this.data.name = this.refs.title.getValue();
     } else {
       let data = {};
       data.timestamp = this.timestamp;
       data.color = this.state.color;
       data.top = this.state.top;
-      data.repeat = this.repeat;
+      data.repeat = this.state.repeat;
       data.name = this.refs.title.getValue();
       this.sourceData.push(data);
 
@@ -186,7 +202,7 @@ export default class EditScene extends BaseScene {
         <PickInput
           ref='repeat'
           editable={false}
-          placeholder={'重复'}
+          value={repeatMap.get(this.state.repeat)}
           onPress={() => this.showRepeatDialog()}
           source={require('../../res/image/repeat.png')}
         />
@@ -240,7 +256,14 @@ export default class EditScene extends BaseScene {
           onCancel={() => this.hideDatePicker()}
         />
 
-        <TopOptionDialog
+        <ListDialog
+          ref='repeatDialog'
+          options={repeatMap}
+          value={this.state.repeat}
+          onChange={(value = {}) => this.onChangeRepeatValue(value)}
+        />
+
+        <ListDialog
           ref='topDialog'
           options={topMap}
           value={this.state.top}
@@ -284,6 +307,14 @@ export default class EditScene extends BaseScene {
 const topMap = new Map([
   [true, '置顶'],
   [false, '不置顶']
+]);
+
+const repeatMap = new Map([
+  ['once', '仅一次'],
+  ['everyDay', '每天'],
+  ['everyWeek', '每周'],
+  ['everyMouth', '每月'],
+  ['everyYear', '每年'],
 ]);
 
 const styles = StyleSheet.create({

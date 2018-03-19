@@ -1,6 +1,6 @@
 /**
  * Created by xieshangwu on 2018/3/18.
- * 是否置顶弹窗
+ * 列表选择弹窗
  */
 
 import React, {Component} from 'react';
@@ -16,10 +16,10 @@ import {Dialog} from 'react-native-simple-dialogs';
 import {getWidth} from "../common/Global";
 import {Theme} from "../common/Theme";
 
-export default class TopOptionDialog extends BaseComponent {
+export default class ListDialog extends BaseComponent {
   constructor(props) {
     super(props);
-    this.key = props.value;
+    this.selectedValue = props.value;
     this.optionsMap = props.options;
     this.state = {
       dialogVisible: false
@@ -33,6 +33,7 @@ export default class TopOptionDialog extends BaseComponent {
   }
 
   onPressItem(key) {
+    this.selectedValue = key;
     this.props.onChange(key);
     this.setVisible(false);
   }
@@ -42,7 +43,7 @@ export default class TopOptionDialog extends BaseComponent {
     let viewArray = [];
     this.optionsMap.forEach((value, key, map) => {
 
-      let isSelect = this.key === key;
+      let isSelect = this.selectedValue === key;
       let color = isSelect ? Theme.color.textSelect : Theme.color.textDefault;
       let text = value;
       let length = this.optionsMap.size;
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.color.divide,
     height: 0.5,
     alignSelf: 'center',
-    marginHorizontal: getWidth(30)
+    marginHorizontal: getWidth(30),
+    opacity:0.2
   }
 });
