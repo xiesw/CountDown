@@ -21,7 +21,7 @@ export default class HomeItem extends Component {
     super(props);
     this.state = {
       name: '',
-      color: '',
+      color: 'white',
       stateColor: '',
       date: '',
       time: '',
@@ -40,7 +40,7 @@ export default class HomeItem extends Component {
     this.data = this.props.data;
     let date = this.data.timestamp;
     let isOverdue = DateUtil.isOverdue(date);
-    this.color = this.data.color;
+    this.color = this.data.color || 'white';
     this.stateColor = isOverdue ?
       global.theme.color.lightCyan : global.theme.color.orange;
     this.date = DateUtil.getDataAndWeek(date);

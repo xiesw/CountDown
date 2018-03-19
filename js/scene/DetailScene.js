@@ -32,7 +32,7 @@ export default class DetailScene extends BaseScene {
     this.sourceData = this.props.navigation.state.params.sourceData;
     this.state = {
       name: '',
-      color: '',
+      color: 'white',
       day: '',
       hour: '',
       minute: '',

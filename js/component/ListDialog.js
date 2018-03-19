@@ -49,7 +49,7 @@ export default class ListDialog extends BaseComponent {
       let length = this.optionsMap.size;
 
       viewArray.push(
-        <View>
+        <View key={renderCount}>
           <TouchableOpacity
             style={styles.itemContainer}
             onPress={() => this.onPressItem(key)}

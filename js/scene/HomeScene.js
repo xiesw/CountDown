@@ -93,7 +93,7 @@ export default class HomeScene extends BaseScene {
           ref='list'
           style={styles.list}
           data={this.state.sourceData}
-          keyExtractor={(itemData, index) => index}
+          keyExtractor={(itemData, index) => index + ''}
           renderItem={(itemData) => this.renderItem(itemData)}
         />
         <TouchableOpacity
