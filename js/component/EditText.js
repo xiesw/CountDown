@@ -16,6 +16,7 @@ import {BaseComponent} from './BaseComponent'
 import {ErrorComponent} from './ErrorComponent'
 import {Validate} from './validate/Validate'
 import {KeyboardUtil} from '../util/KeyboardUtil'
+import {Theme} from "../common/Theme";
 
 export default class EditText extends BaseComponent {
   constructor(props) {
@@ -164,7 +165,8 @@ export default class EditText extends BaseComponent {
   divideRender() {
     let style = {
       height: 0.5,
-      backgroundColor:'#C1C1C1',
+      backgroundColor: Theme.color.divide,
+      opacity:0.5,
       marginLeft:75,
       marginRight:32
     };

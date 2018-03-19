@@ -10,21 +10,21 @@ import {
   Dimensions
 } from 'react-native';
 
-export default class Utils{
+export default class Utils {
 
   /**
    * 移除数组里的项
    * @param arr
    * @param item
    */
-  static removeArrayItem(arr, item){
+  static removeArrayItem(arr, item) {
     let length = arr.length;
-    if(length === 0) {
+    if (length === 0) {
       return;
     }
     let index = 0;
-    for(let i = 0; i < length; length ++) {
-      if(arr[i] === item) {
+    for (let i = 0; i < length; i++) {
+      if (arr[i] === item) {
         index = i;
         break;
       }

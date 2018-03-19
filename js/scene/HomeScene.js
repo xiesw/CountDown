@@ -20,6 +20,8 @@ import data from '../data.json';
 import HomeItem from "../component/HomeItem";
 import {getWidth} from "../common/Global";
 import DataDao from "../dao/DataDao";
+import DateUtil from "../util/DateUtil";
+import {appEvent} from "../common/Constants";
 
 export default class HomeScene extends BaseScene {
 
@@ -36,13 +38,36 @@ export default class HomeScene extends BaseScene {
 
   componentDidMount() {
     this.loadData();
+    this.dataChangeListener = DeviceEventEmitter.addListener(appEvent.dataChange, () => {
+      this.loadData();
+    })
+  }
+
+  componentWillUnmount() {
+    this.dataChangeListener && this.dataChangeListener.remove();
   }
 
   loadData() {
     DataDao.load().then(result => {
-      this.setState({
-        sourceData: result
-      })
+      this.handleData(result);
+    })
+  }
+
+  handleData(result) {
+    let sortFun = (obj1, obj2) => {
+      let isOverDue1 = DateUtil.isOverdue(obj1.timestamp);
+      let isOverDue2 = DateUtil.isOverdue(obj2.timestamp);
+      if (obj1.top !== obj2.top) {
+        return obj2.top - obj1.top;
+      } else if (isOverDue1 !== isOverDue2) {
+        return isOverDue1 - isOverDue2;
+      } else {
+        return isOverDue1 ? obj2.timestamp - obj1.timestamp : obj1.timestamp - obj2.timestamp;
+      }
+    };
+    result.sort(sortFun);
+    this.setState({
+      sourceData: result
     })
   }
 
