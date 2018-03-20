@@ -49,6 +49,7 @@ export default class EditText extends BaseComponent {
       return value.toString();
     }
     else {
+      console.log('pain.xie:', 3333,value)
       return value;
     }
   }

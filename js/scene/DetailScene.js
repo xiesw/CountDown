@@ -174,6 +174,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopRightRadius: getWidth(8),
     borderTopLeftRadius: getWidth(8),
+    elevation: 2,
+    shadowColor: Theme.color.shadow,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
   },
   name: {
     fontSize: getWidth(18),
@@ -214,6 +218,7 @@ const styles = StyleSheet.create({
   divide: {
     width: '100%',
     height: 0.5,
+    opacity: 0.3,
     marginTop: getWidth(55),
     backgroundColor: Theme.color.divide,
   },
