@@ -271,14 +271,14 @@
 			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
 			remoteInfo = "third-party";
 		};
-		982722C8205FFF3C00BC2AD8 /* PBXContainerItemProxy */ = {
+		98FB965D2060A17C00D4F0AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
 			remoteInfo = "third-party-tvOS";
 		};
-		982722CA205FFF3C00BC2AD8 /* PBXContainerItemProxy */ = {
+		98FB965F2060A17C00D4F0AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
@@ -502,14 +502,14 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				982722C3205FFF3C00BC2AD8 /* libjsinspector.a */,
-				982722C5205FFF3C00BC2AD8 /* libjsinspector-tvOS.a */,
-				982722C7205FFF3C00BC2AD8 /* libthird-party.a */,
-				982722C9205FFF3C00BC2AD8 /* libthird-party.a */,
-				982722CB205FFF3C00BC2AD8 /* libdouble-conversion.a */,
-				982722CD205FFF3C00BC2AD8 /* libdouble-conversion.a */,
-				982722CF205FFF3C00BC2AD8 /* libprivatedata.a */,
-				982722D1205FFF3C00BC2AD8 /* libprivatedata-tvOS.a */,
+				98FB96582060A17C00D4F0AA /* libjsinspector.a */,
+				98FB965A2060A17C00D4F0AA /* libjsinspector-tvOS.a */,
+				98FB965C2060A17C00D4F0AA /* libthird-party.a */,
+				98FB965E2060A17C00D4F0AA /* libthird-party.a */,
+				98FB96602060A17C00D4F0AA /* libdouble-conversion.a */,
+				98FB96622060A17C00D4F0AA /* libdouble-conversion.a */,
+				98FB96642060A17C00D4F0AA /* libprivatedata.a */,
+				98FB96662060A17C00D4F0AA /* libprivatedata-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -692,7 +692,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = KX74R84EZL;
+						DevelopmentTeam = DLNS3G8AHW;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -973,60 +973,60 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722C3205FFF3C00BC2AD8 /* libjsinspector.a */ = {
+		98FB96582060A17C00D4F0AA /* libjsinspector.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libjsinspector.a;
-			remoteRef = 982722C2205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB96572060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722C5205FFF3C00BC2AD8 /* libjsinspector-tvOS.a */ = {
+		98FB965A2060A17C00D4F0AA /* libjsinspector-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libjsinspector-tvOS.a";
-			remoteRef = 982722C4205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB96592060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722C7205FFF3C00BC2AD8 /* libthird-party.a */ = {
+		98FB965C2060A17C00D4F0AA /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = 982722C6205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB965B2060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722C9205FFF3C00BC2AD8 /* libthird-party.a */ = {
+		98FB965E2060A17C00D4F0AA /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = 982722C8205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB965D2060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722CB205FFF3C00BC2AD8 /* libdouble-conversion.a */ = {
+		98FB96602060A17C00D4F0AA /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = 982722CA205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB965F2060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722CD205FFF3C00BC2AD8 /* libdouble-conversion.a */ = {
+		98FB96622060A17C00D4F0AA /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = 982722CC205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB96612060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722CF205FFF3C00BC2AD8 /* libprivatedata.a */ = {
+		98FB96642060A17C00D4F0AA /* libprivatedata.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libprivatedata.a;
-			remoteRef = 982722CE205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB96632060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		982722D1205FFF3C00BC2AD8 /* libprivatedata-tvOS.a */ = {
+		98FB96662060A17C00D4F0AA /* libprivatedata-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
-			remoteRef = 982722D0205FFF3C00BC2AD8 /* PBXContainerItemProxy */;
+			remoteRef = 98FB96652060A17C00D4F0AA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */ = {
@@ -1211,7 +1211,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = KX74R84EZL;
+				DEVELOPMENT_TEAM = DLNS3G8AHW;
 				INFOPLIST_FILE = CountDown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1219,6 +1219,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sc.CountDown;
 				PRODUCT_NAME = CountDown;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1229,7 +1230,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KX74R84EZL;
+				DEVELOPMENT_TEAM = DLNS3G8AHW;
 				INFOPLIST_FILE = CountDown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1237,6 +1238,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sc.CountDown;
 				PRODUCT_NAME = CountDown;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
