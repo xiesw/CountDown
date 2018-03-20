@@ -1,4 +1,4 @@
-package com.countdown;
+package com.sc.countdown;
 
 import android.app.Application;
 
