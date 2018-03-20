@@ -9,7 +9,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  ScrollView
 } from 'react-native';
 import {getWidth} from "../common/Global"
 import DateUtil from "../util/DateUtil";
@@ -298,15 +299,21 @@ export default class EditScene extends BaseScene {
 
   render() {
     return (
-      <View style={styles.container}>
 
+      <ScrollView
+        bounces={false}
+        overScrollMode="never"
+        style={styles.container}
+        keyboardShouldPersistTaps="handled"
+      >
         {this.editRender()}
 
         {this.btnRender()}
 
         {this.renderDialog()}
 
-      </View>
+      </ScrollView>
+
     );
   }
 }
