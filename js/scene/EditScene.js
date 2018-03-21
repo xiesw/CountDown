@@ -216,16 +216,13 @@ export default class EditScene extends BaseScene {
 
         <PickInput
           ref='date'
-          editable={false}
           value={this.date}
-          placeholder={'选择日期'}
           onPress={() => this.setDatePickerVisible(true)}
           source={require('../../res/image/time.png')}
         />
 
         <PickInput
           ref='repeat'
-          editable={false}
           value={repeatMap.get(this.state.repeat)}
           onPress={() => this.showRepeatDialog()}
           source={require('../../res/image/repeat.png')}
@@ -233,9 +230,7 @@ export default class EditScene extends BaseScene {
 
         <PickInput
           ref='top'
-          editable={false}
           value={topMap.get(this.state.top)}
-          placeholder={'置顶'}
           onPress={() => this.showTopDialog()}
           source={require('../../res/image/top.png')}
         />

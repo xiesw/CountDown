@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import {
   Image,
   View,
+  Text,
   TouchableWithoutFeedback,
 } from 'react-native';
 import EditText from './EditText';
@@ -25,6 +26,13 @@ export default class PickInput extends EditText {
         style={style}
         source={require('../../res/image/more.png')}
       />
+    )
+  }
+
+  editRender() {
+    let value = this.state.value;
+    return (
+      <Text style={this.state.style.input}>{value}</Text>
     )
   }
 
