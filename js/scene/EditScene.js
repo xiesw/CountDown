@@ -29,7 +29,7 @@ import {Theme} from "../common/Theme";
 export default class EditScene extends BaseScene {
 
   static navigationOptions = {
-    headerTitle: '倒计时'
+    headerTitle: '编辑'
   };
 
   constructor(props) {
@@ -218,7 +218,7 @@ export default class EditScene extends BaseScene {
           ref='date'
           value={this.date}
           onPress={() => this.setDatePickerVisible(true)}
-          source={require('../../res/image/time.png')}
+          source={require('../../res/image/date.png')}
         />
 
         {/* pain.todo <PickInput*/}
@@ -273,6 +273,7 @@ export default class EditScene extends BaseScene {
           isVisible={this.state.isDatePickerVisible}
           onConfirm={(date) => this.handleDatePicked(date)}
           onCancel={() => this.setDatePickerVisible(false)}
+          mode='date'
         />
 
         <ListDialog

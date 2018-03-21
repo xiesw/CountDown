@@ -4,6 +4,7 @@
  */
 
 import React, {Component} from 'react';
+import {StatusBar, Platform} from 'react-native';
 import {RouterStack} from "../routers/index"
 import {Theme} from "../common/Theme";
 import {regs} from '../component/validate/Validate';
@@ -21,6 +22,14 @@ export default class App extends Component<Props> {
   init() {
     global.theme = Theme;
     global.validaterRegs = regs;
+    this.setStatusBar();
+  }
+
+  setStatusBar() {
+    if(Platform.OS === "android") {
+      StatusBar.setBarStyle("dark-content");
+      StatusBar.setBackgroundColor('rgba(0,0,0,0.2)');
+    }
   }
 
   render() {

@@ -12,4 +12,9 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "CountDown";
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

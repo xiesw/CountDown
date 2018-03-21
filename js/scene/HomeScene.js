@@ -79,7 +79,7 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
+    this.props.navigation.navigate('SettingScene', {sourceData: this.state.sourceData});
   }
 
   renderItem(itemData) {
