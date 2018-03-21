@@ -1,10 +1,10 @@
 # CountDown
 个人倒计时项目: 使用RN开发 可以同时运行在ios 及 android上
 
-###1. 个人开发工具
+### 1. 个人开发工具
     Macbook Pro + WebStorm + iphone模拟器 + android
 
-###2. 如何运行
+### 2. 如何运行
 ```
 1. 安装node
     brew install node
@@ -29,7 +29,7 @@
     react-native run-android
 ```
 
-###3. 目录结构
+### 3. 目录结构
 ```
 CountDown
     |
@@ -50,13 +50,13 @@ CountDown
         |--startup  启动入口
         |--util     工具类
 ```
-###4. 引用三方组件:
+### 4. 引用三方组件:
 ```
     react-navigation: 导航
     react-native-modal-datetime-picker: 选择时间组件
     react-native-simple-dialogs: dialog组件
 ```
-###5. 数据结构
+### 5. 数据结构
 ```
 {
     "name": 'new year',       //string
@@ -67,10 +67,11 @@ CountDown
 }
 ```
 
-###6. app预览:
+### 6. app预览:   
+
 <img src="http://ovxz7mlox.bkt.clouddn.com/Group.png" width="640"/>
 
-###7. todo:
+### 7. todo:
 ```
     1.0
         基本功能   ok
