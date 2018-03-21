@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script>
-      console.log('pain.xie:', /^\s*$/.test(" aa "));
-      console.log('pain.xie:', /^\s*$/.test("aa"));
-      console.log('pain.xie:', /^\s*$/.test("a a"));
-      console.log('pain.xie:', /^\s*$/.test(""));
-      console.log('pain.xie:', /^\s*$/.test(" "));
-      console.log('pain.xie:', /^\s*$/.test("\t"));
+      console.log('pain.xie:', /.*\S+.*$/.test(" aa "));
+      console.log('pain.xie:', /.*\S+.*$/.test("aa"));
+      console.log('pain.xie:', /.*\S+.*$/.test("a a"));
+      console.log('pain.xie:', /.*\S+.*$/.test(""));
+      console.log('pain.xie:', /.*\S+.*$/.test(" "));
+      console.log('pain.xie:', /.*\S+.*$/.test("\t"));
+
       console.log('pain.xie:', 222222);
 
       console.log('pain.xie:', /^[^\s*]$/.test(" aa "));

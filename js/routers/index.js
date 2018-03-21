@@ -42,7 +42,7 @@ function getRouteParams(navigation) {
   return {};
 }
 
-
+// 获取导航栏配置
 function getNavigationOptions(navigation) {
   const {params = {}, routeName} = navigation.state;
   const {

@@ -48,7 +48,7 @@ export default class DetailScene extends BaseScene {
 
     this.name = isOverdue ?
       this.data.name + ' 已经' : '距离 ' + this.data.name + ' 还有';
-    this.color = this.data.color || Theme.color.lightBlue;
+    this.color = this.data.color || (isOverdue ? Theme.color.lightCyan : Theme.color.orange);
     this.day = DateUtil.getDaysCount(timestamp);
     this.hour = DateUtil.getHour(timestamp);
     this.minute = DateUtil.getMinute(timestamp);
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   day: {
-    color:'black',
+    color: 'black',
     fontSize: getWidth(72),
     marginRight: getWidth(12)
   },

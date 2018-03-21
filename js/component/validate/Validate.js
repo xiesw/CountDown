@@ -5,7 +5,7 @@
 
 export const regs = {
   'title': {
-    'reg': /^\S+$/,
+    'reg': /.*\S+.*$/,
     'errorMessage': '请输入标题'
   },
   'mobile': {

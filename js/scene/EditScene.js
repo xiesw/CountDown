@@ -221,12 +221,12 @@ export default class EditScene extends BaseScene {
           source={require('../../res/image/time.png')}
         />
 
-        <PickInput
-          ref='repeat'
-          value={repeatMap.get(this.state.repeat)}
-          onPress={() => this.showRepeatDialog()}
-          source={require('../../res/image/repeat.png')}
-        />
+        {/* pain.todo <PickInput*/}
+          {/*ref='repeat'*/}
+          {/*value={repeatMap.get(this.state.repeat)}*/}
+          {/*onPress={() => this.showRepeatDialog()}*/}
+          {/*source={require('../../res/image/repeat.png')}*/}
+        {/*/>*/}
 
         <PickInput
           ref='top'

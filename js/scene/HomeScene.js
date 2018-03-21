@@ -54,7 +54,7 @@ export default class HomeScene extends BaseScene {
   }
 
   /**
-   * 处理数据
+   * 处理数据(排序)
    * @param result
    */
   handleData(result) {
