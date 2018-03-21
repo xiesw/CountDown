@@ -68,9 +68,7 @@ CountDown
 ```
 
 ###6. app预览:
-![image](http://ovxz7mlox.bkt.clouddn.com/cd2.png)
-![image](http://ovxz7mlox.bkt.clouddn.com/cd1.png)
-![image](http://ovxz7mlox.bkt.clouddn.com/cd3.png)
+<img src="http://ovxz7mlox.bkt.clouddn.com/cd1.png" width="640"/>
 
 ###7. todo:
 ```
