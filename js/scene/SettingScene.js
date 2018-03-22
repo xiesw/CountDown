@@ -9,6 +9,8 @@ import {
   View
 } from 'react-native';
 import BaseScene from "./BaseScene";
+import DescribeView from "../component/setting/DescribeView";
+import SelectItem, {Type} from "../component/setting/SelectItem";
 
 export default class SettingScene extends BaseScene {
 
@@ -20,11 +22,61 @@ export default class SettingScene extends BaseScene {
     super(props);
   }
 
+  onPressDatetime() {
+
+  }
+
+  onPressFrequency() {
+
+  }
+
+  onPressBackup() {
+
+  }
+
+  onPressRestore() {
+
+  }
+
+  onPressAbout() {
+    this.props.navigation.navigate('AboutScene');
+  }
+
+
   render() {
     return (
-       <View style={styles.container}>
+      <View style={styles.container}>
+        <DescribeView text='时间设置'/>
+        <SelectItem
+          text='输入选择时间:'
+          type={Type.top}
+          onPress={() => this.onPressDatetime()}
+        />
 
-       </View>
+        <SelectItem
+          text='时间刷新频率:'
+          type={Type.bottom}
+          onPress={() => this.onPressFrequency()}
+        />
+        <DescribeView text='备份与恢复'/>
+        <SelectItem
+          text='备份数据'
+          type={Type.top}
+          onPress={() => this.onPressBackup()}
+        />
+
+        <SelectItem
+          text='恢复数据'
+          type={Type.bottom}
+          onPress={() => this.onPressRestore()}
+        />
+        <DescribeView text='关于'/>
+        <SelectItem
+          text='关于'
+          type={Type.single}
+          onPress={() => this.onPressAbout()}
+        />
+      </View>
     );
   }
 }

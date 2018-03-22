@@ -71,6 +71,11 @@ CountDown
 
 <img src="http://ovxz7mlox.bkt.clouddn.com/Group.png" width="640"/>
 
+app: 1.1完成后提供  
+note:   
+1. app时间系统为本机系统   
+2. 卸载app将会丢失数据,1.1将添加备份功能
+
 ### 7. todo:
 ```
     1.0
@@ -80,17 +85,17 @@ CountDown
         ui细节整理 ok 
         bug去掉颜色首页 ok
         ios键盘收入 ok
-    2.0
-        空白提示
-        重复功能
-        沉沁式状态栏
-        设置时间组件
+    1.1
+        空白提示 ok
+        开源文档 ok
+        沉沁式状态栏 --
         设置页面
         关于页面
         备份系统
-        开源文档
-        统计系统
+        重复功能
+        设置时间组件
         walle打包
+        统计系统
         多渠道统计
         打包上架
         提高:   
