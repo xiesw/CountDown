@@ -36,8 +36,8 @@ export default class AboutScene extends BaseScene {
           style={styles.image}
           source={require('../../res/image/timer.png')}
         />
-        <Text style={styles.title}>CountDown</Text>
-        <Text style={styles.version}>{`version:1.1.0`}</Text>
+        <Text style={styles.title}>{global.appInfo.appName}</Text>
+        <Text style={styles.version}>{`version:${global.appInfo.version}`}</Text>
         <Text style={styles.des}>{'开源的倒计时app项目\n' + '同时适用于ios/android平台'}</Text>
 
         <View style={styles.card}>

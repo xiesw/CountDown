@@ -21,7 +21,7 @@ public class CustomerPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> list = new ArrayList<>();
-        list.add(new StatusBarPlus(reactContext));
+        list.add(new RNAppUtil(reactContext));
         return list;
     }
 
