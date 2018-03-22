@@ -9,7 +9,8 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Linking
 } from 'react-native';
 import BaseScene from "./BaseScene";
 import {getWidth} from "../common/Global";
@@ -26,7 +27,11 @@ export default class AboutScene extends BaseScene {
   }
 
   goGitHub() {
-
+    let url = 'https://github.com/xiesw/CountDown';
+    Linking.openURL(url)
+      .catch((err)=>{
+        console.log('An error occurred', err);
+      });
   }
 
   render() {
@@ -38,7 +43,7 @@ export default class AboutScene extends BaseScene {
         />
         <Text style={styles.title}>{global.appInfo.appName}</Text>
         <Text style={styles.version}>{`version:${global.appInfo.version}`}</Text>
-        <Text style={styles.des}>{'开源的倒计时app项目\n' + '同时适用于ios/android平台'}</Text>
+        <Text style={styles.des}>{'开源的倒计时app项目\n' + '采用ReactNative开发,同时适用于ios/android平台'}</Text>
 
         <View style={styles.card}>
           <Text style={styles.contact}>联系方式:</Text>

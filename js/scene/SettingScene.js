@@ -11,6 +11,7 @@ import {
 import BaseScene from "./BaseScene";
 import DescribeView from "../component/setting/DescribeView";
 import SelectItem, {Type} from "../component/setting/SelectItem";
+import * as Keychain from 'react-native-keychain';
 
 export default class SettingScene extends BaseScene {
 
@@ -31,11 +32,14 @@ export default class SettingScene extends BaseScene {
   }
 
   onPressBackup() {
-
+    Keychain.setGenericPassword('ios', 'fuckd');
   }
 
   onPressRestore() {
-
+    Keychain.getGenericPassword()
+      .then(result => {
+        console.log('pain.xie', result)
+      })
   }
 
   onPressAbout() {
