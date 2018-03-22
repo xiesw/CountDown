@@ -155,6 +155,21 @@ export default class DateUtil {
     let newDate = new Date(year + '/' + month + '/' + day);
     return newDate.getTime();
   }
+
+  /**
+   * 获取今年剩余时间百分比
+   * @returns {number}
+   */
+  static getRemainOfYear() {
+    let date = new Date();
+    let year = date.getFullYear();
+
+    let d = new Date(`${year}/1/1`);
+    let passTime = Date.now() - d.getTime();
+
+    return (1 - (passTime / (365 * 24 * 60 * 60 * 1000))) * 100;
+  }
+
 }
 
 const weekArray = ['日', '一', '二', '三', '四', '五', '六',];

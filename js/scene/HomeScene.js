@@ -11,6 +11,7 @@ import {
   DeviceEventEmitter,
   FlatList,
   Image,
+  Text
 } from 'react-native';
 import BaseScene from "./BaseScene";
 import HomeItem from "../component/HomeItem";
@@ -19,12 +20,25 @@ import DataDao from "../dao/DataDao";
 import DateUtil from "../util/DateUtil";
 import {appEvent} from "../common/Constants";
 import {Theme} from "../common/Theme";
+import YearProgressView from "../component/YearProgressView";
 
 export default class HomeScene extends BaseScene {
 
-  static navigationOptions = {
-    headerTitle: '倒计时'
-  };
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: '倒计时',
+    headerRight: (
+      <TouchableOpacity
+        onPress={() => {
+          HomeScene.goSettingScene(navigation);
+        }}
+      >
+        <Image
+          style={{marginRight: 20}}
+          source={require('../../res/image/setting.png')}
+        />
+      </TouchableOpacity>
+    )
+  });
 
   constructor(props) {
     super(props);
@@ -75,24 +89,43 @@ export default class HomeScene extends BaseScene {
     })
   }
 
+  static goSettingScene(navigation) {
+    navigation.navigate('SettingScene');
+  }
+
   /**
    * 添加新条目
    */
   add() {
-    this.props.navigation.navigate('SettingScene', {sourceData: this.state.sourceData});
+    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
   }
 
   renderItem(itemData) {
-    return <HomeItem
-      sourceData={this.state.sourceData}
-      data={itemData.item}
-      {...this.props}
-    />
+    return (
+      <HomeItem
+        sourceData={this.state.sourceData}
+        data={itemData.item}
+        {...this.props}
+      />
+    )
+  }
+
+  renderEmptyView() {
+    return ( this.state.sourceData.length === 0
+        ? <View style={styles.emptyContainer}>
+          <YearProgressView/>
+          <Text style={styles.note}>点击右下角按钮添加倒计时项目</Text>
+        </View>
+        : null
+    );
+
   }
 
   render() {
     return (
       <View style={styles.container}>
+        {this.renderEmptyView()}
+
         <FlatList
           ref='list'
           style={styles.list}
@@ -100,6 +133,7 @@ export default class HomeScene extends BaseScene {
           keyExtractor={(itemData, index) => index + ''}
           renderItem={(itemData) => this.renderItem(itemData)}
         />
+
         <TouchableOpacity
           style={styles.imageContainer}
           onPress={() => this.add()}
@@ -116,9 +150,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
-    flex: 1,
     marginTop: 20,
   },
+
+  emptyContainer: {
+    marginTop: getWidth(100),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  note: {
+    marginTop: getWidth(32),
+    color: Theme.color.textGray,
+    fontSize: 18
+  },
+
   imageContainer: {
     position: 'absolute',
     right: getWidth(36),
@@ -128,5 +173,6 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
     shadowRadius: getWidth(2),
-  }
+  },
+
 });

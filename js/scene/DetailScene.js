@@ -21,7 +21,7 @@ const REFRESH_TIME = 57;
 export default class DetailScene extends BaseScene {
 
   static navigationOptions = {
-    headerTitle: '倒计时',
+    headerTitle: '详情',
   };
 
   constructor(props) {

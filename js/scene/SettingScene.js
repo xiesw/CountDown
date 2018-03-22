@@ -11,6 +11,11 @@ import {
 import BaseScene from "./BaseScene";
 
 export default class SettingScene extends BaseScene {
+
+  static navigationOptions = {
+    headerTitle: '设置',
+  };
+
   constructor(props) {
     super(props);
   }
