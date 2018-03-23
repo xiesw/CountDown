@@ -21,12 +21,15 @@ import DateUtil from "../util/DateUtil";
 import {appEvent} from "../common/Constants";
 import {Theme} from "../common/Theme";
 import YearProgressView from "../component/YearProgressView";
-import Api from "../net/Api";
+import {inject, observer} from 'mobx-react';
+import Stores from '../stores';
 
+@inject('homeStore')
+@observer
 export default class HomeScene extends BaseScene {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: '倒计时',
+    headerTitle: 'xx',
     headerRight: (
       <TouchableOpacity
         onPress={() => {
@@ -98,7 +101,8 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
+    //this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
+    Stores.navigation.navigate('SettingScene');
   }
 
   renderItem(itemData) {
@@ -125,7 +129,7 @@ export default class HomeScene extends BaseScene {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderEmptyView()}
+        {/*{this.renderEmptyView()}*/}
 
         <FlatList
           ref='list'

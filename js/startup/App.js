@@ -6,8 +6,11 @@
 import React, {Component} from 'react';
 import {StatusBar, Platform} from 'react-native';
 import {RouterStack} from "../routers/index"
-
+import Stores from "../stores";
 import Global from "../common/Global";
+import {observer, Provider} from 'mobx-react'
+import {addNavigationHelpers} from "react-navigation";
+import {useStrict, toJS} from 'mobx';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -16,13 +19,28 @@ export default class App extends Component<Props> {
     super(props);
     // 关闭黄色警告
     console.disableYellowBox = true;
+    this.navigationStore = Stores.navigation;
     Global.init();
   }
 
   render() {
+    const {...storesArray} = Stores;
     return (
-      <RouterStack/>
+      <Provider {...storesArray}>
+        <RouterStack
+          navigation={
+            addNavigationHelpers({
+              dispatch: this.navigationStore.dispatch,
+              state: toJS(this.navigationStore.navigationState),
+              addListener: () => {
+              }
+            })}
+        />
+      </Provider>
+
     );
   }
+
+
 }
 
