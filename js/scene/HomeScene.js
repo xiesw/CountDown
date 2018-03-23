@@ -21,6 +21,7 @@ import DateUtil from "../util/DateUtil";
 import {appEvent} from "../common/Constants";
 import {Theme} from "../common/Theme";
 import YearProgressView from "../component/YearProgressView";
+import Api from "../net/Api";
 
 export default class HomeScene extends BaseScene {
 

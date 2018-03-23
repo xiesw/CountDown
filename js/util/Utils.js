@@ -11,18 +11,12 @@ export default class Utils {
    * @param item
    */
   static removeArrayItem(arr, item) {
-    let length = arr.length;
-    if (length === 0) {
-      return;
+    if (!arr) {
+      return
     }
-    let index = 0;
-    for (let i = 0; i < length; i++) {
-      if (arr[i] === item) {
-        index = i;
-        break;
-      }
-    }
-    if(index < length) {
+    let index = arr.indexOf(item);
+
+    if (index !== -1) {
       arr.splice(index, 1);
     }
   }

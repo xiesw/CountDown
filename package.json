@@ -12,13 +12,14 @@
     "react-native-circular-progress": "^0.2.0",
     "react-native-keychain": "^3.0.0-rc.3",
     "react-native-modal-datetime-picker": "^4.13.0",
-    "react-native-progress-circle": "^2.0.0",
     "react-native-simple-dialogs": "^0.3.1",
     "react-navigation": "^1.5.1"
   },
   "devDependencies": {
     "babel-jest": "22.4.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-react-native": "4.0.0",
+    "babel-preset-react-native-stage-0": "^1.0.1",
     "jest": "22.4.2",
     "react-test-renderer": "16.3.0-alpha.1"
   },
