@@ -55,6 +55,9 @@ CountDown
     react-navigation: 导航
     react-native-modal-datetime-picker: 选择时间组件
     react-native-simple-dialogs: dialog组件
+    react-native-keychain: ios keychain 存储
+    mobx:  简单、可扩展的状态管理
+
 ```
 ### 5. 数据结构
 ```
