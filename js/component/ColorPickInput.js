@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import EditText from './EditText';
 import {markColor} from "../common/Constants"
-import {getWidth} from "../common/Global";
+import {getWidth} from "../util/Utils";
 
 export default class ColorPickInput extends EditText {
   constructor(props) {

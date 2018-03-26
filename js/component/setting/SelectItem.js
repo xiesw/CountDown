@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {BaseComponent} from "../BaseComponent";
 import {Theme} from "../../common/Theme";
-import {getWidth} from "../../common/Global";
+import {getWidth} from "../../util/Utils";
 
 export default class SelectItem extends BaseComponent {
 

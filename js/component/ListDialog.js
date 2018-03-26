@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {BaseComponent} from "./BaseComponent";
 import {Dialog} from 'react-native-simple-dialogs';
-import {getWidth} from "../common/Global";
+import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
 
 export default class ListDialog extends BaseComponent {

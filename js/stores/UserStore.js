@@ -23,6 +23,11 @@ export default class UserStore {
     this.password = '';
   }
 
+  @computed
+  get hasLogin() {
+    return this.username || this.password;
+  }
+
   /**
    * 加载用户信息
    * @returns {Promise}
@@ -61,7 +66,7 @@ export default class UserStore {
   /**
    * 移除用户信息
    */
-  @action()
+  @action
   removeInfo() {
     this.clear();
     AsyncStorage.removeItem(AsyncStorage_Name);

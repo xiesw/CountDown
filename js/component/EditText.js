@@ -75,6 +75,10 @@ export default class EditText extends BaseComponent {
     return validate.result;
   }
 
+  showErrorMessage(message) {
+    this.refs.errorComponent.show(message);
+  }
+
   getStyle() {
     return {
       container: {

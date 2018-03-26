@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import BaseScene from "./BaseScene";
 import HomeItem from "../component/HomeItem";
-import {getWidth} from "../common/Global";
+import {getWidth} from "../util/Utils";
 import DataDao from "../dao/DataDao";
 import DateUtil from "../util/DateUtil";
 import {appEvent} from "../common/Constants";

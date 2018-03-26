@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {BaseComponent} from "../BaseComponent";
 import {Theme} from "../../common/Theme";
-import {getWidth} from "../../common/Global";
+import {getWidth} from "../../util/Utils";
 
 export default class DescribeView extends BaseComponent {
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   container: {
     color: Theme.color.textGray,
     fontSize:12,
-    marginLeft:getWidth(18),
-    marginVertical:(10)
+    marginLeft: getWidth(18),
+    marginVertical:getWidth(10)
   },
 });

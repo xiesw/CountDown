@@ -14,9 +14,7 @@ import {Theme} from "./Theme";
 import {regs} from '../component/validate/Validate';
 import {EnvHost} from "../net/Env";
 import bmob from '../net/bmob/bmob';
-
-const BASE_WIN_HEIGHT = 667;
-const BASE_WIN_WIDTH = 375;
+import Stores from '../stores/index';
 
 global.evn = {
   isDebug: true,
@@ -31,17 +29,6 @@ global.appInfo = {
   brand: 'iphone',
   deviceId: '',
 };
-/** 根据实际屏幕尺寸转换对应的像素高度 */
-export const getHeight = h => {
-  let {height} = Dimensions.get('window');
-  return h * (height / BASE_WIN_HEIGHT);
-};
-
-/** 根据实际屏幕尺寸转换对应的像素宽度 */
-export const getWidth = w => {
-  let {width} = Dimensions.get('window');
-  return w * (width / BASE_WIN_WIDTH);
-};
 
 export default class Global {
 
@@ -49,6 +36,7 @@ export default class Global {
     global.theme = Theme;
     global.validaterRegs = regs;
     this.setStatusBar();
+    this.loadUserInfo();
     this.loadAppInfo();
     this.initialEnv();
     this.initBmob();
@@ -63,6 +51,13 @@ export default class Global {
       StatusBar.setBarStyle("dark-content");
       StatusBar.setBackgroundColor('rgba(0,0,0,0.2)');
     }
+  }
+
+  /**
+   * 加载用户信息
+   */
+  static loadUserInfo() {
+    Stores.userStore.loadInfo();
   }
 
   /**

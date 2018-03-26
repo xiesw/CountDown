@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   AppState,
 } from 'react-native';
-import {getWidth} from "../common/Global"
+import {getWidth} from "../util/Utils"
 import DateUtil from "../util/DateUtil";
 import {Theme} from "../common/Theme";
 

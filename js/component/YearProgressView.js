@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {BaseComponent} from "./BaseComponent";
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {getWidth} from "../common/Global";
+import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
 import DateUtil from "../util/DateUtil";
 

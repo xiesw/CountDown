@@ -32,6 +32,10 @@ export const Theme = {
     // 阴影颜色
     shadow: '#666666',
 
+    // 按钮颜色
+    btnBlue: '#618FE7',
+    btnRed: '#FE3824',
+
     // 待使用颜色
     lightOrange: '#FA876B',
     lightGreen: '#8DC64A',

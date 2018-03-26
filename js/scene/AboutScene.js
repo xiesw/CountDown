@@ -13,7 +13,7 @@ import {
   Linking
 } from 'react-native';
 import BaseScene from "./BaseScene";
-import {getWidth} from "../common/Global";
+import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
 
 export default class AboutScene extends BaseScene {

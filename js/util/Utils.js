@@ -3,7 +3,25 @@
  * 简单的工具
  */
 
-import {Platform} from 'react-native';
+import {
+  Dimensions,
+  Platform,
+} from 'react-native';
+
+const BASE_WIN_HEIGHT = 667;
+const BASE_WIN_WIDTH = 375;
+
+/** 根据实际屏幕尺寸转换对应的像素高度 */
+export const getHeight = h => {
+  let {height} = Dimensions.get('window');
+  return h * (height / BASE_WIN_HEIGHT);
+};
+
+/** 根据实际屏幕尺寸转换对应的像素宽度 */
+export const getWidth = w => {
+  let {width} = Dimensions.get('window');
+  return w * (width / BASE_WIN_WIDTH);
+};
 
 export default class Utils {
 

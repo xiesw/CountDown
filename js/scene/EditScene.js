@@ -12,7 +12,7 @@ import {
   DeviceEventEmitter,
   ScrollView
 } from 'react-native';
-import {getWidth} from "../common/Global"
+import {getWidth} from "../util/Utils"
 import DateUtil from "../util/DateUtil";
 import BaseScene from "./BaseScene";
 import NormalEditText from '../component/NormalEditText';
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: getWidth(2),
-    backgroundColor: '#FE3824',
+    backgroundColor: Theme.color.btnRed,
     elevation: 2,
     shadowColor: Theme.color.shadow,
     shadowOffset: {width: 0, height: 2},
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: getWidth(2),
-    backgroundColor: '#618FE7',
+    backgroundColor: Theme.color.btnBlue,
     elevation: 2,
     shadowColor: Theme.color.shadow,
     shadowOffset: {width: 0, height: 2},
@@ -372,6 +372,5 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: getWidth(18),
-    color: 'white'
   }
 });
