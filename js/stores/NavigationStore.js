@@ -3,13 +3,13 @@
  * 导航栏数据
  */
 
-import { observable, action, runInAction, reaction, autorun, computed } from 'mobx';
+import {observable, action, runInAction, reaction, autorun, computed} from 'mobx';
 import {
   DeviceEventEmitter,
   Keyboard
 } from 'react-native';
-import { RouterStack } from '../routers'
-import { NavigationActions } from 'react-navigation'
+import {RouterStack} from '../routers'
+import {NavigationActions} from 'react-navigation'
 
 //返回当前所在路由
 export const getCurrentRoute = (state) => {
@@ -47,7 +47,7 @@ export default class NavigationStore {
     ]
   };
 
-  goBack(param = { key: null }) {
+  goBack(param = {key: null}) {
     if (param.hasOwnProperty('routeName')) {
       let routers = [].slice.call(this.navigationState.routes);
       let find = false;
@@ -87,15 +87,11 @@ export default class NavigationStore {
     );
   }
 
-
-  @action dispatch = (action, stackNavState = true) => {
-
-    console.log('pain.xie:', action);
-
-    const previousNavState = stackNavState ? this.navigationState : null;
-    return (RouterStack.router.getStateForAction(
+  @action
+  dispatch(action) {
+    return (this.navigationState = RouterStack.router.getStateForAction(
       action,
-      previousNavState
+      this.navigationState
     ));
   };
 }

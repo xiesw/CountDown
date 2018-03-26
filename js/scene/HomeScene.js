@@ -94,6 +94,7 @@ export default class HomeScene extends BaseScene {
   }
 
   static goSettingScene(navigation) {
+    console.log('pain.xie:', navigation);
     navigation.navigate('SettingScene');
   }
 
@@ -101,8 +102,8 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    //this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
-    Stores.navigation.navigate('SettingScene');
+    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
+    //Stores.navigation.navigate({routeName:'SettingScene'});
   }
 
   renderItem(itemData) {
@@ -129,7 +130,7 @@ export default class HomeScene extends BaseScene {
   render() {
     return (
       <View style={styles.container}>
-        {/*{this.renderEmptyView()}*/}
+        {this.renderEmptyView()}
 
         <FlatList
           ref='list'

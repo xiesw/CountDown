@@ -28,17 +28,19 @@ export default class App extends Component<Props> {
     return (
       <Provider {...storesArray}>
         <RouterStack
-          navigation={
-            addNavigationHelpers({
-              dispatch: this.navigationStore.dispatch,
-              state: toJS(this.navigationStore.navigationState),
-              addListener: () => {
-              }
-            })}
+
         />
       </Provider>
 
     );
+
+  //   navigation={
+  //     addNavigationHelpers({
+  //                            dispatch: this.navigationStore.dispatch,
+  //     state: toJS(this.navigationStore.navigationState),
+  //     addListener: () => {
+  //   }
+  // })}
   }
 
 
