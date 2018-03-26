@@ -9,6 +9,9 @@ import EditScene from "../scene/EditScene";
 import DetailScene from "../scene/DetailScene";
 import SettingScene from "../scene/SettingScene";
 import AboutScene from "../scene/AboutScene";
+import BackupScene from "../scene/BackupScene";
+import RestoreScene from "../scene/RestoreScene";
+import LoginScene from "../scene/LoginScene";
 
 
 // 默认的导航栏样式
@@ -68,6 +71,9 @@ const RouterStack = StackNavigator(
     EditScene: {screen: EditScene},
     SettingScene: {screen: SettingScene},
     AboutScene: {screen: AboutScene},
+    BackupScene: {screen: BackupScene},
+    RestoreScene: {screen: RestoreScene},
+    LoginScene: {screen: LoginScene},
   },
   {
     navigationOptions: ({navigation}) => getNavigationOptions(navigation),

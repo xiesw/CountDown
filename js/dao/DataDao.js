@@ -43,12 +43,5 @@ export default class DataDao {
     AsyncStorage.setItem(AsyncStorage_Name, JSON.stringify(data));
   }
 
-  /**
-   * 清除所有数据
-   * @returns {*|Promise}
-   */
-  static clear() {
-    return AsyncStorage.clear();
-  }
 }
 

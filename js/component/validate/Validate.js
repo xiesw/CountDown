@@ -8,6 +8,14 @@ export const regs = {
     'reg': /.*\S+.*$/,
     'errorMessage': '请输入标题'
   },
+  'username': {
+    'reg': /^\S+$/,
+    'errorMessage': '请输入用户名'
+  },
+  'password': {
+    'reg': /^\S+$/,
+    'errorMessage': '请输入验证码'
+  },
   'mobile': {
     'reg': /^1[3|4|5|7|8][0-9]\d{8}$/,
     'errorMessage': '请输入正确的手机号码'

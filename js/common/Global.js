@@ -13,6 +13,7 @@ import {
 import {Theme} from "./Theme";
 import {regs} from '../component/validate/Validate';
 import {EnvHost} from "../net/Env";
+import bmob from '../net/bmob/bmob';
 
 const BASE_WIN_HEIGHT = 667;
 const BASE_WIN_WIDTH = 375;
@@ -50,6 +51,7 @@ export default class Global {
     this.setStatusBar();
     this.loadAppInfo();
     this.initialEnv();
+    this.initBmob();
   }
 
   /**
@@ -100,5 +102,16 @@ export default class Global {
     };
   }
 
-  static getHost = (key) => global.env.hosts[key];
+  static getHost(key) {
+    return global.env.hosts[key];
+  };
+
+  /**
+   * 初始化比目
+   */
+  static initBmob() {
+    // 测试环境数据库
+    bmob.Bmob.initialize('2fc5489d6682bfb17ad3a7c62156afd0', '9c7465e3f2ae21010850c4594f354b72');
+  }
+
 }

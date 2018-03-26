@@ -3,6 +3,8 @@
  * 简单的工具
  */
 
+import {Platform} from 'react-native';
+
 export default class Utils {
 
   /**
@@ -20,5 +22,13 @@ export default class Utils {
       arr.splice(index, 1);
     }
   }
+
+  /**
+   * 是否是Android
+   */
+  static isAndroid() {
+    return Platform.OS === 'android';
+  }
+
 }
 

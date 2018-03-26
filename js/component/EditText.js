@@ -92,7 +92,7 @@ export default class EditText extends BaseComponent {
       },
       input: {
         flex: 1,
-        fontSize: 18,
+        fontSize: 16,
         color: Theme.color.textDefault,
         borderWidth: 0,
         paddingLeft: 0,

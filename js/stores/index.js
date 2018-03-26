@@ -5,16 +5,18 @@
 import HomeStore from "./HomeStore";
 import SettingScene from "../scene/SettingScene";
 import NavigationStore from "./NavigationStore";
+import UserStore from "./UserStore";
 
 class Stores {
   constructor() {
     this.navigation = new NavigationStore(this);
     this.homeStore = new HomeStore(this);
     this.settingStore = new SettingScene(this);
+    this.userStore = new UserStore(this);
   }
 
   clearStores() {
-
+    this.userStore.clear();
   }
 }
 

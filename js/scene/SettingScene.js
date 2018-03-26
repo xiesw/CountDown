@@ -11,7 +11,7 @@ import {
 import BaseScene from "./BaseScene";
 import DescribeView from "../component/setting/DescribeView";
 import SelectItem, {Type} from "../component/setting/SelectItem";
-import * as Keychain from 'react-native-keychain';
+import bmob from '../net/bmob/bmob';
 
 export default class SettingScene extends BaseScene {
 
@@ -32,14 +32,21 @@ export default class SettingScene extends BaseScene {
   }
 
   onPressBackup() {
-    Keychain.setGenericPassword('ios', 'fuckd');
+    //this.props.navigation.navigate('BackupScene');
+    let User = bmob.Bmob.Object.extend("_User");
+    let _user = new User();
+    _user.set("username", 'xieshangwu').set("password", 'xie7561331');
+    _user.save(null, {
+      success: (object) => {
+      },
+      error: function (error) {
+        alert("异常：" + error.message);
+      }
+    })
   }
 
   onPressRestore() {
-    Keychain.getGenericPassword()
-      .then(result => {
-        console.log('pain.xie', result)
-      })
+    this.props.navigation.navigate('RestoreScene');
   }
 
   onPressAbout() {

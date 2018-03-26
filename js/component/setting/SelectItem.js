@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'black',
     marginVertical: getWidth(13),
-    fontSize: getWidth(18)
+    fontSize: getWidth(16)
   }
 });
 
