@@ -97,7 +97,6 @@ note:
         用户系统 ok
         android 回退栈 ok
         备份系统    
-        重复功能
         设置时间组件 --
         walle打包
         统计系统
@@ -106,6 +105,7 @@ note:
         提高:   
             引入labal, mobx ok
     1.2 
+        重复功能
         弹窗
         loading
 ```

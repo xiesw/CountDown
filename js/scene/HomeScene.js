@@ -16,15 +16,14 @@ import {
 import BaseScene from "./BaseScene";
 import HomeItem from "../component/HomeItem";
 import {getWidth} from "../util/Utils";
-import DataDao from "../dao/DataDao";
-import DateUtil from "../util/DateUtil";
 import {appEvent} from "../common/Constants";
 import {Theme} from "../common/Theme";
 import YearProgressView from "../component/YearProgressView";
 import {inject, observer} from 'mobx-react';
+import {useStrict, toJS} from 'mobx';
 import Stores from '../stores';
 
-@inject('homeStore')
+@inject('dataStore')
 @observer
 export default class HomeScene extends BaseScene {
 
@@ -47,51 +46,17 @@ export default class HomeScene extends BaseScene {
 
   constructor(props) {
     super(props);
-    this.state = ({
-      sourceData: []
-    });
   }
 
   componentDidMount() {
     this.loadData();
-    this.dataChangeListener = DeviceEventEmitter.addListener(appEvent.dataChange, () => {
-      this.loadData();
-    })
-  }
-
-  componentWillUnmount() {
-    this.dataChangeListener && this.dataChangeListener.remove();
   }
 
   /**
    * 加载数据
    */
   loadData() {
-    DataDao.load().then(result => {
-      this.handleData(result);
-    })
-  }
-
-  /**
-   * 处理数据(排序)
-   * @param result
-   */
-  handleData(result) {
-    let sortFun = (obj1, obj2) => {
-      let isOverDue1 = DateUtil.isOverdue(obj1.timestamp);
-      let isOverDue2 = DateUtil.isOverdue(obj2.timestamp);
-      if (obj1.top !== obj2.top) {
-        return obj2.top - obj1.top;
-      } else if (isOverDue1 !== isOverDue2) {
-        return isOverDue1 - isOverDue2;
-      } else {
-        return isOverDue1 ? obj2.timestamp - obj1.timestamp : obj1.timestamp - obj2.timestamp;
-      }
-    };
-    result.sort(sortFun);
-    this.setState({
-      sourceData: result
-    })
+    this.props.dataStore.load();
   }
 
   static goSettingScene() {
@@ -102,13 +67,13 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
+    Stores.dataStore.currentItemData = {};
+    this.props.navigation.navigate('EditScene',);
   }
 
   renderItem(itemData) {
     return (
       <HomeItem
-        sourceData={this.state.sourceData}
         data={itemData.item}
         {...this.props}
       />
@@ -116,7 +81,7 @@ export default class HomeScene extends BaseScene {
   }
 
   renderEmptyView() {
-    return ( this.state.sourceData.length === 0
+    return ( this.props.dataStore.isEmpty
         ? <View style={styles.emptyContainer}>
           <YearProgressView/>
           <Text style={styles.note}>点击右下角按钮添加倒计时项目</Text>
@@ -133,7 +98,7 @@ export default class HomeScene extends BaseScene {
         <FlatList
           ref='list'
           style={styles.list}
-          data={this.state.sourceData}
+          data={toJS(Stores.dataStore.dataSource)}
           keyExtractor={(itemData, index) => index + ''}
           renderItem={(itemData) => this.renderItem(itemData)}
         />
@@ -147,7 +112,7 @@ export default class HomeScene extends BaseScene {
       </View>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   container: {

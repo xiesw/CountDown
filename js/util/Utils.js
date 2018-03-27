@@ -42,11 +42,35 @@ export default class Utils {
   }
 
   /**
+   * 通过时间戳移除数组数据
+   * @param arr
+   * @param item
+   */
+  static removeArrayByTimeStamp(arr, item) {
+    if(!arr) {
+      return
+    }
+    let index = -1;
+    let length = arr.length;
+    for(let i = 0; i< length; i++) {
+      if(arr[i].timestamp === item.timestamp) {
+        index = i;
+        break;
+      }
+    }
+    if (index !== -1) {
+      arr.splice(index, 1);
+    }
+  }
+
+  /**
    * 是否是Android
    */
   static isAndroid() {
     return Platform.OS === 'android';
   }
+
+
 
 }
 

@@ -14,6 +14,7 @@ import {
 import {getWidth} from "../util/Utils"
 import DateUtil from "../util/DateUtil";
 import {Theme} from "../common/Theme";
+import Stores from "../stores";
 
 const REFRESH_TIME = 1000;
 export default class HomeItem extends Component {
@@ -109,10 +110,8 @@ export default class HomeItem extends Component {
    * 点击条目
    */
   onPressItem() {
-    this.props.navigation.navigate('DetailScene', {
-      sourceData: this.props.sourceData,
-      data: this.data
-    });
+    Stores.dataStore.currentItemData = this.props.data;
+    this.props.navigation.navigate('DetailScene');
   }
 
   render() {
@@ -134,9 +133,9 @@ export default class HomeItem extends Component {
         <View/>
 
         {this.state.top
-          ?<View style={styles.topContainer}>
-          <Text style={styles.top}>置顶</Text>
-        </View>
+          ? <View style={styles.topContainer}>
+            <Text style={styles.top}>置顶</Text>
+          </View>
           : null}
       </TouchableOpacity>
     );
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
     right: getWidth(28),
     borderRadius: getWidth(2),
     borderWidth: 0.5,
-    borderColor:'#979797'
+    borderColor: '#979797'
   },
   top: {
     fontSize: getWidth(9)

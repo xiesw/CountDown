@@ -19,12 +19,11 @@ import NormalEditText from '../component/NormalEditText';
 import PickInput from '../component/PickInput';
 import ColorPickInput from '../component/ColorPickInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import DataDao from "../dao/DataDao";
 import {NavigationActions} from 'react-navigation'
-import Utils from "../util/Utils";
 import ListDialog from "../component/ListDialog";
 import {appEvent} from "../common/Constants";
 import {Theme} from "../common/Theme";
+import Stores from '../stores';
 
 export default class EditScene extends BaseScene {
 
@@ -34,8 +33,7 @@ export default class EditScene extends BaseScene {
 
   constructor(props) {
     super(props);
-    this.data = this.props.navigation.state.params.data;
-    this.sourceData = this.props.navigation.state.params.sourceData;
+    this.data = Stores.dataStore.currentItemData.name ? Stores.dataStore.currentItemData : null;
     this.state = {
       isDatePickerVisible: false,
       color: '',
@@ -141,8 +139,7 @@ export default class EditScene extends BaseScene {
    */
   deleteItem() {
     if (this.data) {
-      Utils.removeArrayItem(this.sourceData, this.data);
-      DataDao.save(this.sourceData);
+      Stores.dataStore.delete(this.data);
       this.resetToHome();
     } else {
       this.props.navigation.goBack();
@@ -157,27 +154,19 @@ export default class EditScene extends BaseScene {
       return;
     }
 
-    if (this.data) {
-      this.data.timestamp = this.timestamp;
-      this.data.color = this.state.color;
-      this.data.top = this.state.top;
-      this.data.repeat = this.state.repeat;
-      this.data.name = this.refs.title.getValue();
-    } else {
-      let data = {};
-      data.timestamp = this.timestamp;
-      data.color = this.state.color;
-      data.top = this.state.top;
-      data.repeat = this.state.repeat;
-      data.name = this.refs.title.getValue();
-      this.sourceData.push(data);
-    }
-    DataDao.save(this.sourceData);
+    let data = {};
+    data.timestamp = this.timestamp;
+    data.color = this.state.color;
+    data.top = this.state.top;
+    data.repeat = this.state.repeat;
+    data.name = this.refs.title.getValue();
 
     if (this.data) {
-      DeviceEventEmitter.emit(appEvent.dataChange);
+      Stores.dataStore.update(this.data, data);
+      this.data = data;
       this.props.navigation.goBack();
     } else {
+      Stores.dataStore.insert(data);
       this.resetToHome();
     }
   }
@@ -222,10 +211,10 @@ export default class EditScene extends BaseScene {
         />
 
         {/* pain.todo <PickInput*/}
-          {/*ref='repeat'*/}
-          {/*value={repeatMap.get(this.state.repeat)}*/}
-          {/*onPress={() => this.showRepeatDialog()}*/}
-          {/*source={require('../../res/image/repeat.png')}*/}
+        {/*ref='repeat'*/}
+        {/*value={repeatMap.get(this.state.repeat)}*/}
+        {/*onPress={() => this.showRepeatDialog()}*/}
+        {/*source={require('../../res/image/repeat.png')}*/}
         {/*/>*/}
 
         <PickInput

@@ -16,6 +16,7 @@ import {getWidth} from "../util/Utils"
 import DateUtil from "../util/DateUtil";
 import BaseScene from "./BaseScene";
 import {Theme} from "../common/Theme";
+import Stores from "../stores";
 
 const REFRESH_TIME = 57;
 export default class DetailScene extends BaseScene {
@@ -26,8 +27,6 @@ export default class DetailScene extends BaseScene {
 
   constructor(props) {
     super(props);
-    this.data = this.props.navigation.state.params.data;
-    this.sourceData = this.props.navigation.state.params.sourceData;
     this.state = {
       name: '',
       color: 'white',
@@ -43,6 +42,7 @@ export default class DetailScene extends BaseScene {
 
   handleData() {
     // pain.todo 刷新优化
+    this.data = Stores.dataStore.currentItemData;
     let timestamp = this.data.timestamp;
     let isOverdue = DateUtil.isOverdue(timestamp);
 
@@ -105,7 +105,7 @@ export default class DetailScene extends BaseScene {
   }
 
   edit() {
-    this.props.navigation.navigate('EditScene', {sourceData: this.sourceData, data: this.data});
+    this.props.navigation.navigate('EditScene');
   }
 
   render() {
