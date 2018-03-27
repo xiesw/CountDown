@@ -94,6 +94,8 @@ note:
         沉沁式状态栏 --
         设置页面 ok
         关于页面 ok
+        用户系统 ok
+        android 回退栈 
         备份系统    
         重复功能
         设置时间组件 --
@@ -102,6 +104,9 @@ note:
         多渠道统计
         打包上架
         提高:   
-            引入labal, mobx ok 
+            引入labal, mobx ok
+    1.2 
+        弹窗
+        loading
 ```
 

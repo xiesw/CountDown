@@ -3,6 +3,8 @@
  * 路由表
  */
 
+import React, {Component} from 'react';
+import {View} from 'react-native';
 import {StackNavigator} from 'react-navigation'
 import HomeScene from '../scene/HomeScene';
 import EditScene from "../scene/EditScene";
@@ -49,7 +51,7 @@ function getRouteParams(navigation) {
 function getNavigationOptions(navigation) {
   const {params = {}, routeName} = navigation.state;
   const {
-    rightCom,
+    headerRight,
     headerTitleStyle = {},
     headerStyle = {}
   } = getRouteParams(navigation);
@@ -58,6 +60,7 @@ function getNavigationOptions(navigation) {
     headerStyle: Object.assign({}, CommonHeaderStyle, headerStyle),
     headerTitleStyle: Object.assign({}, CommonHeaderTitleStyle, headerTitleStyle),
     headerBackTitle: null,
+    headerRight: headerRight || <View/>
   };
 
   return options;

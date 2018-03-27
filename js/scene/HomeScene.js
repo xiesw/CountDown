@@ -41,7 +41,8 @@ export default class HomeScene extends BaseScene {
           source={require('../../res/image/setting.png')}
         />
       </TouchableOpacity>
-    )
+    ),
+    headerLeft: (<View/>)
   });
 
   constructor(props) {
