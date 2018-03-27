@@ -13,6 +13,8 @@ import {addNavigationHelpers} from "react-navigation";
 import {useStrict, toJS} from 'mobx';
 
 type Props = {};
+
+@observer
 export default class App extends Component<Props> {
 
   constructor(props) {
@@ -28,19 +30,18 @@ export default class App extends Component<Props> {
     return (
       <Provider {...storesArray}>
         <RouterStack
-
+          navigation={
+            addNavigationHelpers({
+              dispatch: this.navigationStore.dispatch,
+              state: toJS(this.navigationStore.navigationState),
+              addListener: () => {
+              },
+            })}
         />
       </Provider>
 
     );
 
-  //   navigation={
-  //     addNavigationHelpers({
-  //                            dispatch: this.navigationStore.dispatch,
-  //     state: toJS(this.navigationStore.navigationState),
-  //     addListener: () => {
-  //   }
-  // })}
   }
 
 

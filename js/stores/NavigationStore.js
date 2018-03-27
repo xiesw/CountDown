@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {RouterStack} from '../routers'
 import {NavigationActions} from 'react-navigation'
+import {useStrict, toJS} from 'mobx';
 
 //返回当前所在路由
 export const getCurrentRoute = (state) => {
@@ -36,6 +37,11 @@ export const getActionRoute = (action) => {
 export default class NavigationStore {
   constructor(stores) {
     this.stores = stores;
+    autorun(() => {
+      if (__DEV__) {
+        console.log('pain.xie:', this.navigationState);
+      }
+    })
   }
 
   @observable navigationState = {
@@ -87,8 +93,7 @@ export default class NavigationStore {
     );
   }
 
-  @action
-  dispatch(action) {
+  @action dispatch = (action) => {
     return (this.navigationState = RouterStack.router.getStateForAction(
       action,
       this.navigationState

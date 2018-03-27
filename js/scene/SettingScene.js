@@ -84,6 +84,7 @@ export default class SettingScene extends BaseScene {
   }
 
   render() {
+    // return <View/>;
     return (
       <View style={styles.container}>
         <DescribeView text='时间设置'/>

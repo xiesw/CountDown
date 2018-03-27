@@ -6,7 +6,9 @@ import {
   AsyncStorage
 } from 'react-native';
 import {observable, action, runInAction, reaction, autorun, computed} from 'mobx';
+import bmob from '../net/bmob/bmob';
 
+const Bmob = bmob.Bmob;
 const AsyncStorage_Name = 'userInfo';
 export default class UserStore {
   constructor(stores) {
@@ -15,7 +17,6 @@ export default class UserStore {
 
   @observable username = '';
   @observable password = '';
-
 
   @action
   clear() {
@@ -70,5 +71,35 @@ export default class UserStore {
   removeInfo() {
     this.clear();
     AsyncStorage.removeItem(AsyncStorage_Name);
+  }
+
+  /**
+   * 检查用户名是否已经存在
+   * @param username
+   * @returns {Promise}
+   */
+  @action
+  checkUser(username) {
+    let User = Bmob.Object.extend("_User");
+    let query = new Bmob.Query(User);
+    return new Promise((resolve, reject) => {
+      query.equalTo("username", username).find({
+        success: (result) => {
+          if (result.length === 0) {
+            resolve();
+          } else {
+            reject("用户名已存在");
+          }
+        }, error: (error) => {
+          reject("异常");
+        }
+      });
+    })
+  }
+
+  @action
+  register(username, password) {
+    let User = Bmob.Object.extend("_User");
+
   }
 }

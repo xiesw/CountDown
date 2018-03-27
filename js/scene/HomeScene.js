@@ -29,7 +29,7 @@ import Stores from '../stores';
 export default class HomeScene extends BaseScene {
 
   static navigationOptions = ({navigation}) => ({
-    headerTitle: 'xx',
+    headerTitle: '倒计时',
     headerRight: (
       <TouchableOpacity
         onPress={() => {
@@ -94,16 +94,14 @@ export default class HomeScene extends BaseScene {
   }
 
   static goSettingScene(navigation) {
-    console.log('pain.xie:', navigation);
-    navigation.navigate('SettingScene');
+    Stores.navigation.navigate({routeName:'SettingScene'});
   }
 
   /**
    * 添加新条目
    */
   add() {
-    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
-    //Stores.navigation.navigate({routeName:'SettingScene'});
+    this.props.navigation.navigate('SettingScene');
   }
 
   renderItem(itemData) {
@@ -124,7 +122,6 @@ export default class HomeScene extends BaseScene {
         </View>
         : null
     );
-
   }
 
   render() {

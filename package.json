@@ -16,7 +16,7 @@
     "react-native-circular-progress": "^0.2.0",
     "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-simple-dialogs": "^0.3.1",
-    "react-navigation": "^1.5.1"
+    "react-navigation": "1.0.0-beta.23"
   },
   "devDependencies": {
     "babel-jest": "22.4.1",

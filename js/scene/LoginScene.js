@@ -32,12 +32,12 @@ export default class LoginScene extends BaseScene {
   }
 
   onPressBtn() {
-    this.refs.username.showErrorMessage('hah');
-    console.log('pain.xie', this.refs);
-    if(this.state.isLogin) {
+    if(this.validateAll()) {
+      if (this.state.isLogin) {
 
-    } else {
+      } else {
 
+      }
     }
   }
 
@@ -48,8 +48,17 @@ export default class LoginScene extends BaseScene {
   }
 
   validateAll() {
-    if(this.state.isLogin) {
-
+    if (this.state.isLogin) {
+      return this.refs.username.validate() && this.refs.password.validate();
+    } else {
+      let result = this.refs.username.validate() && this.refs.password.validate() && this.refs.passwordConfirm.validate();
+      if (result) {
+        return false;
+      }
+      if (this.refs.password.getValue() !== this.refs.passwordConfirm.getValue()) {
+        return false;
+      }
+      return true;
     }
   }
 
