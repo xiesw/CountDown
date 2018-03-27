@@ -15,6 +15,7 @@ import {regs} from '../component/validate/Validate';
 import {EnvHost} from "../net/Env";
 import bmob from '../net/bmob/bmob';
 import Stores from '../stores/index';
+import AndroidBackUtils from "../util/AndroidBackUtils";
 
 global.evn = {
   isDebug: true,
@@ -40,6 +41,7 @@ export default class Global {
     this.loadAppInfo();
     this.initialEnv();
     this.initBmob();
+    this.initAndroidBack();
   }
 
   /**
@@ -114,4 +116,10 @@ export default class Global {
     bmob.Bmob.initialize('2fc5489d6682bfb17ad3a7c62156afd0', '9c7465e3f2ae21010850c4594f354b72');
   }
 
+  /**
+   * 监听android返回键
+   */
+  static initAndroidBack() {
+    AndroidBackUtils.addBackAndroidListener();
+  }
 }

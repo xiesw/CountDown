@@ -94,7 +94,7 @@ export default class HomeScene extends BaseScene {
     })
   }
 
-  static goSettingScene(navigation) {
+  static goSettingScene() {
     Stores.navigation.navigate({routeName:'SettingScene'});
   }
 
@@ -102,7 +102,7 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    this.props.navigation.navigate('SettingScene');
+    this.props.navigation.navigate('EditScene', {sourceData: this.state.sourceData});
   }
 
   renderItem(itemData) {
