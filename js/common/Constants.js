@@ -18,3 +18,6 @@ export const markColor = [
 export const appEvent = {
   dataChange: 'dataChange'
 };
+
+// 密码 solt
+export const Solt = 'a628501d48f4044d701b7af62fea1a87b2075337764b65b46587f60919009dd7';

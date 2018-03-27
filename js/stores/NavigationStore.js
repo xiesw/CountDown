@@ -39,7 +39,6 @@ export default class NavigationStore {
     this.stores = stores;
     autorun(() => {
       if (__DEV__) {
-        console.log('pain.xie:', this.navigationState);
       }
     })
   }

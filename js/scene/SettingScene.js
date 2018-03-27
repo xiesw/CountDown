@@ -16,7 +16,10 @@ import bmob from '../net/bmob/bmob';
 import Stores from '../stores'
 import {Theme} from "../common/Theme";
 import {getWidth} from "../util/Utils";
+import {inject, observer} from 'mobx-react';
 
+@inject('userStore')
+@observer
 export default class SettingScene extends BaseScene {
 
   static navigationOptions = {
@@ -27,38 +30,46 @@ export default class SettingScene extends BaseScene {
     super(props);
   }
 
+  /**
+   * 设置是否选择时间
+   */
   onPressDatetime() {
 
   }
 
+  /**
+   * 设置显示单位
+   */
   onPressFrequency() {
 
   }
 
+  /**
+   * 备份
+   */
   onPressBackup() {
-    //this.props.navigation.navigate('BackupScene');
-    let User = bmob.Bmob.Object.extend("_User");
-    let _user = new User();
-    _user.set("username", 'xieshangwu').set("password", 'xie7561331');
-    _user.save(null, {
-      success: (object) => {
-      },
-      error: function (error) {
-        alert("异常：" + error.message);
-      }
-    })
+    this.props.navigation.navigate('BackupScene');
   }
 
+  /**
+   * 恢复
+   */
   onPressRestore() {
     this.props.navigation.navigate('RestoreScene');
   }
 
+  /**
+   * 关于
+   */
   onPressAbout() {
     this.props.navigation.navigate('AboutScene');
   }
 
+  /**
+   * 登陆/退出
+   */
   onPressLogin() {
-    if(Stores.userStore.hasLogin) {
+    if (Stores.userStore.hasLogin) {
       Stores.userStore.removeInfo();
     } else {
       this.props.navigation.navigate('LoginScene');
@@ -66,9 +77,9 @@ export default class SettingScene extends BaseScene {
   }
 
   renderLoginView() {
-    let color = Stores.userStore.hasLogin ? Theme.color.btnRed : Theme.color.btnBlue;
-    let text = Stores.userStore.hasLogin ? '退出' : '登陆';
-    let note = Stores.userStore.hasLogin ? `当前账户: ${Stores.userStore.username}` : '登陆账号可进行备份/恢复数据';
+    let color = this.props.userStore.hasLogin ? Theme.color.btnRed : Theme.color.btnBlue;
+    let text = this.props.userStore.hasLogin ? '退出' : '登陆';
+    let note = this.props.userStore.hasLogin ? `当前账户: ${Stores.userStore.username}` : '登陆账号可进行备份/恢复数据';
 
     return (
       <View style={styles.loginContainer}>
@@ -84,7 +95,6 @@ export default class SettingScene extends BaseScene {
   }
 
   render() {
-    // return <View/>;
     return (
       <View style={styles.container}>
         <DescribeView text='时间设置'/>
@@ -138,7 +148,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: getWidth(50),
     paddingVertical: getWidth(10),
     borderRadius: getWidth(2),
-    borderWidth: 0.5
+    borderWidth: 1
   },
   note: {
     fontSize: 12,

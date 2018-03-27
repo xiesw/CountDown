@@ -15,6 +15,8 @@ import NormalEditText from '../component/NormalEditText';
 import {inject, observer} from 'mobx-react';
 import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
+import CryptoUtils from "../util/CryptoUtils";
+import {Solt} from "../common/Constants";
 
 @inject('userStore')
 @observer
@@ -31,31 +33,86 @@ export default class LoginScene extends BaseScene {
     };
   }
 
+  /**
+   * 登陆/注册
+   */
   onPressBtn() {
-    if(this.validateAll()) {
+    if (this.validateAll()) {
       if (this.state.isLogin) {
-
+        this.login();
       } else {
-
+        this.register();
       }
     }
   }
 
+  /**
+   * 点击底下登陆/注册切换
+   */
   onPressNote() {
     this.setState({
       isLogin: !this.state.isLogin
     })
   }
 
+  /**
+   * 登陆
+   */
+  login() {
+    let username = this.refs.username.getValue();
+    let password = this.refs.password.getValue();
+
+    // 使用密码加盐sha256
+    let cryptoPassword = CryptoUtils.sha256(password + Solt);
+    this.props.userStore.login(username, cryptoPassword)
+      .then(() => {
+        this.props.navigation.goBack();
+      })
+      .catch((error) => {
+        this.refs.username.showErrorMessage(error);
+      })
+  }
+
+  /**
+   * 注册
+   */
+  register() {
+    let username = this.refs.username.getValue();
+    let password = this.refs.password.getValue();
+
+    // 使用密码加盐sha256
+    let cryptoPassword = CryptoUtils.sha256(password + Solt);
+
+    this.props.userStore.checkUser(username)
+      .then(result => {
+        this.props.userStore.register(username, cryptoPassword)
+          .then(result => {
+            this.props.navigation.goBack();
+          })
+          .catch(error => {
+            this.refs.username.showErrorMessage(error);
+          })
+      })
+      .catch(error => {
+        this.refs.username.showErrorMessage(error);
+      })
+
+  }
+
+  /**
+   * 验证输入
+   * @returns {*}
+   */
   validateAll() {
     if (this.state.isLogin) {
       return this.refs.username.validate() && this.refs.password.validate();
     } else {
       let result = this.refs.username.validate() && this.refs.password.validate() && this.refs.passwordConfirm.validate();
-      if (result) {
+      if (!result) {
         return false;
       }
       if (this.refs.password.getValue() !== this.refs.passwordConfirm.getValue()) {
+        this.refs.passwordConfirm.showErrorMessage('您输入的密码不一致');
         return false;
       }
       return true;
@@ -130,7 +187,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: getWidth(50),
     paddingVertical: getWidth(10),
     borderRadius: getWidth(2),
-    borderWidth: 0.5,
+    borderWidth: 1,
     color: Theme.color.btnBlue,
     borderColor: Theme.color.btnBlue
   },

@@ -26,7 +26,7 @@ export default class UserStore {
 
   @computed
   get hasLogin() {
-    return this.username || this.password;
+    return this.username && this.password;
   }
 
   /**
@@ -41,7 +41,7 @@ export default class UserStore {
           reject(error);
         } else {
           if (result) {
-            let data= JSON.parse(result);
+            let data = JSON.parse(result);
             this.username = data.username;
             this.password = data.password;
           } else {
@@ -86,7 +86,7 @@ export default class UserStore {
       query.equalTo("username", username).find({
         success: (result) => {
           if (result.length === 0) {
-            resolve();
+            resolve('该用户名可用');
           } else {
             reject("用户名已存在");
           }
@@ -97,9 +97,64 @@ export default class UserStore {
     })
   }
 
+  /**
+   * 注册
+   * @param username
+   * @param password
+   * @returns {Promise}
+   */
   @action
   register(username, password) {
     let User = Bmob.Object.extend("_User");
-
+    let _user = new User();
+    return new Promise((resolve, reject) => {
+      _user.set("username", username).set("password", password);
+      _user.save(null, {
+        success: (object) => {
+          runInAction(() => {
+            this.username = username;
+            this.password = password;
+            this.saveInfo();
+          });
+          resolve(object);
+        },
+        error: function (error) {
+          reject(error.message);
+        }
+      })
+    })
   }
+
+  /**
+   * 登陆验证
+   * @param username
+   * @param password
+   * @returns {Promise}
+   */
+  @action
+  login(username, password) {
+    let User = Bmob.Object.extend("_User");
+    let query = new Bmob.Query(User);
+    return new Promise((resolve, reject) => {
+      query.equalTo("username", username);
+      query.equalTo("password", password);
+      query.find({
+        success: (result) => {
+          if (result.length === 1) {
+            runInAction(() => {
+              this.username = username;
+              this.password = password;
+              this.saveInfo();
+            })
+            resolve('登陆成功');
+          } else {
+            reject("用户名或密码错误");
+          }
+        }, error: (error) => {
+          reject("用户名或密码错误");
+        }
+      });
+    })
+  }
+
 }

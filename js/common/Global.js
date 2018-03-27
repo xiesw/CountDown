@@ -97,6 +97,11 @@ export default class Global {
     };
   }
 
+  /**
+   * 获取url host地址
+   * @param key
+   * @returns {*}
+   */
   static getHost(key) {
     return global.env.hosts[key];
   };

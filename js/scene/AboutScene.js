@@ -29,7 +29,7 @@ export default class AboutScene extends BaseScene {
   goGitHub() {
     let url = 'https://github.com/xiesw/CountDown';
     Linking.openURL(url)
-      .catch((err)=>{
+      .catch((err) => {
         console.log('An error occurred', err);
       });
   }
@@ -51,7 +51,7 @@ export default class AboutScene extends BaseScene {
           <Text style={styles.text}>{'E-mail:  pal_xie@foxmail.com'}</Text>
           <Text style={styles.text}>{'Location:  ShenZhen'}</Text>
           <TouchableOpacity
-            style={{flexDirection:'row'}}
+            style={{flexDirection: 'row'}}
             onPress={() => this.goGitHub()}
           >
             <Text style={styles.text}>{'GitHub:  '}</Text>

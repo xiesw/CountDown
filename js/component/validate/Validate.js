@@ -178,10 +178,6 @@ export class Validate {
     let reg = global.validaterRegs[name] || regs[name];
     if (reg) {
       let result = null !== value && undefined !== value && value !== '' && reg['reg'].test(value);
-      console.log('pain.xie:', 111111, value);
-      console.log('pain.xie:', 111111, reg['reg']);
-
-      console.log('pain.xie:', 222222,/^[^\S]+}$/.test(value));
       let errorMessage = reg['errorMessage'];
       validateResult = {result: result, errorMessage: errorMessage};
     }
