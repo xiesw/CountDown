@@ -10,7 +10,7 @@ import {
   StyleSheet
 } from 'react-native';
 import EditText from './EditText';
-import {markColor} from "../common/Constants"
+import {MARK_COLOR} from "../common/Constants"
 import {getWidth} from "../util/Utils";
 
 export default class ColorPickInput extends EditText {
@@ -23,7 +23,7 @@ export default class ColorPickInput extends EditText {
   }
 
   renderOptions() {
-    return markColor.map((color, index, arr) => {
+    return MARK_COLOR.map((color, index, arr) => {
       let style = (color === this.props.color ? styles.dotSelect : styles.dot);
       return (
         <TouchableOpacity

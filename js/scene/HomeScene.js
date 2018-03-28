@@ -16,12 +16,12 @@ import {
 import BaseScene from "./BaseScene";
 import HomeItem from "../component/HomeItem";
 import {getWidth} from "../util/Utils";
-import {appEvent} from "../common/Constants";
 import {Theme} from "../common/Theme";
 import YearProgressView from "../component/YearProgressView";
 import {inject, observer} from 'mobx-react';
 import {useStrict, toJS} from 'mobx';
 import Stores from '../stores';
+import {EDIT_MODEL} from "../common/Constants";
 
 @inject('dataStore')
 @observer
@@ -67,7 +67,7 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    Stores.dataStore.currentItemData = {};
+    Stores.editStore.model = EDIT_MODEL.new;
     this.props.navigation.navigate('EditScene',);
   }
 

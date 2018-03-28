@@ -5,7 +5,7 @@
 import {Theme} from "./Theme";
 
 // 标记颜色
-export const markColor = [
+export const MARK_COLOR = [
   Theme.color.red,
   Theme.color.yellow,
   Theme.color.blue,
@@ -14,10 +14,16 @@ export const markColor = [
   Theme.color.gray,
 ];
 
+// 编辑页的模式 新增/
+export const EDIT_MODEL = {
+  new: 'new',
+  update: 'update'
+};
+
 // App内广播
-export const appEvent = {
+export const APP_EVENT = {
   dataChange: 'dataChange'
 };
 
 // 密码 solt
-export const Solt = 'a628501d48f4044d701b7af62fea1a87b2075337764b65b46587f60919009dd7';
+export const SOLT = 'a628501d48f4044d701b7af62fea1a87b2075337764b65b46587f60919009dd7';

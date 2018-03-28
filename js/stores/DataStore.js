@@ -21,6 +21,7 @@ export default class DataStore {
   @observable dataSource = [];
   // 当前详情数据
   @observable currentItemData = {};
+
   @action
   clear() {
     this.dataSource = [];
@@ -33,7 +34,7 @@ export default class DataStore {
   }
 
   /**
-   * 加载数据
+   * 从本地加载数据
    * @returns {Promise}
    */
   @action
@@ -49,31 +50,12 @@ export default class DataStore {
   }
 
   /**
-   * 保存数据
+   * 保存数据到本地
    * @param data
    */
   @action
   save() {
     AsyncStorage.setItem(AsyncStorage_Name, JSON.stringify(toJS(this.dataSource)));
-  }
-
-  /**
-   * 处理数据(排序)
-   * @param result
-   */
-  sortData(result) {
-    let sortFun = (obj1, obj2) => {
-      let isOverDue1 = DateUtil.isOverdue(obj1.timestamp);
-      let isOverDue2 = DateUtil.isOverdue(obj2.timestamp);
-      if (obj1.top !== obj2.top) {
-        return obj2.top - obj1.top;
-      } else if (isOverDue1 !== isOverDue2) {
-        return isOverDue1 - isOverDue2;
-      } else {
-        return isOverDue1 ? obj2.timestamp - obj1.timestamp : obj1.timestamp - obj2.timestamp;
-      }
-    };
-    result.sort(sortFun);
   }
 
   /**
@@ -116,9 +98,30 @@ export default class DataStore {
    * 重置数据源
    * @param dataSource
    */
+  @action
   reset(dataSource) {
     this.sortData(dataSource);
     this.dataSource = dataSource;
     this.save();
+  }
+
+
+  /**
+   * 处理数据(排序)
+   * @param result
+   */
+  sortData(result) {
+    let sortFun = (obj1, obj2) => {
+      let isOverDue1 = DateUtil.isOverdue(obj1.timestamp);
+      let isOverDue2 = DateUtil.isOverdue(obj2.timestamp);
+      if (obj1.top !== obj2.top) {
+        return obj2.top - obj1.top;
+      } else if (isOverDue1 !== isOverDue2) {
+        return isOverDue1 - isOverDue2;
+      } else {
+        return isOverDue1 ? obj2.timestamp - obj1.timestamp : obj1.timestamp - obj2.timestamp;
+      }
+    };
+    result.sort(sortFun);
   }
 };

@@ -26,20 +26,15 @@ export default class ListDialog extends BaseComponent {
     }
   }
 
-  /**
-   * 设置显示
-   * @param value
-   */
-  setVisible(value) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
-      dialogVisible: value
+      dialogVisible: nextProps.isVisible
     })
   }
 
   onPressItem(key) {
     this.selectedValue = key;
     this.props.onChange(key);
-    this.setVisible(false);
   }
 
   renderItems() {
@@ -81,7 +76,7 @@ export default class ListDialog extends BaseComponent {
       <Dialog
         visible={this.state.dialogVisible}
         title="置顶"
-        onTouchOutside={() => this.setState({dialogVisible: false})}>
+        onTouchOutside={() => this.onPressItem(this.selectedValue)}>
         <View>
           {this.renderItems()}
         </View>

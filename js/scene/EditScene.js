@@ -21,10 +21,13 @@ import ColorPickInput from '../component/ColorPickInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {NavigationActions} from 'react-navigation'
 import ListDialog from "../component/ListDialog";
-import {appEvent} from "../common/Constants";
+import {APP_EVENT} from "../common/Constants";
 import {Theme} from "../common/Theme";
 import Stores from '../stores';
+import {inject, observer} from 'mobx-react';
 
+@inject('editStore')
+@observer
 export default class EditScene extends BaseScene {
 
   static navigationOptions = {
@@ -33,14 +36,6 @@ export default class EditScene extends BaseScene {
 
   constructor(props) {
     super(props);
-    this.data = Stores.dataStore.currentItemData.name ? Stores.dataStore.currentItemData : null;
-    this.state = {
-      isDatePickerVisible: false,
-      color: '',
-      repeat: 'once',
-      top: false,
-    };
-
     this.handleData();
   }
 
@@ -48,67 +43,39 @@ export default class EditScene extends BaseScene {
    * 处理数据
    */
   handleData() {
-    this.timestamp = DateUtil.getTodayTimeStamp();
-    this.date = DateUtil.getDataAndWeek(this.timestamp);
-
-    if (this.data) {
-      this.name = this.data.name;
-      this.timestamp = this.data.timestamp;
-      this.date = DateUtil.getDataAndWeek(this.timestamp);
-
-      this.state.color = this.data.color;
-      this.state.top = this.data.top;
-      this.state.repeat = this.data.repeat;
-      this.setState({
-        color: this.date.color,
-        top: this.data.top,
-        repeat: this.data.repeat
-      });
+    let store = this.props.editStore;
+    if (Stores.editStore.isUpdate) {
+      let data = Stores.dataStore.currentItemData;
+      let timestamp = data.timestamp;
+      store.name = data.name;
+      store.color = data.color;
+      store.repeat = data.repeat;
+      store.top = data.top;
+      store.dateAndWeek = DateUtil.getDataAndWeek(timestamp);
+    } else {
+      let timestamp = DateUtil.getTodayTimeStamp();
+      store.date = DateUtil.getDataAndWeek(timestamp);
     }
-  }
-
-  /**
-   * 设置时间控件显示/隐藏
-   * @param visible
-   */
-  setDatePickerVisible(visible) {
-    this.setState({isDatePickerVisible: visible})
   }
 
   /**
    * 处理时间控件选择值
    */
   handleDatePicked(date) {
+    let store = this.props.editStore;
     let d = new Date(date);
-    this.timestamp = DateUtil.getZeroTimeStamp(d.getTime());
-    this.refs.date.setValue(DateUtil.getDataAndWeek(this.timestamp));
-    this.setDatePickerVisible(false);
+    store.timestamp = DateUtil.getZeroTimeStamp(d.getTime());
+    this.refs.date.setValue(DateUtil.getDataAndWeek(store.timestamp));
+    Stores.editStore.isDateTimePickVisible = false;
   };
-
-  /**
-   * 显示重复弹窗
-   */
-  showRepeatDialog() {
-    this.refs.repeatDialog.setVisible(true);
-  }
 
   /**
    * 处理重复弹窗选择值
    */
   onChangeRepeatValue(value) {
-    this.state.repeat = value;
-    this.setState({
-      repeat: value
-    });
+    this.props.editStore.repeat = value;
     this.refs.repeat.setValue(repeatMap.get(value));
-
-  }
-
-  /**
-   * 显示置顶弹窗
-   */
-  showTopDialog() {
-    this.refs.topDialog.setVisible(true);
+    Stores.editStore.isRepeatDialogVisible = false;
   }
 
   /**
@@ -116,11 +83,9 @@ export default class EditScene extends BaseScene {
    * @param value
    */
   onChangeTopValue(value) {
-    this.state.top = value;
-    this.setState({
-      top: value
-    });
+    this.props.editStore.top = value;
     this.refs.top.setValue(topMap.get(value));
+    Stores.editStore.isTopDialogVisible = false;
   }
 
   /**
@@ -128,18 +93,17 @@ export default class EditScene extends BaseScene {
    * @param color
    */
   onChangeColor(color) {
-    let c = this.state.color === color ? '' : color;
-    this.setState({
-      color: c
-    });
+    console.log('pain.xie:', color);
+    let c = this.props.editStore.color;
+    this.props.editStore.color = c === color? '': color;
   }
 
   /**
    * 点击删除按钮
    */
   deleteItem() {
-    if (this.data) {
-      Stores.dataStore.delete(this.data);
+    if (Stores.editStore.isUpdate) {
+      Stores.dataStore.delete(Stores.dataStore.currentItemData);
       this.resetToHome();
     } else {
       this.props.navigation.goBack();
@@ -154,16 +118,17 @@ export default class EditScene extends BaseScene {
       return;
     }
 
+    let store = this.props.editStore;
     let data = {};
-    data.timestamp = this.timestamp;
-    data.color = this.state.color;
-    data.top = this.state.top;
-    data.repeat = this.state.repeat;
+    data.timestamp = store.timestamp;
+    data.color = store.color;
+    data.top = store.top;
+    data.repeat = store.repeat;
     data.name = this.refs.title.getValue();
 
-    if (this.data) {
-      Stores.dataStore.update(this.data, data);
-      this.data = data;
+    if (Stores.editStore.isUpdate) {
+      Stores.dataStore.update(Stores.dataStore.currentItemData, data);
+      Stores.dataStore.currentItemData = data;
       this.props.navigation.goBack();
     } else {
       Stores.dataStore.insert(data);
@@ -193,11 +158,12 @@ export default class EditScene extends BaseScene {
   }
 
   editRender() {
+    let store = this.props.editStore;
     return (
       <View style={styles.editContainer}>
         <NormalEditText
           ref='title'
-          value={this.name}
+          value={store.name}
           placeholder={'标题'}
           validate='title'
           source={require('../../res/image/title.png')}
@@ -205,22 +171,22 @@ export default class EditScene extends BaseScene {
 
         <PickInput
           ref='date'
-          value={this.date}
-          onPress={() => this.setDatePickerVisible(true)}
+          value={store.date}
+          onPress={() => store.isDateTimePickVisible = true}
           source={require('../../res/image/date.png')}
         />
 
         {/* pain.todo <PickInput*/}
         {/*ref='repeat'*/}
         {/*value={repeatMap.get(this.state.repeat)}*/}
-        {/*onPress={() => this.showRepeatDialog()}*/}
+        {/*onPress={() => store.isRepeatDialogVisible = true}*/}
         {/*source={require('../../res/image/repeat.png')}*/}
         {/*/>*/}
 
         <PickInput
           ref='top'
-          value={topMap.get(this.state.top)}
-          onPress={() => this.showTopDialog()}
+          value={topMap.get(store.top)}
+          onPress={() => store.isTopDialogVisible = true}
           source={require('../../res/image/top.png')}
         />
 
@@ -228,7 +194,7 @@ export default class EditScene extends BaseScene {
           ref='color'
           editable={false}
           placeholder={'标记'}
-          color={this.state.color}
+          color={store.color}
           onChange={(color) => this.onChangeColor(color)}
           source={require('../../res/image/mark.png')}
         />
@@ -256,26 +222,29 @@ export default class EditScene extends BaseScene {
   }
 
   renderDialog() {
+    let store = this.props.editStore;
     return (
       <View style={{position: 'absolute'}}>
         <DateTimePicker
-          isVisible={this.state.isDatePickerVisible}
+          isVisible={store.isDateTimePickVisible}
           onConfirm={(date) => this.handleDatePicked(date)}
-          onCancel={() => this.setDatePickerVisible(false)}
+          onCancel={() => store.isDateTimePickVisible = false}
           mode='date'
         />
 
         <ListDialog
+          isVisible={store.isRepeatDialogVisible}
           ref='repeatDialog'
           options={repeatMap}
-          value={this.state.repeat}
+          value={store.repeat}
           onChange={(value = {}) => this.onChangeRepeatValue(value)}
         />
 
         <ListDialog
+          isVisible={store.isTopDialogVisible}
           ref='topDialog'
           options={topMap}
-          value={this.state.top}
+          value={store.top}
           onChange={(value = {}) => this.onChangeTopValue(value)}
         />
       </View>

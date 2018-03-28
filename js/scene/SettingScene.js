@@ -97,18 +97,18 @@ export default class SettingScene extends BaseScene {
   render() {
     return (
       <View style={styles.container}>
-        <DescribeView text='时间设置'/>
-        <SelectItem
-          text='输入选择时间:'
-          type={Type.top}
-          onPress={() => this.onPressDatetime()}
-        />
+        {/*<DescribeView text='时间设置'/>*/}
+        {/*<SelectItem*/}
+          {/*text='输入选择时间:'*/}
+          {/*type={Type.top}*/}
+          {/*onPress={() => this.onPressDatetime()}*/}
+        {/*/>*/}
 
-        <SelectItem
-          text='时间刷新频率:'
-          type={Type.bottom}
-          onPress={() => this.onPressFrequency()}
-        />
+        {/*<SelectItem*/}
+          {/*text='时间刷新频率:'*/}
+          {/*type={Type.bottom}*/}
+          {/*onPress={() => this.onPressFrequency()}*/}
+        {/*/>*/}
         <DescribeView text='备份与恢复'/>
         <SelectItem
           text='备份数据'

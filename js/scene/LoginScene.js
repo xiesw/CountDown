@@ -16,7 +16,7 @@ import {inject, observer} from 'mobx-react';
 import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
 import CryptoUtils from "../util/CryptoUtils";
-import {Solt} from "../common/Constants";
+import {SOLT} from "../common/Constants";
 
 @inject('userStore')
 @observer
@@ -63,7 +63,7 @@ export default class LoginScene extends BaseScene {
     let password = this.refs.password.getValue();
 
     // 使用密码加盐sha256
-    let cryptoPassword = CryptoUtils.sha256(password + Solt);
+    let cryptoPassword = CryptoUtils.sha256(password + SOLT);
     this.props.userStore.login(username, cryptoPassword)
       .then(() => {
         this.props.navigation.goBack();
@@ -81,7 +81,7 @@ export default class LoginScene extends BaseScene {
     let password = this.refs.password.getValue();
 
     // 使用密码加盐sha256
-    let cryptoPassword = CryptoUtils.sha256(password + Solt);
+    let cryptoPassword = CryptoUtils.sha256(password + SOLT);
 
     this.props.userStore.checkUser(username)
       .then(result => {

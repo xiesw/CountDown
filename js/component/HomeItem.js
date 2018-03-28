@@ -15,6 +15,7 @@ import {getWidth} from "../util/Utils"
 import DateUtil from "../util/DateUtil";
 import {Theme} from "../common/Theme";
 import Stores from "../stores";
+import {EDIT_MODEL} from "../common/Constants";
 
 const REFRESH_TIME = 1000;
 export default class HomeItem extends Component {
@@ -111,6 +112,7 @@ export default class HomeItem extends Component {
    */
   onPressItem() {
     Stores.dataStore.currentItemData = this.props.data;
+    Stores.editStore.model = EDIT_MODEL.update;
     this.props.navigation.navigate('DetailScene');
   }
 
