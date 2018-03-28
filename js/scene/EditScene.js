@@ -39,6 +39,10 @@ export default class EditScene extends BaseScene {
     this.handleData();
   }
 
+  componentWillUnmount() {
+    this.props.editStore.clear();
+  }
+
   /**
    * 处理数据
    */
@@ -54,7 +58,7 @@ export default class EditScene extends BaseScene {
       store.dateAndWeek = DateUtil.getDataAndWeek(timestamp);
     } else {
       let timestamp = DateUtil.getTodayTimeStamp();
-      store.date = DateUtil.getDataAndWeek(timestamp);
+      store.dateAndWeek = DateUtil.getDataAndWeek(timestamp);
     }
   }
 
@@ -171,7 +175,7 @@ export default class EditScene extends BaseScene {
 
         <PickInput
           ref='date'
-          value={store.date}
+          value={store.dateAndWeek}
           onPress={() => store.isDateTimePickVisible = true}
           source={require('../../res/image/date.png')}
         />

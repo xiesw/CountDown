@@ -26,6 +26,7 @@ export default class UserStore {
 
   @computed
   get hasLogin() {
+    console.log('pain.xie:', 'haahah')
     return this.username && this.password;
   }
 
@@ -111,12 +112,13 @@ export default class UserStore {
       _user.set("username", username).set("password", password);
       _user.save(null, {
         success: (object) => {
+          resolve(object);
           runInAction(() => {
             this.username = username;
             this.password = password;
             this.saveInfo();
-          });
-          resolve(object);
+            resolve('登陆成功')
+          })
         },
         error: function (error) {
           reject(error.message);

@@ -3,14 +3,16 @@
  * 恢复页面
  */
 
-
 import React, {Component} from 'react';
 import {
   StyleSheet,
   View
 } from 'react-native';
 import BaseScene from "./BaseScene";
+import {inject, observer} from 'mobx-react';
 
+@inject('dataStore')
+@observer
 export default class RestoreScene extends BaseScene {
 
   static navigationOptions = {
@@ -20,7 +22,6 @@ export default class RestoreScene extends BaseScene {
   constructor(props) {
     super(props);
   }
-
 
   render() {
     return (

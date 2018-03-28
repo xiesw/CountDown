@@ -20,6 +20,13 @@ export default class EditStore {
     this.isDateTimePickVisible = false;
     this.isTopDialogVisible = false;
     this.isRepeatDialogVisible = false;
+
+    this.name = '';
+    this.timestamp = 0;
+    this.repeat = 'once';
+    this.top = false;
+    this.color = '';
+    this.dateAndWeek = '';
   }
 
   // 是编辑还是新增

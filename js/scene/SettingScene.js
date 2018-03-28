@@ -48,7 +48,11 @@ export default class SettingScene extends BaseScene {
    * 备份
    */
   onPressBackup() {
-    this.props.navigation.navigate('BackupScene');
+    if(Stores.userStore.hasLogin) {
+      this.props.navigation.navigate('BackupScene');
+    } else {
+      this.props.navigation.navigate('LoginScene');
+    }
   }
 
   /**
@@ -111,16 +115,16 @@ export default class SettingScene extends BaseScene {
         {/*/>*/}
         <DescribeView text='备份与恢复'/>
         <SelectItem
-          text='备份数据'
+          text='备份/还原'
           type={Type.top}
           onPress={() => this.onPressBackup()}
         />
 
-        <SelectItem
-          text='恢复数据'
-          type={Type.bottom}
-          onPress={() => this.onPressRestore()}
-        />
+        {/*<SelectItem*/}
+          {/*text='恢复数据'*/}
+          {/*type={Type.bottom}*/}
+          {/*onPress={() => this.onPressRestore()}*/}
+        {/*/>*/}
         <DescribeView text='关于'/>
         <SelectItem
           text='关于'

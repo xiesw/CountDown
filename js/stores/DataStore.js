@@ -10,7 +10,9 @@ import {observable, action, runInAction, reaction, autorun, computed} from 'mobx
 import DateUtil from "../util/DateUtil";
 import {useStrict, toJS} from 'mobx';
 import Utils from "../util/Utils";
+import bmob from '../net/bmob/bmob';
 
+const Bmob = bmob.Bmob;
 const AsyncStorage_Name = 'Data';
 export default class DataStore {
   constructor(stores) {
@@ -103,6 +105,7 @@ export default class DataStore {
     this.sortData(dataSource);
     this.dataSource = dataSource;
     this.save();
+    this.autoBackup();
   }
 
 
@@ -124,4 +127,34 @@ export default class DataStore {
     };
     result.sort(sortFun);
   }
+
+  /**
+   * 自动备份
+   */
+  @action
+  autoBackup() {
+
+
+
+    // let Data = Bmob.Object.extend("data");
+    // let d = new Data();
+    // return new Promise((resolve, reject) => {
+    //   d.set("username", this.stores.userStore.username)
+    //     .set("autoBackup", true)
+    //     .set("timestamp", Date.now())
+    //     .set("data", JSON.stringify(toJS(this.dataSource)));
+    //   d.save(null, {
+    //     success: (object) => {
+    //       resolve(object);
+    //       runInAction(() => {
+    //         resolve('保存成功')
+    //       })
+    //     },
+    //     error: function (error) {
+    //       reject(error.message);
+    //     }
+    //   })
+    // })
+  }
+
 };
