@@ -42,10 +42,15 @@ export default class BackupScene extends BaseScene {
     this.props.dataStore.selectBackupData = [];
   }
 
+  /**
+   * 备份数据
+   */
   backup() {
     if (toJS(this.props.dataStore.backupData).length > 50) {
       ToastUtil.show('个人最多备份数为50条');
-    } else {
+    } else if(toJS(this.props.dataStore.dataSource).length === 0){
+      ToastUtil.show('当前无数据可备份');
+    }else {
       this.props.dataStore.backup()
         .then(() => {
           ToastUtil.show('备份成功');
@@ -54,6 +59,9 @@ export default class BackupScene extends BaseScene {
     }
   }
 
+  /**
+   * 显示确定还原弹出
+   */
   showConfirmDialog() {
     if (this.props.dataStore.selectedId) {
       ConfirmDialog.show({
@@ -65,7 +73,9 @@ export default class BackupScene extends BaseScene {
     }
   }
 
-
+  /**
+   * 还原数据
+   */
   restore() {
     let dataArr = toJS(this.props.dataStore.selectBackupData);
     this.props.dataStore.reset(dataArr);

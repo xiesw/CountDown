@@ -1,5 +1,5 @@
 # CountDown
-个人倒计时项目: 使用RN开发 可以同时运行在ios 及 android上
+个人倒计时项目: 使用RN开发 可以同时运行在ios 及 android上,供大家学习交流
 
 ### 1. 个人开发工具
     Macbook Pro + WebStorm + iphone模拟器 + android
@@ -43,11 +43,12 @@ CountDown
     |--js
         |--common   通用操作, 配置主题,常量,全局操作
         |--component 组件
-        |--dao      数据操作
         |--net      网络请求(尚未有网络模块)
+        |   |--bmob 比目云
         |--routers  路由表
         |--scene    页面文件
         |--startup  启动入口
+        |--stores   数据存储类
         |--util     工具类
 ```
 ### 4. 引用三方组件:
@@ -55,7 +56,6 @@ CountDown
     react-navigation: 导航
     react-native-modal-datetime-picker: 选择时间组件
     react-native-simple-dialogs: dialog组件
-    react-native-keychain: ios keychain 存储
     mobx:  简单、可扩展的状态管理
     react-native-root-toast: toast
     react-native-root-siblings: 从根布局添加视图
@@ -79,7 +79,7 @@ CountDown
 app: 1.1完成后提供  
 note:   
 1. app时间系统为本机系统   
-2. 卸载app将会丢失数据,1.1将添加备份功能
+2. 卸载app将会丢失数据,请在设置里
 3. 备份的数据存储在比目云上, 数据对开发者是可见的, 账号的密码开发者不可见
 
 ### 7. todo:
@@ -99,18 +99,17 @@ note:
         用户系统 ok
         android 回退栈 ok
         Toast 组件 ok
-        备份系统    
+        弹窗      ok
+        备份系统    ok
+        引入labal, mobx ok
         walle打包
         统计系统
         多渠道统计
         打包上架
-        提高:   
-            引入labal, mobx ok
     1.2 
         沉沁式状态栏
         设置时间组件
         重复功能
-        弹窗
         loading
 ```
 

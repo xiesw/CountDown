@@ -20,10 +20,23 @@ export const EDIT_MODEL = {
   update: 'update'
 };
 
-// App内广播
-export const APP_EVENT = {
-  dataChange: 'dataChange'
-};
-
 // 密码 solt
 export const SOLT = 'a628501d48f4044d701b7af62fea1a87b2075337764b65b46587f60919009dd7';
+
+// 应用统计事件
+export const APP_EVENT = {
+  HoneScene: 'HomePage', // 进到首页
+  DetailScene: 'DetailScene', //进到详情页
+  EditScene: 'EditScene',
+  BackupScene: 'BackupScene',
+  AboutScene: 'AboutScene',
+  LoginScene: 'LoginScene',
+  Add: 'Add',   // 点击新增按钮
+  Edit: 'Edit', // 点击编辑按钮
+  Delete: 'Delete', // 点击删除
+  Confirm: 'Confirm', // 点击确认
+  Setting: 'Setting', // 点击设置按
+  Register: 'Register',
+  Login: 'Login',
+  GitHub: 'GitHub'
+};

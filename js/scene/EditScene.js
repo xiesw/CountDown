@@ -21,7 +21,6 @@ import ColorPickInput from '../component/ColorPickInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {NavigationActions} from 'react-navigation'
 import ListDialog from "../component/ListDialog";
-import {APP_EVENT} from "../common/Constants";
 import {Theme} from "../common/Theme";
 import Stores from '../stores';
 import {inject, observer} from 'mobx-react';
