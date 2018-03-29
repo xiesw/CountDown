@@ -24,10 +24,17 @@ export default class DataStore {
   // 当前详情数据
   @observable currentItemData = {};
 
+  // 自动备份的数据
+  @observable autoBackupData = [];
+  @observable backupData = [];
+  @observable selectedBackupItem = '';
+
   @action
   clear() {
-    this.dataSource = [];
     this.currentItemData = {};
+    this.autoBackupData = [];
+    this.backupData = [];
+    this.selectedBackupItem = '';
   }
 
   @computed
@@ -105,7 +112,9 @@ export default class DataStore {
     this.sortData(dataSource);
     this.dataSource = dataSource;
     this.save();
-    this.autoBackup();
+    if (this.stores.userStore.hasLogin) {
+      this.autoBackup();
+    }
   }
 
 
@@ -133,28 +142,140 @@ export default class DataStore {
    */
   @action
   autoBackup() {
+    let username = this.stores.userStore.username;
+    let Data = Bmob.Object.extend("data");
+    // 有备份过 删除备份, 没备份过 新增备份
+    this.checkHasAutoBackup()
+      .then((result) => {
+        let d = new Data();
+        return new Promise((resolve, reject) => {
+          d.set("username", username)
+            .set("autoBackup", true)
+            .set("timestamp", Date.now())
+            .set("data", JSON.stringify(toJS(this.dataSource)));
+          d.save(null, {
+            success: (object) => {
+              resolve(object);
+            },
+            error: function (error) {
+              reject(error.message);
+            }
+          })
+        })
+      })
+  }
 
+  /**
+   * 检查是否已经自动备份过了,有则删除
+   */
+  @action
+  checkHasAutoBackup() {
+    let username = this.stores.userStore.username;
+    let Data = Bmob.Object.extend("data");
+    let query = new Bmob.Query(Data);
+    query.equalTo("username", username);
+    query.equalTo("autoBackup", true);
+    return new Promise((resolve, reject) => {
+      query.find({
+        success: (result) => {
+          if (result.length > 0) {
+            query.get(result[0].id, {
+              success: function (object) {
+                object.destroy();
+                resolve(true)
+              },
+              error: function (object, error) {
+              }
+            });
+          } else {
+            resolve(true);
+          }
+        }, error: (error) => {
+        }
+      });
+    })
+  }
 
+  /**
+   * 手动备份数据
+   * @returns {Promise}
+   */
+  @action
+  backup() {
+    let username = this.stores.userStore.username;
+    let Data = Bmob.Object.extend("data");
+    let d = new Data();
+    return new Promise((resolve, reject) => {
+      d.set("username", username)
+        .set("autoBackup", false)
+        .set("timestamp", Date.now())
+        .set("data", JSON.stringify(toJS(this.dataSource)));
+      d.save(null, {
+        success: (object) => {
+          resolve(object);
+        },
+        error: function (error) {
+          reject(error.message);
+        }
+      })
+    })
+  }
 
-    // let Data = Bmob.Object.extend("data");
-    // let d = new Data();
-    // return new Promise((resolve, reject) => {
-    //   d.set("username", this.stores.userStore.username)
-    //     .set("autoBackup", true)
-    //     .set("timestamp", Date.now())
-    //     .set("data", JSON.stringify(toJS(this.dataSource)));
-    //   d.save(null, {
-    //     success: (object) => {
-    //       resolve(object);
-    //       runInAction(() => {
-    //         resolve('保存成功')
-    //       })
-    //     },
-    //     error: function (error) {
-    //       reject(error.message);
-    //     }
-    //   })
-    // })
+  /**
+   * 删除备份的数据
+   * @param id
+   */
+  deleteBackupData(id) {
+    let username = this.stores.userStore.username;
+    let Data = Bmob.Object.extend("data");
+    let query = new Bmob.Query(Data);
+    query.equalTo("username", username);
+    return new Promise((resolve, reject) => {
+      query.get(id, {
+        success: function (object) {
+          object.destroy();
+          resolve(true)
+        },
+        error: function (object, error) {
+          reject(false);
+        }
+      });
+    })
+  }
+
+  /**
+   * 获取备份的数据
+   * @returns {Promise}
+   */
+  @action
+  fetchBackupData() {
+    let username = this.stores.userStore.username;
+    let Data = Bmob.Object.extend("data");
+    let query = new Bmob.Query(Data);
+    query.equalTo("username", username);
+    return new Promise((resolve, reject) => {
+      query.find({
+        success: (result) => {
+          if (result) {
+            let autoBackupArr = [];
+            let backupArr = [];
+            result.forEach((item, index, arr) => {
+              if (item.get('autoBackup')) {
+                autoBackupArr.push(item);
+              } else {
+                backupArr.push(item);
+              }
+            });
+
+            console.log('pain.xie:', autoBackupArr);
+            console.log('pain.xie:', backupArr);
+            this.autoBackupData = autoBackupArr;
+            this.backupData = backupArr;
+          }
+        }, error: (error) => {
+        }
+      });
+    })
   }
 
 };

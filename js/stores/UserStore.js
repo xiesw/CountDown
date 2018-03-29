@@ -26,7 +26,6 @@ export default class UserStore {
 
   @computed
   get hasLogin() {
-    console.log('pain.xie:', 'haahah')
     return this.username && this.password;
   }
 
@@ -147,7 +146,7 @@ export default class UserStore {
               this.username = username;
               this.password = password;
               this.saveInfo();
-            })
+            });
             resolve('登陆成功');
           } else {
             reject("用户名或密码错误");

@@ -50,15 +50,15 @@ export default class EditScene extends BaseScene {
     let store = this.props.editStore;
     if (Stores.editStore.isUpdate) {
       let data = Stores.dataStore.currentItemData;
-      let timestamp = data.timestamp;
+      store.timestamp = data.timestamp;
       store.name = data.name;
       store.color = data.color;
       store.repeat = data.repeat;
       store.top = data.top;
-      store.dateAndWeek = DateUtil.getDataAndWeek(timestamp);
+      store.dateAndWeek = DateUtil.getDataAndWeek(store.timestamp);
     } else {
-      let timestamp = DateUtil.getTodayTimeStamp();
-      store.dateAndWeek = DateUtil.getDataAndWeek(timestamp);
+      store.timestamp = DateUtil.getTodayTimeStamp();
+      store.dateAndWeek = DateUtil.getDataAndWeek(store.timestamp);
     }
   }
 
