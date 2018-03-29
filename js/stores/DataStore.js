@@ -11,6 +11,7 @@ import DateUtil from "../util/DateUtil";
 import {useStrict, toJS} from 'mobx';
 import Utils from "../util/Utils";
 import bmob from '../net/bmob/bmob';
+import ToastUtil from "../util/ToastUtil";
 
 const Bmob = bmob.Bmob;
 const AsyncStorage_Name = 'Data';
@@ -27,14 +28,16 @@ export default class DataStore {
   // 自动备份的数据
   @observable autoBackupData = [];
   @observable backupData = [];
-  @observable selectedBackupItem = '';
+  @observable selectedId = '';
+  @observable selectBackupData = [];
 
   @action
   clear() {
     this.currentItemData = {};
     this.autoBackupData = [];
     this.backupData = [];
-    this.selectedBackupItem = '';
+    this.selectBackupData = [];
+    this.selectedId = '';
   }
 
   @computed
@@ -267,8 +270,6 @@ export default class DataStore {
               }
             });
 
-            console.log('pain.xie:', autoBackupArr);
-            console.log('pain.xie:', backupArr);
             this.autoBackupData = autoBackupArr;
             this.backupData = backupArr;
           }

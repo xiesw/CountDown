@@ -17,6 +17,7 @@ import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
 import CryptoUtils from "../util/CryptoUtils";
 import {SOLT} from "../common/Constants";
+import ToastUtil from "../util/ToastUtil";
 
 @inject('userStore')
 @observer
@@ -66,6 +67,7 @@ export default class LoginScene extends BaseScene {
     let cryptoPassword = CryptoUtils.sha256(password + SOLT);
     this.props.userStore.login(username, cryptoPassword)
       .then(() => {
+        ToastUtil.show('登陆成功');
         this.props.navigation.goBack();
       })
       .catch((error) => {
@@ -87,6 +89,7 @@ export default class LoginScene extends BaseScene {
       .then(result => {
         this.props.userStore.register(username, cryptoPassword)
           .then(result => {
+            ToastUtil.show('注册成功');
             this.props.navigation.goBack();
           })
           .catch(error => {

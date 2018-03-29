@@ -7,10 +7,11 @@ import React from 'react';
 import {
   Platform,
   BackHandler,
+  ToastAndroid
 } from 'react-native';
 
 import Stores from '../stores';
-
+import MaskRootSibling, {removeFormSibling} from '../component/MaskRootSibling';
 import {getCurrentRoute} from '../stores/NavigationStore';
 
 const NoBackRoutes = [];
@@ -22,6 +23,10 @@ export default {
   addBackAndroidListener() {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', () => {
+        if (MaskRootSibling.siblings.length > 0) {
+          removeFormSibling();
+          return true;
+        }
         return this.onBackAndroid();
       });
     }
@@ -40,6 +45,7 @@ export default {
       return BackHandler.exitApp();
     }
     this.lastBackPressed = Date.now();
+    ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
     return true;
   }
 }

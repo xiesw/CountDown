@@ -10,13 +10,14 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  FlatList
+  FlatList,
 } from 'react-native';
 import {BaseComponent} from "./BaseComponent";
 import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
 import {useStrict, toJS} from 'mobx';
 import BackupItem from './BackupItem';
+import Stores from "../stores";
 
 export default class BackupList extends BaseComponent {
   constructor(props) {

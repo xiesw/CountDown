@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
 } from 'react-native';
 import BaseScene from "./BaseScene";
 import {inject, observer} from 'mobx-react';
@@ -17,6 +17,9 @@ import BackupList from "../component/BackupList";
 import {Theme} from "../common/Theme";
 import Stores from "../stores";
 import {useStrict, toJS} from 'mobx';
+import ToastUtil from "../util/ToastUtil";
+import ConfirmDialog from "../component/ConfirmDialog";
+import {observable, action, runInAction, reaction, autorun, computed} from 'mobx';
 
 @inject('dataStore')
 @observer
@@ -34,12 +37,39 @@ export default class BackupScene extends BaseScene {
     this.props.dataStore.fetchBackupData();
   }
 
-  backup() {
-    this.props.dataStore.backup();
+  componentWillUnmount() {
+    this.props.dataStore.selectedId = '';
+    this.props.dataStore.selectBackupData = [];
   }
 
-  restore() {
+  backup() {
+    if (toJS(this.props.dataStore.backupData).length > 50) {
+      ToastUtil.show('个人最多备份数为50条');
+    } else {
+      this.props.dataStore.backup()
+        .then(() => {
+          ToastUtil.show('备份成功');
+          Stores.dataStore.fetchBackupData();
+        });
+    }
+  }
 
+  showConfirmDialog() {
+    if (this.props.dataStore.selectedId) {
+      ConfirmDialog.show({
+        message: '确定还原吗?',
+        confirm: () => this.restore()
+      });
+    } else {
+      ToastUtil.show('请从列表中选择还原的数据')
+    }
+  }
+
+
+  restore() {
+    let dataArr = toJS(this.props.dataStore.selectBackupData);
+    this.props.dataStore.reset(dataArr);
+    ToastUtil.show('还原成功');
   }
 
   render() {
@@ -70,13 +100,13 @@ export default class BackupScene extends BaseScene {
           >备份</Text>
           <Text
             style={styles.btnRestore}
-            onPress={() => this.restore()}
+            onPress={() => this.showConfirmDialog()}
           >还原</Text>
         </View>
 
         <Text style={styles.account}>
           {`当前账户: ${Stores.userStore.username}`}
-          </Text>
+        </Text>
       </View>
     );
   }

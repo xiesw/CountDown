@@ -25,6 +25,7 @@ import {APP_EVENT} from "../common/Constants";
 import {Theme} from "../common/Theme";
 import Stores from '../stores';
 import {inject, observer} from 'mobx-react';
+import ToastUtil from "../util/ToastUtil";
 
 @inject('editStore')
 @observer
@@ -97,7 +98,6 @@ export default class EditScene extends BaseScene {
    * @param color
    */
   onChangeColor(color) {
-    console.log('pain.xie:', color);
     let c = this.props.editStore.color;
     this.props.editStore.color = c === color? '': color;
   }
@@ -108,6 +108,7 @@ export default class EditScene extends BaseScene {
   deleteItem() {
     if (Stores.editStore.isUpdate) {
       Stores.dataStore.delete(Stores.dataStore.currentItemData);
+      ToastUtil.show('删除成功');
       this.resetToHome();
     } else {
       this.props.navigation.goBack();
@@ -133,9 +134,11 @@ export default class EditScene extends BaseScene {
     if (Stores.editStore.isUpdate) {
       Stores.dataStore.update(Stores.dataStore.currentItemData, data);
       Stores.dataStore.currentItemData = data;
+      ToastUtil.show('修改成功');
       this.props.navigation.goBack();
     } else {
       Stores.dataStore.insert(data);
+      ToastUtil.show('添加成功');
       this.resetToHome();
     }
   }

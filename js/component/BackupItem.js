@@ -10,7 +10,8 @@ import {
   Text,
   TouchableOpacity,
   AppState,
-  Image
+  Image,
+  InteractionManager
 } from 'react-native';
 import {getWidth} from "../util/Utils"
 import DateUtil from "../util/DateUtil";
@@ -19,23 +20,42 @@ import Stores from "../stores";
 import {EDIT_MODEL} from "../common/Constants";
 import ToastUtil from "../util/ToastUtil";
 import TestView from "./TestView";
+import BackupDataDialog from "./BackupDataDialog";
+import {observable, action, runInAction, reaction, autorun, computed} from 'mobx';
 
 export default class BackupItem extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selected: false
+    };
+    this.evalDispose = reaction(
+      () => Stores.dataStore.selectedId,
+      () => {
+        InteractionManager.runAfterInteractions(() => {
+          this.setState({
+            selected: this.objId === Stores.dataStore.selectedId
+          });
+        });
+      }
+    )
+  }
+
+  componentWillUnmount() {
+    this.evalDispose();
   }
 
   onPressItem() {
-    TestView.show();
+    BackupDataDialog.show({data: this.data, objId: this.objId});
   }
 
   handleData() {
     let bmobObj = this.props.bmobObj;
-    let data = JSON.parse(bmobObj.get('data'));
-
     this.objId = bmobObj.id;
-    this.count = data.length;
     this.updatedAt = bmobObj.updatedAt;
+    this.data = JSON.parse(bmobObj.get('data'));
+
+    this.count = this.data.length;
   }
 
   render() {
@@ -48,7 +68,7 @@ export default class BackupItem extends Component {
         <View style={{flexDirection: 'row', marginHorizontal: 32, paddingVertical: getWidth(10)}}>
           <Text style={styles.time}>{this.updatedAt}</Text>
           <Text style={styles.count}>{`${this.count}条记录`}</Text>
-          {this.objId === Stores.dataStore.selectedBackupItem ?
+          {this.state.selected ?
             <Image source={require('../../res/image/select.png')}/> : <View/>}
         </View>
 
