@@ -17,6 +17,8 @@ import DateUtil from "../util/DateUtil";
 import {Theme} from "../common/Theme";
 import Stores from "../stores";
 import {EDIT_MODEL} from "../common/Constants";
+import ToastUtil from "../util/ToastUtil";
+import TestView from "./TestView";
 
 export default class BackupItem extends Component {
   constructor(props) {
@@ -24,7 +26,7 @@ export default class BackupItem extends Component {
   }
 
   onPressItem() {
-    
+    TestView.show();
   }
 
   handleData() {

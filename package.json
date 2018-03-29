@@ -11,10 +11,13 @@
     "localStorage": "^1.0.3",
     "mobx": "^4.1.0",
     "mobx-react": "^5.0.0",
+    "mpm": "0.0.1",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.0",
     "react-native-circular-progress": "^0.2.0",
     "react-native-modal-datetime-picker": "^4.13.0",
+    "react-native-root-siblings": "^3.0.0",
+    "react-native-root-toast": "^3.0.1",
     "react-native-simple-dialogs": "^0.3.1",
     "react-navigation": "1.0.0-beta.23"
   },

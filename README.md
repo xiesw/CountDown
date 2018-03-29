@@ -57,6 +57,8 @@ CountDown
     react-native-simple-dialogs: dialog组件
     react-native-keychain: ios keychain 存储
     mobx:  简单、可扩展的状态管理
+    react-native-root-toast: toast
+    react-native-root-siblings: 从根布局添加视图
 
 ```
 ### 5. 数据结构
@@ -95,6 +97,7 @@ note:
         关于页面 ok
         用户系统 ok
         android 回退栈 ok
+        Toast 组件 ok
         备份系统    
         walle打包
         统计系统
@@ -107,7 +110,6 @@ note:
         设置时间组件
         重复功能
         弹窗
-        Toast 组件
         loading
 ```
 

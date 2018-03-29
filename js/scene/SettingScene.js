@@ -116,7 +116,7 @@ export default class SettingScene extends BaseScene {
         <DescribeView text='备份与恢复'/>
         <SelectItem
           text='备份/还原'
-          type={Type.top}
+          type={Type.single}
           onPress={() => this.onPressBackup()}
         />
 
