@@ -30,6 +30,7 @@ build/
 local.properties
 *.iml
 *.jks
+*.py
 # node.js
 #
 node_modules/
@@ -51,3 +52,4 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
