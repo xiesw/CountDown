@@ -51,6 +51,9 @@ public class MainApplication extends Application implements ReactApplication {
 
     public void initYuoMeng() {
         String channel = WalleChannelReader.getChannel(this.getApplicationContext());
+        if(channel == null) {
+            channel = "official";
+        }
         Log.e("pain.xie", channel);
     }
 
