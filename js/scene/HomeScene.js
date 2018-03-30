@@ -22,6 +22,8 @@ import {inject, observer} from 'mobx-react';
 import {useStrict, toJS} from 'mobx';
 import Stores from '../stores';
 import {EDIT_MODEL} from "../common/Constants";
+import AnalyticsUtil from '../util/um/AnalyticsUtil'
+import {APP_EVENT} from "../common/Constants";
 
 @inject('dataStore')
 @observer
@@ -50,6 +52,7 @@ export default class HomeScene extends BaseScene {
 
   componentDidMount() {
     this.loadData();
+    AnalyticsUtil.onEvent(APP_EVENT.HoneScene);
   }
 
   /**
@@ -60,6 +63,7 @@ export default class HomeScene extends BaseScene {
   }
 
   static goSettingScene() {
+    AnalyticsUtil.onEvent(APP_EVENT.Setting);
     Stores.navigation.navigate({routeName:'SettingScene'});
   }
 
@@ -69,6 +73,7 @@ export default class HomeScene extends BaseScene {
   add() {
     Stores.editStore.model = EDIT_MODEL.new;
     this.props.navigation.navigate('EditScene',);
+    AnalyticsUtil.onEvent(APP_EVENT.Add);
   }
 
   renderItem(itemData) {

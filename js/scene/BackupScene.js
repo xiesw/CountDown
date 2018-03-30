@@ -20,6 +20,8 @@ import {useStrict, toJS} from 'mobx';
 import ToastUtil from "../util/ToastUtil";
 import ConfirmDialog from "../component/ConfirmDialog";
 import {observable, action, runInAction, reaction, autorun, computed} from 'mobx';
+import AnalyticsUtil from '../util/um/AnalyticsUtil'
+import {APP_EVENT} from "../common/Constants";
 
 @inject('dataStore')
 @observer
@@ -35,6 +37,7 @@ export default class BackupScene extends BaseScene {
 
   componentDidMount() {
     this.props.dataStore.fetchBackupData();
+    AnalyticsUtil.onEvent(APP_EVENT.BackupScene);
   }
 
   componentWillUnmount() {
@@ -56,6 +59,7 @@ export default class BackupScene extends BaseScene {
           ToastUtil.show('备份成功');
           Stores.dataStore.fetchBackupData();
         });
+      AnalyticsUtil.onEvent(APP_EVENT.Backup);
     }
   }
 
@@ -80,6 +84,7 @@ export default class BackupScene extends BaseScene {
     let dataArr = toJS(this.props.dataStore.selectBackupData);
     this.props.dataStore.reset(dataArr);
     ToastUtil.show('还原成功');
+    AnalyticsUtil.onEvent(APP_EVENT.Restore);
   }
 
   render() {

@@ -1,13 +1,15 @@
 package com.sc.countdown;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.meituan.android.walle.WalleChannelReader;
 
 /**
  * Created by xieshangwu on 2018/3/22
@@ -33,22 +35,12 @@ public class ConfigUtil {
      * @return
      */
     public static String getChannel(Context reactApplicationContext) {
-        // pain.todo 获取渠道号
-
-        String channel = "GitHub", packageName = "com.sc.countdown";
-        try {
-            if(null != reactApplicationContext) {
-                packageName = reactApplicationContext.getPackageName();
-                ApplicationInfo appInfo = reactApplicationContext.getPackageManager()
-                        .getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                channel = appInfo.metaData.get("MARKET_CHANNEL").toString();
-                System.out.println("===android getChannel:" + channel);
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            return channel;
+        String channel = WalleChannelReader.getChannel(reactApplicationContext);
+        if(channel == null) {
+            channel = "official";
         }
+        Log.e("pain.xie:getChannel", channel);
+        return channel;
     }
 
     /**

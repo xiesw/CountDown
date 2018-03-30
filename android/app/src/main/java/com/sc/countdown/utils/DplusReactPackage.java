@@ -3,7 +3,6 @@ package com.sc.countdown.utils;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.modules.share.ShareModule;
 import com.facebook.react.uimanager.ViewManager;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ public class DplusReactPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(
         ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new ShareModule(reactContext));
         modules.add(new AnalyticsModule(reactContext));
         return modules;
     }

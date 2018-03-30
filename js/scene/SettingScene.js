@@ -17,6 +17,8 @@ import Stores from '../stores'
 import {Theme} from "../common/Theme";
 import {getWidth} from "../util/Utils";
 import {inject, observer} from 'mobx-react';
+import AnalyticsUtil from '../util/um/AnalyticsUtil'
+import {APP_EVENT} from "../common/Constants";
 
 @inject('userStore')
 @observer
@@ -28,6 +30,9 @@ export default class SettingScene extends BaseScene {
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
   }
 
   /**

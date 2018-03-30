@@ -15,6 +15,8 @@ import {
 import BaseScene from "./BaseScene";
 import {getWidth} from "../util/Utils";
 import {Theme} from "../common/Theme";
+import AnalyticsUtil from '../util/um/AnalyticsUtil'
+import {APP_EVENT} from "../common/Constants";
 
 export default class AboutScene extends BaseScene {
 
@@ -26,12 +28,17 @@ export default class AboutScene extends BaseScene {
     super(props);
   }
 
+  componentDidMount() {
+    AnalyticsUtil.onEvent(APP_EVENT.AboutScene);
+  }
+
   goGitHub() {
     let url = 'https://github.com/xiesw/CountDown';
     Linking.openURL(url)
       .catch((err) => {
         console.log('An error occurred', err);
       });
+    AnalyticsUtil.onEvent(APP_EVENT.GitHub);
   }
 
   render() {

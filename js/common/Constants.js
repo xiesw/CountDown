@@ -38,5 +38,7 @@ export const APP_EVENT = {
   Setting: 'Setting', // 点击设置按
   Register: 'Register',
   Login: 'Login',
-  GitHub: 'GitHub'
+  GitHub: 'GitHub',
+  Backup: 'Backup',
+  Restore: 'Restore'
 };

@@ -18,6 +18,8 @@ import {Theme} from "../common/Theme";
 import CryptoUtils from "../util/CryptoUtils";
 import {SOLT} from "../common/Constants";
 import ToastUtil from "../util/ToastUtil";
+import AnalyticsUtil from '../util/um/AnalyticsUtil'
+import {APP_EVENT} from "../common/Constants";
 
 @inject('userStore')
 @observer
@@ -32,6 +34,10 @@ export default class LoginScene extends BaseScene {
     this.state = {
       isLogin: true
     };
+  }
+
+  componentDidMount() {
+    AnalyticsUtil.onEvent(APP_EVENT.LoginScene);
   }
 
   /**
@@ -99,7 +105,7 @@ export default class LoginScene extends BaseScene {
       .catch(error => {
         this.refs.username.showErrorMessage(error);
       })
-
+    AnalyticsUtil.onEvent(APP_EVENT.Register);
   }
 
   /**

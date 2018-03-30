@@ -25,6 +25,8 @@ import {Theme} from "../common/Theme";
 import Stores from '../stores';
 import {inject, observer} from 'mobx-react';
 import ToastUtil from "../util/ToastUtil";
+import AnalyticsUtil from '../util/um/AnalyticsUtil'
+import {APP_EVENT} from "../common/Constants";
 
 @inject('editStore')
 @observer
@@ -37,6 +39,10 @@ export default class EditScene extends BaseScene {
   constructor(props) {
     super(props);
     this.handleData();
+  }
+
+  componentDidMount() {
+    AnalyticsUtil.onEvent(APP_EVENT.EditScene);
   }
 
   componentWillUnmount() {
@@ -112,6 +118,8 @@ export default class EditScene extends BaseScene {
     } else {
       this.props.navigation.goBack();
     }
+    AnalyticsUtil.onEvent(APP_EVENT.Delete);
+
   }
 
   /**
@@ -140,6 +148,8 @@ export default class EditScene extends BaseScene {
       ToastUtil.show('添加成功');
       this.resetToHome();
     }
+    AnalyticsUtil.onEvent(APP_EVENT.Confirm);
+
   }
 
   /**
