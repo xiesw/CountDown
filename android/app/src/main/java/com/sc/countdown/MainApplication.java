@@ -9,6 +9,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.meituan.android.walle.WalleChannelReader;
+import com.sc.countdown.utils.DplusReactPackage;
+import com.sc.countdown.utils.RNUMConfigure;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +29,11 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage> asList(new MainReactPackage(),
-            new CustomerPackage());
+            return Arrays.<ReactPackage> asList(
+                    new MainReactPackage(),
+                    new CustomerPackage(),
+                    new DplusReactPackage()
+            );
         }
 
         @Override
@@ -35,6 +41,10 @@ public class MainApplication extends Application implements ReactApplication {
             return "index";
         }
     };
+
+    public static MainApplication getApplication() {
+        return application;
+    }
 
     @Override
     public ReactNativeHost getReactNativeHost() {
@@ -55,10 +65,8 @@ public class MainApplication extends Application implements ReactApplication {
             channel = "official";
         }
         Log.e("pain.xie", channel);
-    }
-
-    public static MainApplication getApplication(){
-        return application;
+        RNUMConfigure.init(this, "5abde506f43e484f9b0000e2", channel, UMConfigure.DEVICE_TYPE_PHONE,
+                "669c30a9584623e70e8cd01b0381dcb4");
     }
 
 }
