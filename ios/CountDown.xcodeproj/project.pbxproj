@@ -35,13 +35,13 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* CountDownTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* CountDownTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
-		6ABC677E75674BE69503C169 /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B69627A68BA84EBCA408BF0A /* libRNKeychain.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		984718232063446D00A9F268 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 984717FB2063445E00A9F268 /* libART.a */; };
-		9849EF64206E272200A60405 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9849EF62206E272200A60405 /* UMAnalytics.framework */; };
-		9849EF65206E272200A60405 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9849EF63206E272200A60405 /* UMCommon.framework */; };
-		9849EF68206E275000A60405 /* UMAnalyticsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9849EF66206E275000A60405 /* UMAnalyticsModule.m */; };
-		9849EF6B206E275B00A60405 /* RNUMConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 9849EF6A206E275B00A60405 /* RNUMConfigure.m */; };
+		9849EF7E206E310E00A60405 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9849EF7C206E310D00A60405 /* UMAnalytics.framework */; };
+		9849EF7F206E310E00A60405 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9849EF7D206E310E00A60405 /* UMCommon.framework */; };
+		9849EF82206E319300A60405 /* UMAnalyticsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9849EF80206E319200A60405 /* UMAnalyticsModule.m */; };
+		9849EF85206E319F00A60405 /* RNUMConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 9849EF84206E319E00A60405 /* RNUMConfigure.m */; };
+		9849EF87206E34C400A60405 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9849EF86206E34C400A60405 /* libsqlite3.tbd */; };
 		98AC61612063B5350041D219 /* RNAppUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 98AC61602063B5350041D219 /* RNAppUtil.m */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
@@ -363,16 +363,16 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		984717F52063445E00A9F268 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
-		9849EF62206E272200A60405 /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMAnalytics.framework; path = ../../../.Trash/UMAnalytics.framework; sourceTree = "<group>"; };
-		9849EF63206E272200A60405 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UMCommon.framework; path = ../../../.Trash/UMCommon.framework; sourceTree = "<group>"; };
-		9849EF66206E275000A60405 /* UMAnalyticsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UMAnalyticsModule.m; path = ../../../Downloads/1414895420/ReactNative/analytics/analytics_reactnative_1.0.0/analytics_ios/UMAnalyticsModule.m; sourceTree = "<group>"; };
-		9849EF67206E275000A60405 /* UMAnalyticsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UMAnalyticsModule.h; path = ../../../Downloads/1414895420/ReactNative/analytics/analytics_reactnative_1.0.0/analytics_ios/UMAnalyticsModule.h; sourceTree = "<group>"; };
-		9849EF69206E275B00A60405 /* RNUMConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNUMConfigure.h; path = ../../../Downloads/1414895420/ReactNative/common/common_reactnative_1.0.0/common_ios/RNUMConfigure.h; sourceTree = "<group>"; };
-		9849EF6A206E275B00A60405 /* RNUMConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNUMConfigure.m; path = ../../../Downloads/1414895420/ReactNative/common/common_reactnative_1.0.0/common_ios/RNUMConfigure.m; sourceTree = "<group>"; };
+		9849EF7C206E310D00A60405 /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAnalytics.framework; sourceTree = "<group>"; };
+		9849EF7D206E310E00A60405 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
+		9849EF80206E319200A60405 /* UMAnalyticsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAnalyticsModule.m; sourceTree = "<group>"; };
+		9849EF81206E319300A60405 /* UMAnalyticsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAnalyticsModule.h; sourceTree = "<group>"; };
+		9849EF83206E319E00A60405 /* RNUMConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNUMConfigure.h; sourceTree = "<group>"; };
+		9849EF84206E319E00A60405 /* RNUMConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNUMConfigure.m; sourceTree = "<group>"; };
+		9849EF86206E34C400A60405 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		98AC61342063B33E0041D219 /* RNAppUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNAppUtil.h; path = CountDown/RNAppUtil.h; sourceTree = "<group>"; };
 		98AC61602063B5350041D219 /* RNAppUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNAppUtil.m; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
-		B2F059FF07094843ADDC10FE /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "../node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
 		B69627A68BA84EBCA408BF0A /* libRNKeychain.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNKeychain.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -389,23 +389,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9849EF87206E34C400A60405 /* libsqlite3.tbd in Frameworks */,
 				984718232063446D00A9F268 /* libART.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
-				9849EF65206E272200A60405 /* UMCommon.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
-				9849EF64206E272200A60405 /* UMAnalytics.framework in Frameworks */,
+				9849EF7E206E310E00A60405 /* UMAnalytics.framework in Frameworks */,
+				9849EF7F206E310E00A60405 /* UMCommon.framework in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				6ABC677E75674BE69503C169 /* libRNKeychain.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,11 +516,15 @@
 		13B07FAE1A68108700A75B9A /* CountDown */ = {
 			isa = PBXGroup;
 			children = (
+				9849EF7C206E310D00A60405 /* UMAnalytics.framework */,
+				9849EF7D206E310E00A60405 /* UMCommon.framework */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				9849EF81206E319300A60405 /* UMAnalyticsModule.h */,
+				9849EF80206E319200A60405 /* UMAnalyticsModule.m */,
+				9849EF83206E319E00A60405 /* RNUMConfigure.h */,
+				9849EF84206E319E00A60405 /* RNUMConfigure.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				9849EF61206E270200A60405 /* UMReactBridge */,
-				9849EF60206E26E200A60405 /* UMComponent */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -557,6 +561,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9849EF86206E34C400A60405 /* libsqlite3.tbd */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 			);
 			name = Frameworks;
@@ -596,7 +601,6 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				B2F059FF07094843ADDC10FE /* RNKeychain.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -651,26 +655,6 @@
 				B69627A68BA84EBCA408BF0A /* libRNKeychain.a */,
 			);
 			name = "Recovered References";
-			sourceTree = "<group>";
-		};
-		9849EF60206E26E200A60405 /* UMComponent */ = {
-			isa = PBXGroup;
-			children = (
-				9849EF62206E272200A60405 /* UMAnalytics.framework */,
-				9849EF63206E272200A60405 /* UMCommon.framework */,
-			);
-			name = UMComponent;
-			sourceTree = "<group>";
-		};
-		9849EF61206E270200A60405 /* UMReactBridge */ = {
-			isa = PBXGroup;
-			children = (
-				9849EF69206E275B00A60405 /* RNUMConfigure.h */,
-				9849EF6A206E275B00A60405 /* RNUMConfigure.m */,
-				9849EF67206E275000A60405 /* UMAnalyticsModule.h */,
-				9849EF66206E275000A60405 /* UMAnalyticsModule.m */,
-			);
-			name = UMReactBridge;
 			sourceTree = "<group>";
 		};
 		ADBDB9201DFEBF0600ED6528 /* Products */ = {
@@ -1216,8 +1200,8 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				9849EF6B206E275B00A60405 /* RNUMConfigure.m in Sources */,
-				9849EF68206E275000A60405 /* UMAnalyticsModule.m in Sources */,
+				9849EF85206E319F00A60405 /* RNUMConfigure.m in Sources */,
+				9849EF82206E319300A60405 /* UMAnalyticsModule.m in Sources */,
 				98AC61612063B5350041D219 /* RNAppUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1329,6 +1313,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = DLNS3G8AHW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
@@ -1352,6 +1340,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DLNS3G8AHW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
