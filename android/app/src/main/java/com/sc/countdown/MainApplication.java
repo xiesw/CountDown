@@ -1,12 +1,14 @@
 package com.sc.countdown;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +46,12 @@ public class MainApplication extends Application implements ReactApplication {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
         application = this;
+        initYuoMeng();
+    }
+
+    public void initYuoMeng() {
+        String channel = WalleChannelReader.getChannel(this.getApplicationContext());
+        Log.e("pain.xie", channel);
     }
 
     public static MainApplication getApplication(){
