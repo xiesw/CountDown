@@ -8,6 +8,7 @@
  */
 
 #import "AppDelegate.h"
+#import "RNUMConfigure.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -16,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [RNUMConfigure initWithAppkey:@"5abde9c3f29d9812f9000141" channel:@"App Store"];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
