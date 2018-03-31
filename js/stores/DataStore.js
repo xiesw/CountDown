@@ -24,6 +24,7 @@ export default class DataStore {
   @observable dataSource = [];
   // 当前详情数据
   @observable currentItemData = {};
+  @observable loadDataComplete = false;
 
   // 自动备份的数据
   @observable autoBackupData = [];
@@ -38,6 +39,7 @@ export default class DataStore {
     this.backupData = [];
     this.selectBackupData = [];
     this.selectedId = '';
+    this.loadDataComplete = false;
   }
 
   @computed
@@ -57,6 +59,7 @@ export default class DataStore {
         let dataArray = JSON.parse(result);
         this.sortData(dataArray);
         this.dataSource = dataArray;
+        this.loadDataComplete = true;
       }
     })
   }

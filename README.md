@@ -102,9 +102,9 @@ note:
         弹窗      ok
         备份系统    ok
         引入labal, mobx ok
-        walle打包
-        统计系统
-        多渠道统计
+        walle打包 ok
+        统计系统 ok
+        多渠道统计 ok
         上架
     1.2 
         沉沁式状态栏

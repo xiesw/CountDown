@@ -86,7 +86,7 @@ export default class HomeScene extends BaseScene {
   }
 
   renderEmptyView() {
-    return ( this.props.dataStore.isEmpty
+    return ( this.props.dataStore.isEmpty && this.props.dataStore.loadDataComplete
         ? <View style={styles.emptyContainer}>
           <YearProgressView/>
           <Text style={styles.note}>点击右下角按钮添加倒计时项目</Text>
