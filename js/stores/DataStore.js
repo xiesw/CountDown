@@ -59,8 +59,8 @@ export default class DataStore {
         let dataArray = JSON.parse(result);
         this.sortData(dataArray);
         this.dataSource = dataArray;
-        this.loadDataComplete = true;
       }
+      this.loadDataComplete = true;
     })
   }
 
