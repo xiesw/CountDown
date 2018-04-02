@@ -66,7 +66,8 @@ public class MainApplication extends Application implements ReactApplication {
         }
         Log.e("pain.xie", channel);
         RNUMConfigure.init(this, "5abde506f43e484f9b0000e2", channel, UMConfigure.DEVICE_TYPE_PHONE,
-                "669c30a9584623e70e8cd01b0381dcb4");
+                null);
+        UMConfigure.setLogEnabled(true);
     }
 
 }
