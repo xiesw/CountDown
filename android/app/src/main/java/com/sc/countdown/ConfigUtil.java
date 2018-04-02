@@ -24,8 +24,13 @@ public class ConfigUtil {
      * @return
      */
     public static String getAppName(Context context) {
-        String appName = context.getString(R.string.app_name);
-        return appName == null || appName.length() == 0 ? "" : appName;
+        try {
+            String appName = context.getString(R.string.app_name);
+            return appName.length() == 0 ? "" : appName;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "CountDown";
     }
 
     /**
