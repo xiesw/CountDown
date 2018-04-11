@@ -76,7 +76,8 @@ CountDown
 
 <img src="http://ovxz7mlox.bkt.clouddn.com/Group.png" width="640"/>
 
-app: 1.1完成后提供  
+#### Download    
+[release](https://github.com/xiesw/CountDown/releases)  
 note:   
 1. app时间系统为本机系统   
 2. 卸载app将会丢失数据,请在设置里
