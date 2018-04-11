@@ -20,7 +20,7 @@ import Stores from "../stores";
 import AnalyticsUtil from '../util/um/AnalyticsUtil'
 import {APP_EVENT} from "../common/Constants";
 
-const REFRESH_TIME = 57;
+const REFRESH_TIME = 71;
 export default class DetailScene extends BaseScene {
 
   static navigationOptions = {
@@ -56,6 +56,7 @@ export default class DetailScene extends BaseScene {
     this.minute = DateUtil.getMinute(timestamp);
     this.second = DateUtil.getSecond(timestamp);
     this.millisecond = DateUtil.getMillisecond(timestamp);
+
     this.dateText = DateUtil.getDataAndWeek(timestamp);
 
     this.setState({

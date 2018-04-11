@@ -112,13 +112,13 @@ export default class DateUtil {
   }
 
   /**
-   * 返回毫秒
+   * 返回毫秒(随机)
    * @param timestamp
    * @returns {string}
    */
   static getMillisecond(timestamp) {
     let time = Math.abs(timestamp - Date.now());
-    let millisecond = Math.floor((time % 1000) / 10);
+    let millisecond = Math.abs(Math.floor((time % 1000) / 10) - Math.floor(Math.random() * 10));
     return millisecond < 10 ? '0' + millisecond : millisecond;
   }
 
