@@ -346,5 +346,6 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: getWidth(18),
+    color:'white'
   }
 });
