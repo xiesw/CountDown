@@ -14,6 +14,7 @@ import AboutScene from "../scene/AboutScene";
 import BackupScene from "../scene/BackupScene";
 import RestoreScene from "../scene/RestoreScene";
 import LoginScene from "../scene/LoginScene";
+import WebViewScene from "../scene/WebViewScene";
 
 
 // 默认的导航栏样式
@@ -77,6 +78,7 @@ const RouterStack = StackNavigator(
     BackupScene: {screen: BackupScene},
     RestoreScene: {screen: RestoreScene},
     LoginScene: {screen: LoginScene},
+    WebViewScene: {screen: WebViewScene},
   },
   {
     navigationOptions: ({navigation}) => getNavigationOptions(navigation),
