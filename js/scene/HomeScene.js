@@ -71,12 +71,12 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    // Stores.editStore.model = EDIT_MODEL.new;
-    // this.props.navigation.navigate('EditScene',);
-    // AnalyticsUtil.onEvent(APP_EVENT.Add);
-    let title = '测试';
-    let url = 'http://121.42.181.106/dist/';
-    this.props.navigation.navigate('WebViewScene', {url, title})
+    Stores.editStore.model = EDIT_MODEL.new;
+    this.props.navigation.navigate('EditScene',);
+    AnalyticsUtil.onEvent(APP_EVENT.Add);
+    // let title = '测试';
+    // let url = 'http://www.palxie.xyz';
+    // this.props.navigation.navigate('WebViewScene', {url, title})
   }
 
   renderItem(itemData) {
