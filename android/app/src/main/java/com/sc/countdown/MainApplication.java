@@ -9,8 +9,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.meituan.android.walle.WalleChannelReader;
-import com.sc.countdown.utils.DplusReactPackage;
-import com.sc.countdown.utils.RNUMConfigure;
+import com.sc.countdown.um.DplusReactPackage;
+import com.sc.countdown.um.RNUMConfigure;
 import com.umeng.commonsdk.UMConfigure;
 
 import java.util.Arrays;

@@ -7,7 +7,8 @@ import React, {Component} from 'react';
 import {
   View,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
 import EditText from './EditText';
 import {MARK_COLOR} from "../common/Constants"
@@ -24,14 +25,23 @@ export default class ColorPickInput extends EditText {
 
   renderOptions() {
     return MARK_COLOR.map((color, index, arr) => {
-      let style = (color === this.props.color ? styles.dotSelect : styles.dot);
+      //let style = (color === this.props.color ? styles.dotSelect : styles.dot);
+      let style = styles.dot;
       return (
         <TouchableOpacity
           activeOpacity={1}
           style={[style, {backgroundColor: color}]}
           key={index}
           onPress={() => this.onChange(color)}
-        />
+        >
+          {color === this.props.color ?
+            <Image
+              source={require('../../res/image/select.png')}
+              style={styles.image}
+            />
+            : null
+          }
+        </TouchableOpacity>
       );
     });
   }
@@ -48,13 +58,15 @@ export default class ColorPickInput extends EditText {
 const styles = StyleSheet.create({
   container: {
     marginRight: 64,
-    height:getWidth(30),
+    height: getWidth(30),
     width: getWidth(180),
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
     justifyContent: 'space-between'
   },
   dot: {
+    justifyContent:'center',
+    alignItems:'center',
     width: getWidth(24),
     height: getWidth(24),
     borderRadius: getWidth(24),
@@ -65,5 +77,10 @@ const styles = StyleSheet.create({
     borderRadius: getWidth(24),
     borderColor: 'black',
     borderWidth: 2
+  },
+  image: {
+    width: getWidth(18),
+    height: getWidth(13),
+    tintColor: 'white',
   }
 });
