@@ -1,21 +1,68 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="60dp"
+                android:layout_height="60dp">
+    
+    <LinearLayout
+        android:id="@+id/widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_bg"
+        android:orientation="vertical"
+        >
+        
+        
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="@drawable/widget_text_bg"
+            android:gravity="center"
+            android:text="@string/text_select"
+            android:textColor="#fff"
+            android:textSize="10sp"
+            />
+        
+        
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:src="@mipmap/widget_add"
+            />
+        
+        <LinearLayout
+            android:id="@+id/textContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+            
+            <TextView
+                android:id="@+id/day"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#09C"
-                android:padding="@dimen/widget_margin">
-    
-    <TextView
-        android:id="@+id/appwidget_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        android:background="#09C"
-        android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"/>
-
+                android:layout_gravity="center"
+                android:text="1356"
+                android:textColor="#F2661C"
+                android:textSize="18sp"
+                />
+            
+            <TextView
+                android:id="@+id/unit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="4dp"
+                android:text="天"
+                android:textColor="#F2661C"
+                android:textSize="10sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
