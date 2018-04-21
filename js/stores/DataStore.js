@@ -12,6 +12,7 @@ import {useStrict, toJS} from 'mobx';
 import Utils from "../util/Utils";
 import bmob from '../net/bmob/bmob';
 import ToastUtil from "../util/ToastUtil";
+import UpdateUtil from "../util/UpdateUtil";
 
 const Bmob = bmob.Bmob;
 const AsyncStorage_Name = 'Data';
@@ -55,10 +56,13 @@ export default class DataStore {
   load() {
     AsyncStorage.getItem(AsyncStorage_Name, (error, result) => {
       if (!error && result) {
-        console.log('pain.xie', result);
         let dataArray = JSON.parse(result);
         this.sortData(dataArray);
+        let isUpdate = UpdateUtil.updateId(dataArray);
         this.dataSource = dataArray;
+        if(isUpdate) {
+          this.save();
+        }
       }
       this.loadDataComplete = true;
     })
@@ -80,7 +84,7 @@ export default class DataStore {
   @action
   delete(data) {
     let dataArray = toJS(this.dataSource);
-    Utils.removeArrayByTimeStamp(dataArray, data);
+    Utils.removeArrayById(dataArray, data);
     this.reset(dataArray);
   }
 
@@ -93,7 +97,7 @@ export default class DataStore {
   update(oldData, newData) {
     let dataArray = toJS(this.dataSource);
     this.currentItemData = newData;
-    Utils.removeArrayByTimeStamp(dataArray, oldData);
+    Utils.removeArrayById(dataArray, oldData);
     dataArray.push(newData);
     this.reset(dataArray);
   }

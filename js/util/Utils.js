@@ -64,13 +64,40 @@ export default class Utils {
   }
 
   /**
+   * 通过id移除数组数据
+   * @param arr
+   * @param item
+   */
+  static removeArrayById(arr, item) {
+    if(!arr) {
+      return
+    }
+    let index = -1;
+    let length = arr.length;
+    for(let i = 0; i< length; i++) {
+      if(arr[i].id === item.id) {
+        index = i;
+        break;
+      }
+    }
+    if (index !== -1) {
+      arr.splice(index, 1);
+    }
+  }
+
+  /**
    * 是否是Android
    */
   static isAndroid() {
     return Platform.OS === 'android';
   }
 
-
+  /**
+   * 生成16位随机id
+   */
+  static createId() {
+    return Math.random().toString(36).substr(2);
+  }
 
 }
 

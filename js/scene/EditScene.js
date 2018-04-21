@@ -27,6 +27,7 @@ import {inject, observer} from 'mobx-react';
 import ToastUtil from "../util/ToastUtil";
 import AnalyticsUtil from '../util/um/AnalyticsUtil'
 import {APP_EVENT} from "../common/Constants";
+import Utils from "../util/Utils";
 
 @inject('editStore')
 @observer
@@ -144,6 +145,7 @@ export default class EditScene extends BaseScene {
       ToastUtil.show('修改成功');
       this.props.navigation.goBack();
     } else {
+      data.id = Utils.createId();
       Stores.dataStore.insert(data);
       ToastUtil.show('添加成功');
       this.resetToHome();

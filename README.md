@@ -64,6 +64,7 @@ CountDown
 ### 5. 数据结构
 ```
 {
+    "id": "afasfdascvdf",       // 16位id标示
     "name": 'new year',       //string
     "timestamp": '1516322747974',  //number
     "repeat": 'once',         //enum{'once','everyDay','everyWeek','everyMouth','everyYear'}

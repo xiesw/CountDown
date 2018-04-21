@@ -22,6 +22,8 @@ import ConfirmDialog from "../component/ConfirmDialog";
 import {observable, action, runInAction, reaction, autorun, computed} from 'mobx';
 import AnalyticsUtil from '../util/um/AnalyticsUtil'
 import {APP_EVENT} from "../common/Constants";
+import Utils from "../util/Utils";
+import UpdateUtil from "../util/UpdateUtil";
 
 @inject('dataStore')
 @observer
@@ -82,6 +84,7 @@ export default class BackupScene extends BaseScene {
    */
   restore() {
     let dataArr = toJS(this.props.dataStore.selectBackupData);
+    UpdateUtil.updateId(dataArr);
     this.props.dataStore.reset(dataArr);
     ToastUtil.show('还原成功');
     AnalyticsUtil.onEvent(APP_EVENT.Restore);
