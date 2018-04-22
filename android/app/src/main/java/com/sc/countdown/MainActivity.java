@@ -1,10 +1,14 @@
 package com.sc.countdown;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.facebook.react.ReactActivity;
+import com.sc.countdown.widget.Actions;
+import com.sc.countdown.widget.RNWidgetUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends ReactActivity {
@@ -24,6 +28,26 @@ public class MainActivity extends ReactActivity {
         super.onCreate(savedInstanceState, persistentState);
         MobclickAgent.setSessionContinueMillis(1000);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("xieshangwu", "onStart");
+        Intent intent = getIntent();
+        if(intent.getAction() != null) {
+            switch(intent.getAction()) {
+                case Actions.SELECT:
+                    int appWidgetId = intent.getIntExtra("appWidgetId", 0);
+                    Log.e("xieshangwu", "onStart appWidgetId:" + appWidgetId);
+                    Log.e("xieshangwu", "SELECT");
+                    RNWidgetUtil.goSelect(49);
+                    break;
+                case Actions.DETAIL:
+
+                    break;
+            }
+        }
     }
 
     @Override

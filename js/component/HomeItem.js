@@ -111,9 +111,7 @@ export default class HomeItem extends Component {
    * 点击条目
    */
   onPressItem() {
-    Stores.dataStore.currentItemData = this.props.data;
-    Stores.editStore.model = EDIT_MODEL.update;
-    this.props.navigation.navigate('DetailScene');
+    this.props.onClickItem(this.props.data);
   }
 
   render() {

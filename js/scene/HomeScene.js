@@ -48,6 +48,19 @@ export default class HomeScene extends BaseScene {
 
   constructor(props) {
     super(props);
+    this.addListener();
+  }
+
+  addListener() {
+    this.subscription = DeviceEventEmitter.addListener('goSelect',(data) =>{
+      let appWidgetId = data.appWidgetId;
+      console.log('pain.xie', data);
+      Stores.navigation.navigate({routeName:'SelectScene', params:{appWidgetId}});
+    })
+  }
+
+  componentWillUnmount() {
+    this.subscription.remove();
   }
 
   componentDidMount() {
@@ -74,9 +87,18 @@ export default class HomeScene extends BaseScene {
     Stores.editStore.model = EDIT_MODEL.new;
     this.props.navigation.navigate('EditScene',);
     AnalyticsUtil.onEvent(APP_EVENT.Add);
+
+    // this.props.navigation.navigate('SelectScene');
+
     // let title = '测试';
     // let url = 'http://www.palxie.xyz';
     // this.props.navigation.navigate('WebViewScene', {url, title})
+  }
+
+  onClickItem(data) {
+    Stores.dataStore.currentItemData = data;
+    Stores.editStore.model = EDIT_MODEL.update;
+    this.props.navigation.navigate('DetailScene');
   }
 
   renderItem(itemData) {
@@ -84,6 +106,7 @@ export default class HomeScene extends BaseScene {
       <HomeItem
         data={itemData.item}
         {...this.props}
+        onClickItem = {(data) => this.onClickItem(data)}
       />
     )
   }

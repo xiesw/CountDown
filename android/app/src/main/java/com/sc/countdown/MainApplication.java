@@ -11,6 +11,7 @@ import com.facebook.soloader.SoLoader;
 import com.meituan.android.walle.WalleChannelReader;
 import com.sc.countdown.um.DplusReactPackage;
 import com.sc.countdown.um.RNUMConfigure;
+import com.sc.countdown.widget.WidgetPackage;
 import com.umeng.commonsdk.UMConfigure;
 
 import java.util.Arrays;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage> asList(
                     new MainReactPackage(),
                     new CustomerPackage(),
+                    new WidgetPackage(),
                     new DplusReactPackage()
             );
         }
