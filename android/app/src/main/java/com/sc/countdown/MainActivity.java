@@ -1,5 +1,6 @@
 package com.sc.countdown;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -38,10 +39,9 @@ public class MainActivity extends ReactActivity {
         if(intent.getAction() != null) {
             switch(intent.getAction()) {
                 case Actions.SELECT:
-                    int appWidgetId = intent.getIntExtra("appWidgetId", 0);
+                    int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0);
                     Log.e("xieshangwu", "onStart appWidgetId:" + appWidgetId);
-                    Log.e("xieshangwu", "SELECT");
-                    RNWidgetUtil.goSelect(49);
+                    RNWidgetUtil.goSelect(appWidgetId);
                     break;
                 case Actions.DETAIL:
 
@@ -55,6 +55,7 @@ public class MainActivity extends ReactActivity {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     @Override
     protected void onPause() {
         super.onPause();

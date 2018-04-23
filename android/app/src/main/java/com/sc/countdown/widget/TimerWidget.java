@@ -26,10 +26,9 @@ public class TimerWidget extends AppWidgetProvider {
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.setAction(Actions.SELECT);
-        intent.putExtra("appWidgetId", appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0);
         views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-        Log.e("appWidgetId", appWidgetId + "");
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -37,9 +36,8 @@ public class TimerWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        for(int i = 0; i < appWidgetIds.length; i++) {
-            Log.e("pain.xie", i + "xieshangwu");
-            updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
+        for(int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
@@ -76,7 +74,6 @@ public class TimerWidget extends AppWidgetProvider {
                 Log.e("xieshangwu", "onReceive UPDATE");
                 break;
             case Actions.WIDGET_SELECT:
-                Log.e("xieshangwu", "onReceive WIDGET_SELECT");
                 WidgetUtil.select(TimerWidget.class, context, bundle);
                 break;
         }

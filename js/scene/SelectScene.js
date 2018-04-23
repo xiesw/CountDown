@@ -33,10 +33,8 @@ export default class SelectScene extends BaseScene {
     // pain.todo 调用android方法
     if(Utils.isAndroid()) {
       let RnWidgetUtil = NativeModules.RNWidgetUtil;
-      console.log('pain.xie', this.props);
       data.appWidgetId = this.props.navigation.state.params.appWidgetId;
       RnWidgetUtil.onSelect(data);
-
     }
   }
 
