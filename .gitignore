@@ -24,6 +24,7 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
+captures/
 build/
 .idea
 .gradle
