@@ -53,7 +53,7 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("xieshangwu", "onStart");
+        Log.e("xieshangwu", "onResume");
         Intent intent = getIntent();
         if(intent.getAction() != null) {
             switch(intent.getAction()) {
@@ -66,15 +66,21 @@ public class MainActivity extends ReactActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                EventEmitter.goSelect(appWidgetId);
+                                EventEmitter.select(appWidgetId);
                             }
                         }, 500);
                     } else {
-                        EventEmitter.goSelect(appWidgetId);
+                        EventEmitter.select(appWidgetId);
                     }
                     break;
                 case Actions.DETAIL:
 
+                    break;
+
+                default:
+                    if(RNWidgetUtil.reactApplicationContext != null) {
+                        EventEmitter.cancel();
+                    }
                     break;
             }
         }

@@ -14,16 +14,23 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class EventEmitter {
 
-    static public void goSelect(int appWidgetId) {
+    static public void select(int appWidgetId) {
         final WritableMap map = Arguments.createMap();
         map.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        Log.e("xieshangwu", "EventEmitter goSelect");
-        sendEvent(RNWidgetUtil.reactApplicationContext, "goSelect", map);
+        Log.e("xieshangwu", "EventEmitter select");
+        sendEvent(RNWidgetUtil.reactApplicationContext, "select", map);
     }
+
+    static public void cancel() {
+        Log.e("xieshangwu", "EventEmitter cancel");
+        sendEvent(RNWidgetUtil.reactApplicationContext, "cancel", Arguments.createMap());
+    }
+
 
     static private void sendEvent(ReactContext reactContext, String eventName, WritableMap params) {
         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
     }
+
 
 }

@@ -2,7 +2,6 @@ package com.sc.countdown.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -36,25 +35,15 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
         String name = map.getString("name");
         double d = map.getDouble("timestamp");
         long timestamp = (long) d;
-        String repeat = map.getString("repeat");
-        boolean top = map.getBoolean("top");
         String color = map.getString("color");
 
-        Log.e("xieshangwu", "id:" + id + "/name:" + name + "/timestamp:" + timestamp + "/color:"
-                + color);
-
         Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        bundle.putString("id", id);
-        bundle.putString("name", name);
-        bundle.putLong("timestamp", timestamp);
-        bundle.putString("repeat", repeat);
-        bundle.putBoolean("top", top);
-        bundle.putString("color", color);
-        bundle.putString("name", name);
-        intent.putExtra("bundle", bundle);
+        WidgetBean widgetBean = new WidgetBean(appWidgetId, id, name, timestamp, color);
+        intent.putExtra("data", widgetBean);
         intent.setAction(Actions.WIDGET_SELECT);
+
+        Log.e("xieshangwu", widgetBean.toString());
+
         reactApplicationContext.sendBroadcast(intent);
     }
 

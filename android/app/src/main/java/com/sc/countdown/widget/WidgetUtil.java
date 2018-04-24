@@ -5,14 +5,14 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 
 import com.sc.countdown.MainActivity;
 import com.sc.countdown.R;
+import com.sc.countdown.utils.SpUtil;
 
 /**
  * Created by xieshangwu on 2018/4/22
@@ -35,43 +35,71 @@ public class WidgetUtil {
      *
      * @param c
      * @param context
-     * @param bundle
+     * @param widgetBean
      */
-    public static void select(Class c, Context context, Bundle bundle) {
-        int appWidgetId = bundle.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
-        long timestamp = bundle.getLong("timestamp");
+    public static void updateWidget(Class c, Context context, WidgetBean widgetBean) {
+        int appWidgetId = widgetBean.appWidgetId;
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.timer_widget);
-        remoteViews.setTextViewText(R.id.title, bundle.getString("name"));
-        remoteViews.setInt(R.id.title, "setBackgroundResource", getTitleColor(timestamp, bundle.getString
-                ("color")));
-        remoteViews.setInt(R.id.image, "setVisibility", View.GONE);
-        remoteViews.setInt(R.id.textContainer, "setVisibility", View.VISIBLE);
-        int day = getDay(timestamp);
+        if(TextUtils.isEmpty(widgetBean.id)) {
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setAction(Actions.SELECT);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0);
+            remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
+        } else {
+            long timestamp = widgetBean.timestamp;
+            remoteViews.setTextViewText(R.id.title, widgetBean.name);
+            remoteViews.setInt(R.id.title, "setBackgroundResource", getTitleColor(timestamp,
+                    widgetBean.color));
+            remoteViews.setInt(R.id.image, "setVisibility", View.GONE);
+            remoteViews.setInt(R.id.textContainer, "setVisibility", View.VISIBLE);
+            int day = getDay(timestamp);
 
-        remoteViews.setTextViewText(R.id.day, day + "");
-        remoteViews.setTextViewText(R.id.unit, "天");
-        remoteViews.setTextColor(R.id.day, getColor(timestamp));
-        remoteViews.setTextColor(R.id.unit, getColor(timestamp));
+            remoteViews.setTextViewText(R.id.day, day + "");
+            remoteViews.setTextViewText(R.id.unit, "天");
+            remoteViews.setTextColor(R.id.day, getColor(timestamp));
+            remoteViews.setTextColor(R.id.unit, getColor(timestamp));
 
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setAction(Actions.DETAIL);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0);
-        //remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setAction(Actions.DETAIL);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent,
+                    0);
+            remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
+            saveData(widgetBean);
+        }
 
         AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, remoteViews);
     }
 
-    public static void test(Class c, Context context, Bundle bundle) {
-        TextView textView = new TextView(context);
-        textView.setBackgroundResource(R.drawable.widget_text_bg);
+    private static void saveData(WidgetBean widgetBean) {
+        SpUtil.putInt(WidgetBean.KEY_APPWIDGETID + widgetBean.appWidgetId, widgetBean.appWidgetId);
+        SpUtil.putString(WidgetBean.KEY_ID + widgetBean.appWidgetId, widgetBean.id);
+        SpUtil.putString(WidgetBean.KEY_NAME + widgetBean.appWidgetId, widgetBean.name);
+        SpUtil.putLong(WidgetBean.KEY_TIMESTAMP + widgetBean.appWidgetId, widgetBean.timestamp);
+        SpUtil.putString(WidgetBean.KEY_COLOR + widgetBean.appWidgetId, widgetBean.color);
     }
 
-        /**
-         * 获取剩余时间
-         * @param timestamp
-         * @return
-         */
+    public static WidgetBean getWidgetBean(int appWidgetId) {
+        WidgetBean widgetBean = new WidgetBean();
+        int widgetId = SpUtil.getInt(WidgetBean.KEY_APPWIDGETID + appWidgetId, -1);
+        widgetBean.appWidgetId = appWidgetId;
+        if(widgetId != -1) {
+            widgetBean.id = SpUtil.getString(WidgetBean.KEY_ID + appWidgetId);
+            widgetBean.name = SpUtil.getString(WidgetBean.KEY_NAME + appWidgetId);
+            widgetBean.timestamp = SpUtil.getLong(WidgetBean.KEY_TIMESTAMP + appWidgetId);
+            widgetBean.color = SpUtil.getString(WidgetBean.KEY_COLOR + appWidgetId);
+            Log.e("xieshangwu", widgetBean.toString());
+        }
+        return widgetBean;
+    }
+
+    /**
+     * 获取剩余时间
+     *
+     * @param timestamp
+     * @return
+     */
     private static int getDay(long timestamp) {
         long time = System.currentTimeMillis();
 
@@ -101,13 +129,13 @@ public class WidgetUtil {
                     return R.drawable.widget_text_bg_red;
                 } else if(color.equalsIgnoreCase(YELLOW)) {
                     return R.drawable.widget_text_bg_yellow;
-                }else if(color.equalsIgnoreCase(BLUE)) {
+                } else if(color.equalsIgnoreCase(BLUE)) {
                     return R.drawable.widget_text_bg_blue;
-                }else if(color.equalsIgnoreCase(PURPLE)) {
+                } else if(color.equalsIgnoreCase(PURPLE)) {
                     return R.drawable.widget_text_bg_purple;
-                }else if(color.equalsIgnoreCase(GREEN)) {
+                } else if(color.equalsIgnoreCase(GREEN)) {
                     return R.drawable.widget_text_bg_green;
-                }else if(color.equalsIgnoreCase(GRAY)) {
+                } else if(color.equalsIgnoreCase(GRAY)) {
                     return R.drawable.widget_text_bg_gray;
                 }
             }

@@ -1,6 +1,5 @@
 package com.sc.countdown.widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -8,10 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.RemoteViews;
-
-import com.sc.countdown.MainActivity;
-import com.sc.countdown.R;
 
 /**
  * Implementation of App Widget functionality.
@@ -20,17 +15,7 @@ public class TimerWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int
             appWidgetId) {
-
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.timer_widget);
-
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setAction(Actions.SELECT);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0);
-        views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        WidgetUtil.updateWidget(TimerWidget.class, context, WidgetUtil.getWidgetBean(appWidgetId));
     }
 
     @Override
@@ -66,6 +51,7 @@ public class TimerWidget extends AppWidgetProvider {
         }
 
         Bundle bundle = intent.getBundleExtra("bundle");
+        WidgetBean widgetBean = (WidgetBean) intent.getSerializableExtra("data");
         switch(intent.getAction()) {
             case Actions.DELETE:
 
@@ -74,7 +60,7 @@ public class TimerWidget extends AppWidgetProvider {
                 Log.e("xieshangwu", "onReceive UPDATE");
                 break;
             case Actions.WIDGET_SELECT:
-                WidgetUtil.select(TimerWidget.class, context, bundle);
+                WidgetUtil.updateWidget(TimerWidget.class, context, widgetBean);
                 break;
         }
 

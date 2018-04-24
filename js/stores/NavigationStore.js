@@ -11,6 +11,7 @@ import {
 import {RouterStack} from '../routers'
 import {NavigationActions} from 'react-navigation'
 import {useStrict, toJS} from 'mobx';
+import Stores from "../stores";
 
 //返回当前所在路由
 export const getCurrentRoute = (state) => {

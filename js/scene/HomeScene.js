@@ -6,6 +6,7 @@
 import React, {Component} from 'react';
 import {
   StyleSheet,
+  AppState,
   View,
   TouchableOpacity,
   DeviceEventEmitter,
@@ -26,6 +27,7 @@ import {EDIT_MODEL} from "../common/Constants";
 import AnalyticsUtil from '../util/um/AnalyticsUtil'
 import {APP_EVENT} from "../common/Constants";
 import ToastUtil from "../util/ToastUtil";
+import AndroidEmitUtil from "../util/AndroidEmitUtil";
 
 @inject('dataStore')
 @observer
@@ -33,18 +35,18 @@ export default class HomeScene extends BaseScene {
 
   static navigationOptions = ({navigation}) => {
     let rightView =
-        <TouchableOpacity
-          onPress={() => {
-            if(!Stores.dataStore.selectMode) {
-              HomeScene.goSettingScene(navigation);
-            }
-          }}
-        >
-          <Image
-            style={{marginRight: 20}}
-            source={require('../../res/image/setting.png')}
-          />
-        </TouchableOpacity>;
+      <TouchableOpacity
+        onPress={() => {
+          if (!Stores.dataStore.selectMode) {
+            HomeScene.goSettingScene(navigation);
+          }
+        }}
+      >
+        <Image
+          style={{marginRight: 20}}
+          source={require('../../res/image/setting.png')}
+        />
+      </TouchableOpacity>;
 
     return {
       headerTitle: '倒计时',
@@ -55,24 +57,16 @@ export default class HomeScene extends BaseScene {
 
   constructor(props) {
     super(props);
-    this.addListener();
-  }
-
-  addListener() {
-    this.subscription = DeviceEventEmitter.addListener('goSelect', (data) => {
-      this.appWidgetId = data.appWidgetId;
-      console.log('pain.xie', data);
-      this.props.dataStore.selectMode = true;
-    })
-  }
-
-  componentWillUnmount() {
-    this.subscription.remove();
+    AndroidEmitUtil.init();
   }
 
   componentDidMount() {
     this.loadData();
     AnalyticsUtil.onEvent(APP_EVENT.HoneScene);
+  }
+
+  componentWillUnmount() {
+    AndroidEmitUtil.remove();
   }
 
   /**
@@ -105,7 +99,7 @@ export default class HomeScene extends BaseScene {
   onClickItem(data) {
     if (this.props.dataStore.selectMode) {
       let RnWidgetUtil = NativeModules.RNWidgetUtil;
-      data.appWidgetId = this.appWidgetId;
+      data.appWidgetId = AndroidEmitUtil.getId();
       RnWidgetUtil.onSelect(data);
       this.props.dataStore.selectMode = false;
       ToastUtil.show("已选择");
