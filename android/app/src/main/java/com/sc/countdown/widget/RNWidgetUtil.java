@@ -5,14 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 /**
  * Created by xieshangwu on 2018/3/21
@@ -20,10 +16,11 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class RNWidgetUtil extends ReactContextBaseJavaModule {
     // pain.todo context 优化
-    static ReactApplicationContext reactApplicationContext;
+    public static ReactApplicationContext reactApplicationContext;
 
     public RNWidgetUtil(ReactApplicationContext reactContext) {
         super(reactContext);
+        Log.e("xieshangwu", "RNWidgetUtil init");
         this.reactApplicationContext = reactContext;
     }
 
@@ -43,16 +40,19 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
         boolean top = map.getBoolean("top");
         String color = map.getString("color");
 
+        Log.e("xieshangwu", "id:" + id + "/name:" + name + "/timestamp:" + timestamp + "/color:"
+                + color);
+
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        bundle.putString("id",id);
-        bundle.putString("name",name);
-        bundle.putLong("timestamp",timestamp);
-        bundle.putString("repeat",repeat);
-        bundle.putBoolean("top",top);
-        bundle.putString("color",color);
-        bundle.putString("name",name);
+        bundle.putString("id", id);
+        bundle.putString("name", name);
+        bundle.putLong("timestamp", timestamp);
+        bundle.putString("repeat", repeat);
+        bundle.putBoolean("top", top);
+        bundle.putString("color", color);
+        bundle.putString("name", name);
         intent.putExtra("bundle", bundle);
         intent.setAction(Actions.WIDGET_SELECT);
         reactApplicationContext.sendBroadcast(intent);
@@ -60,24 +60,5 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void onDetail(ReadableMap map) {
-        Log.e("xieshangwu", map.getString("id"));
-        Log.e("xieshangwu", map.getString("name"));
-        double d = map.getDouble("timestamp");
-        Log.e("xieshangwu", "" + (long)d);
-        Log.e("xieshangwu", "" + map.getDouble("timestamp"));
-        Log.e("xieshangwu", map.getString("repeat"));
-        Log.e("xieshangwu","" + map.getBoolean("top"));
-        Log.e("xieshangwu", map.getString("color"));
-    }
-
-    static public void goSelect(int appWidgetId) {
-        WritableMap map =  Arguments.createMap();
-        map.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        sendEvent(reactApplicationContext, "goSelect", map);
-    }
-
-    static private void sendEvent(ReactContext reactContext, String eventName, WritableMap params) {
-        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
     }
 }

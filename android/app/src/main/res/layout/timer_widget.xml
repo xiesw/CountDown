@@ -11,23 +11,16 @@
         >
         
         
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:background="@drawable/widget_text_bg"
-            android:layout_height="18dp">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#f00"
+            android:layout_height="18dp"
+            android:background="@drawable/widget_text_bg"
             android:gravity="center"
             android:text="@string/text_select"
             android:textColor="#fff"
-            android:textSize="10sp"
+            android:textSize="12sp"
             />
-            
-        </FrameLayout>
-        
         
         <ImageView
             android:id="@+id/image"
@@ -59,6 +52,7 @@
                 />
             
             <TextView
+                android:visibility="gone"
                 android:id="@+id/unit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

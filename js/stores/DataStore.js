@@ -33,6 +33,8 @@ export default class DataStore {
   @observable selectedId = '';
   @observable selectBackupData = [];
 
+  // 是否为widget选择模式
+  @observable selectMode = false;
   @action
   clear() {
     this.currentItemData = {};
@@ -41,6 +43,7 @@ export default class DataStore {
     this.selectBackupData = [];
     this.selectedId = '';
     this.loadDataComplete = false;
+    this.selectMode = false;
   }
 
   @computed

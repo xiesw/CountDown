@@ -11,7 +11,8 @@ import {
   DeviceEventEmitter,
   FlatList,
   Image,
-  Text
+  Text,
+  NativeModules
 } from 'react-native';
 import BaseScene from "./BaseScene";
 import HomeItem from "../component/HomeItem";
@@ -24,27 +25,33 @@ import Stores from '../stores';
 import {EDIT_MODEL} from "../common/Constants";
 import AnalyticsUtil from '../util/um/AnalyticsUtil'
 import {APP_EVENT} from "../common/Constants";
+import ToastUtil from "../util/ToastUtil";
 
 @inject('dataStore')
 @observer
 export default class HomeScene extends BaseScene {
 
-  static navigationOptions = ({navigation}) => ({
-    headerTitle: '倒计时',
-    headerRight: (
-      <TouchableOpacity
-        onPress={() => {
-          HomeScene.goSettingScene(navigation);
-        }}
-      >
-        <Image
-          style={{marginRight: 20}}
-          source={require('../../res/image/setting.png')}
-        />
-      </TouchableOpacity>
-    ),
-    headerLeft: (<View/>)
-  });
+  static navigationOptions = ({navigation}) => {
+    let rightView =
+        <TouchableOpacity
+          onPress={() => {
+            if(!Stores.dataStore.selectMode) {
+              HomeScene.goSettingScene(navigation);
+            }
+          }}
+        >
+          <Image
+            style={{marginRight: 20}}
+            source={require('../../res/image/setting.png')}
+          />
+        </TouchableOpacity>;
+
+    return {
+      headerTitle: '倒计时',
+      headerRight: rightView,
+      headerLeft: (<View/>)
+    }
+  };
 
   constructor(props) {
     super(props);
@@ -52,10 +59,10 @@ export default class HomeScene extends BaseScene {
   }
 
   addListener() {
-    this.subscription = DeviceEventEmitter.addListener('goSelect',(data) =>{
-      let appWidgetId = data.appWidgetId;
+    this.subscription = DeviceEventEmitter.addListener('goSelect', (data) => {
+      this.appWidgetId = data.appWidgetId;
       console.log('pain.xie', data);
-      Stores.navigation.navigate({routeName:'SelectScene', params:{appWidgetId}});
+      this.props.dataStore.selectMode = true;
     })
   }
 
@@ -77,7 +84,7 @@ export default class HomeScene extends BaseScene {
 
   static goSettingScene() {
     AnalyticsUtil.onEvent(APP_EVENT.Setting);
-    Stores.navigation.navigate({routeName:'SettingScene'});
+    Stores.navigation.navigate({routeName: 'SettingScene'});
   }
 
   /**
@@ -96,9 +103,17 @@ export default class HomeScene extends BaseScene {
   }
 
   onClickItem(data) {
-    Stores.dataStore.currentItemData = data;
-    Stores.editStore.model = EDIT_MODEL.update;
-    this.props.navigation.navigate('DetailScene');
+    if (this.props.dataStore.selectMode) {
+      let RnWidgetUtil = NativeModules.RNWidgetUtil;
+      data.appWidgetId = this.appWidgetId;
+      RnWidgetUtil.onSelect(data);
+      this.props.dataStore.selectMode = false;
+      ToastUtil.show("已选择");
+    } else {
+      Stores.dataStore.currentItemData = data;
+      Stores.editStore.model = EDIT_MODEL.update;
+      this.props.navigation.navigate('DetailScene');
+    }
   }
 
   renderItem(itemData) {
@@ -106,7 +121,7 @@ export default class HomeScene extends BaseScene {
       <HomeItem
         data={itemData.item}
         {...this.props}
-        onClickItem = {(data) => this.onClickItem(data)}
+        onClickItem={(data) => this.onClickItem(data)}
       />
     )
   }
@@ -126,6 +141,10 @@ export default class HomeScene extends BaseScene {
       <View style={styles.container}>
         {this.renderEmptyView()}
 
+        {this.props.dataStore.selectMode ?
+          <Text style={styles.note}>请选择需要展示的条目</Text>
+          : null}
+
         <FlatList
           ref='list'
           style={styles.list}
@@ -134,12 +153,13 @@ export default class HomeScene extends BaseScene {
           renderItem={(itemData) => this.renderItem(itemData)}
         />
 
-        <TouchableOpacity
-          style={styles.imageContainer}
-          onPress={() => this.add()}
-        >
-          <Image source={require('../../res/image/add.png')}/>
-        </TouchableOpacity>
+        {!this.props.dataStore.selectMode ?
+          <TouchableOpacity
+            style={styles.imageContainer}
+            onPress={() => this.add()}
+          >
+            <Image source={require('../../res/image/add.png')}/>
+          </TouchableOpacity> : null}
       </View>
     );
   }
@@ -161,7 +181,8 @@ const styles = StyleSheet.create({
   note: {
     marginTop: getWidth(32),
     color: Theme.color.textGray,
-    fontSize: 18
+    fontSize: 18,
+    alignSelf: 'center'
   },
 
   imageContainer: {

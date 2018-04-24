@@ -30,12 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
 
         @Override
         protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage> asList(
-                    new MainReactPackage(),
-                    new CustomerPackage(),
-                    new WidgetPackage(),
-                    new DplusReactPackage()
-            );
+            return Arrays.<ReactPackage> asList(new MainReactPackage(), new CustomerPackage(),
+                    new WidgetPackage(), new DplusReactPackage());
         }
 
         @Override
@@ -67,8 +63,8 @@ public class MainApplication extends Application implements ReactApplication {
             channel = "official";
         }
         Log.e("pain.xie", channel);
-        RNUMConfigure.init(this, "5abde506f43e484f9b0000e2", channel, UMConfigure.DEVICE_TYPE_PHONE,
-                "669c30a9584623e70e8cd01b0381dcb4");
+        RNUMConfigure.init(this, "5abde506f43e484f9b0000e2", channel, UMConfigure
+                .DEVICE_TYPE_PHONE, "669c30a9584623e70e8cd01b0381dcb4");
         UMConfigure.setLogEnabled(true);
     }
 
