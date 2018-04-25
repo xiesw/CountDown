@@ -23,8 +23,8 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.DETAIL"/>
-                <action android:name="android.intent.action.SELECT"/>
+                <action android:name="android.intent.action.APP_DETAIL"/>
+                <action android:name="android.intent.action.APP_SELECT"/>
     
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -34,8 +34,8 @@
         <receiver android:name=".widget.TimerWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="android.appwidget.action.UPDATE"/>
-                <action android:name="android.appwidget.action.DELETE"/>
+                <action android:name="android.appwidget.action.WIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.WIDGET_DELETE"/>
                 <action android:name="android.appwidget.action.WIDGET_SELECT"/>
             </intent-filter>
             

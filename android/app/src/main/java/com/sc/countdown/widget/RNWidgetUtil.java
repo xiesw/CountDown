@@ -48,6 +48,26 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void onUpdate(ReadableMap map) {
+
+        int appWidgetId = -1;
+        String id = map.getString("id");
+        String name = map.getString("name");
+        double d = map.getDouble("timestamp");
+        long timestamp = (long) d;
+        String color = map.getString("color");
+
+        Intent intent = new Intent();
+        WidgetBean widgetBean = new WidgetBean(appWidgetId, id, name, timestamp, color);
+        intent.putExtra("data", widgetBean);
+        intent.setAction(Actions.WIDGET_UPDATE);
+
+        Log.e("xieshangwu", widgetBean.toString());
+
+        reactApplicationContext.sendBroadcast(intent);
+    }
+
+    @ReactMethod
     public void onDetail(ReadableMap map) {
     }
 }

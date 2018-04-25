@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 /**
@@ -50,14 +49,14 @@ public class TimerWidget extends AppWidgetProvider {
             return;
         }
 
-        Bundle bundle = intent.getBundleExtra("bundle");
         WidgetBean widgetBean = (WidgetBean) intent.getSerializableExtra("data");
         switch(intent.getAction()) {
-            case Actions.DELETE:
+            case Actions.WIDGET_DELETE:
 
                 break;
-            case Actions.UPDATE:
+            case Actions.WIDGET_UPDATE:
                 Log.e("xieshangwu", "onReceive UPDATE");
+                WidgetUtil.updateWidgetByEidt(TimerWidget.class, context, widgetBean);
                 break;
             case Actions.WIDGET_SELECT:
                 WidgetUtil.updateWidget(TimerWidget.class, context, widgetBean);

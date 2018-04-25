@@ -31,7 +31,7 @@ export default class DateUtil {
     let minute = Math.floor(time / 1000 / 60);
     let second = Math.floor(time / 1000);
     if (day > 0) {
-      return day;
+      return timestamp - Date.now() > 0 ? day + 1 : day;
     } else if (hour > 0) {
       return hour;
     } else if (minute > 0) {

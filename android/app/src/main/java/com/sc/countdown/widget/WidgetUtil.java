@@ -2,6 +2,7 @@ package com.sc.countdown.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,9 +43,10 @@ public class WidgetUtil {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.timer_widget);
         if(TextUtils.isEmpty(widgetBean.id)) {
             Intent intent = new Intent(context, MainActivity.class);
-            intent.setAction(Actions.SELECT);
+            intent.setAction(Actions.APP_SELECT);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent,
+                    0);
             remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
         } else {
             long timestamp = widgetBean.timestamp;
@@ -61,7 +63,7 @@ public class WidgetUtil {
             remoteViews.setTextColor(R.id.unit, getColor(timestamp));
 
             Intent intent = new Intent(context, MainActivity.class);
-            intent.setAction(Actions.DETAIL);
+            intent.setAction(Actions.APP_DETAIL);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent,
                     0);
@@ -70,6 +72,19 @@ public class WidgetUtil {
         }
 
         AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, remoteViews);
+    }
+
+    public static void updateWidgetByEidt(Class c, Context context, WidgetBean widgetBean) {
+        String id = widgetBean.id;
+        ComponentName name = new ComponentName(context.getPackageName(), c.getName());
+        int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
+        for(int appWidgetId : appWidgetIds) {
+            String savedId = SpUtil.getString(WidgetBean.KEY_ID + appWidgetId);
+            if(id.equals(savedId)) {
+                widgetBean.appWidgetId = appWidgetId;
+                updateWidget(c, context, widgetBean);
+            }
+        }
     }
 
     private static void saveData(WidgetBean widgetBean) {
@@ -103,7 +118,7 @@ public class WidgetUtil {
     private static int getDay(long timestamp) {
         long time = System.currentTimeMillis();
 
-        int day = (int) ((time - timestamp) / (1000 * 60 * 60 * 24));
+        int day = (int) ((timestamp - time) / (1000 * 60 * 60 * 24));
         if(timestamp > time) {
             day++;
         }

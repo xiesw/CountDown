@@ -57,7 +57,7 @@ public class MainActivity extends ReactActivity {
         Intent intent = getIntent();
         if(intent.getAction() != null) {
             switch(intent.getAction()) {
-                case Actions.SELECT:
+                case Actions.APP_SELECT:
                     final int appWidgetId = intent.getIntExtra(AppWidgetManager
                             .EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
@@ -73,7 +73,7 @@ public class MainActivity extends ReactActivity {
                         EventEmitter.select(appWidgetId);
                     }
                     break;
-                case Actions.DETAIL:
+                case Actions.APP_DETAIL:
 
                     break;
 

@@ -10,6 +10,7 @@ import {
   Text,
   TouchableOpacity,
   DeviceEventEmitter,
+  NativeModules,
   ScrollView
 } from 'react-native';
 import {getWidth} from "../util/Utils"
@@ -138,10 +139,15 @@ export default class EditScene extends BaseScene {
     data.top = store.top;
     data.repeat = store.repeat;
     data.name = this.refs.title.getValue();
+    data.id = Stores.dataStore.currentItemData.id;
 
     if (Stores.editStore.isUpdate) {
       Stores.dataStore.update(Stores.dataStore.currentItemData, data);
       Stores.dataStore.currentItemData = data;
+      // 更新widget 如果有的话
+      let RnWidgetUtil = NativeModules.RNWidgetUtil;
+      RnWidgetUtil.onUpdate(data);
+
       ToastUtil.show('修改成功');
       this.props.navigation.goBack();
     } else {
