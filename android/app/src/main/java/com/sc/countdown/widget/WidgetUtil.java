@@ -47,7 +47,7 @@ public class WidgetUtil {
             intent.setAction(Actions.APP_SELECT);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent,
-                    0);
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
         } else {
             long timestamp = widgetBean.timestamp;
@@ -65,9 +65,10 @@ public class WidgetUtil {
 
             Intent intent = new Intent(context, MainActivity.class);
             intent.setAction(Actions.APP_DETAIL);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            intent.putExtra(WidgetBean.KEY_ID, widgetBean.id);
+            Log.e("xieshangwu updateWidget", widgetBean.id);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent,
-                    0);
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
             saveData(widgetBean);
         }

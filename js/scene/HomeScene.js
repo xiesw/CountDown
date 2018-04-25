@@ -97,6 +97,7 @@ export default class HomeScene extends BaseScene {
   }
 
   onClickItem(data) {
+    console.log('pain.xie:', toJS(Stores.dataStore.dataSource));
     if (this.props.dataStore.selectMode) {
       let RnWidgetUtil = NativeModules.RNWidgetUtil;
       data.appWidgetId = AndroidEmitUtil.getId();

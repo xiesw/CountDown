@@ -13,6 +13,8 @@ import {
   NativeModules
 } from 'react-native';
 import Stores from '../stores';
+import {useStrict, toJS} from 'mobx';
+import {EDIT_MODEL} from "../common/Constants";
 
 export default class AndroidEmitUtil {
 
@@ -32,6 +34,16 @@ export default class AndroidEmitUtil {
 
   static addDetailListener() {
     this.detailEmitter = DeviceEventEmitter.addListener('detail', (data) => {
+      this.id = data.id;
+      let dataSource = toJS(Stores.dataStore.dataSource);
+      for (let item of dataSource ) {
+        if(item.id === this.id) {
+          Stores.dataStore.currentItemData = item;
+          Stores.editStore.model = EDIT_MODEL.update;
+          Stores.navigation.reset({routeName: 'DetailScene'});
+        }
+      }
+
     })
   }
 

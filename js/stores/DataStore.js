@@ -63,6 +63,7 @@ export default class DataStore {
         this.sortData(dataArray);
         let isUpdate = UpdateUtil.updateId(dataArray);
         this.dataSource = dataArray;
+        console.log('pain.xie:', dataArray);
         if(isUpdate) {
           this.save();
         }

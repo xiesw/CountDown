@@ -15,6 +15,7 @@ import com.facebook.react.ReactActivity;
 import com.sc.countdown.widget.Actions;
 import com.sc.countdown.widget.EventEmitter;
 import com.sc.countdown.widget.RNWidgetUtil;
+import com.sc.countdown.widget.WidgetBean;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends ReactActivity {
@@ -74,7 +75,19 @@ public class MainActivity extends ReactActivity {
                     }
                     break;
                 case Actions.APP_DETAIL:
+                    final String id = intent.getStringExtra(WidgetBean.KEY_ID);
 
+                    Log.e("xieshangwu", "onStart id:" + id);
+                    if(RNWidgetUtil.reactApplicationContext == null) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                EventEmitter.detail(id);
+                            }
+                        }, 500);
+                    } else {
+                        EventEmitter.detail(id);
+                    }
                     break;
 
                 default:

@@ -21,6 +21,13 @@ public class EventEmitter {
         sendEvent(RNWidgetUtil.reactApplicationContext, "select", map);
     }
 
+    static public void detail(String id) {
+        final WritableMap map = Arguments.createMap();
+        map.putString(WidgetBean.KEY_ID, id);
+        Log.e("xieshangwu", "EventEmitter detail");
+        sendEvent(RNWidgetUtil.reactApplicationContext, "detail", map);
+    }
+
     static public void cancel() {
         Log.e("xieshangwu", "EventEmitter cancel");
         sendEvent(RNWidgetUtil.reactApplicationContext, "cancel", Arguments.createMap());
