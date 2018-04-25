@@ -42,6 +42,7 @@ public class TimerWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.e("xieshangwu", "onReceive");
         super.onReceive(context, intent);
 
         if(AppWidgetManager.getInstance(context)
@@ -61,6 +62,10 @@ public class TimerWidget extends AppWidgetProvider {
             case Actions.WIDGET_SELECT:
                 WidgetUtil.updateWidget(TimerWidget.class, context, widgetBean);
                 break;
+            case Actions.WIDGET_AUTO_UPDATE:
+                Log.e("xieshangwu", "WIDGET_AUTO_UPDATE");
+                break;
+
         }
 
     }

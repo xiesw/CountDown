@@ -144,9 +144,12 @@ export default class EditScene extends BaseScene {
     if (Stores.editStore.isUpdate) {
       Stores.dataStore.update(Stores.dataStore.currentItemData, data);
       Stores.dataStore.currentItemData = data;
-      // 更新widget 如果有的话
-      let RnWidgetUtil = NativeModules.RNWidgetUtil;
-      RnWidgetUtil.onUpdate(data);
+
+      if(Utils.isAndroid()) {
+        // 更新widget 如果有的话
+        let RnWidgetUtil = NativeModules.RNWidgetUtil;
+        RnWidgetUtil.onUpdate(data);
+      }
 
       ToastUtil.show('修改成功');
       this.props.navigation.goBack();

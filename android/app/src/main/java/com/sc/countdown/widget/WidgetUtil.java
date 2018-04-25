@@ -39,6 +39,7 @@ public class WidgetUtil {
      * @param widgetBean
      */
     public static void updateWidget(Class c, Context context, WidgetBean widgetBean) {
+        Log.e("xieshangwu", "updateWidget");
         int appWidgetId = widgetBean.appWidgetId;
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.timer_widget);
         if(TextUtils.isEmpty(widgetBean.id)) {
@@ -164,4 +165,5 @@ public class WidgetUtil {
             return R.drawable.widget_text_bg_cyan;
         }
     }
+
 }
