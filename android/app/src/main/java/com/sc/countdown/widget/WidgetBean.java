@@ -17,6 +17,7 @@ public class WidgetBean implements Serializable{
     public static final String KEY_NAME = "name";
     public static final String KEY_TIMESTAMP = "timestamp";
     public static final String KEY_COLOR = "color";
+    public static final String KEY_DATA = "data";
 
     public int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     public String id = "";

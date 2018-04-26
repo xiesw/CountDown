@@ -14,7 +14,6 @@ import com.facebook.react.bridge.ReadableMap;
 
 public class RNWidgetUtil extends ReactContextBaseJavaModule {
 
-    // pain.todo context 优化
     ReactApplicationContext reactApplicationContext;
 
     public RNWidgetUtil(ReactApplicationContext reactContext) {
@@ -29,7 +28,7 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
      */
     private void sendContextBroadcast(ReactApplicationContext reactContext) {
         Intent intent = new Intent();
-        intent.setAction("com.alreadyLoading");      //设置Action
+        intent.setAction(Actions.BROADCAST_INIT);
         reactContext.sendBroadcast(intent);
     }
 
@@ -57,20 +56,20 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
     }
 
     /**
-     * 向weiget发送广播
+     * 向widget发送广播
      * @param map
      * @param appWidgetId
      */
     private void sendBroadcast(String action, ReadableMap map, int appWidgetId) {
-        String id = map.getString("id");
-        String name = map.getString("name");
-        double d = map.getDouble("timestamp");
+        String id = map.getString(WidgetBean.KEY_ID);
+        String name = map.getString(WidgetBean.KEY_NAME);
+        double d = map.getDouble(WidgetBean.KEY_TIMESTAMP);
         long timestamp = (long) d;
-        String color = map.getString("color");
+        String color = map.getString(WidgetBean.KEY_COLOR);
 
         Intent intent = new Intent();
         WidgetBean widgetBean = new WidgetBean(appWidgetId, id, name, timestamp, color);
-        intent.putExtra("data", widgetBean);
+        intent.putExtra(WidgetBean.KEY_DATA, widgetBean);
         intent.setAction(action);
 
         reactApplicationContext.sendBroadcast(intent);

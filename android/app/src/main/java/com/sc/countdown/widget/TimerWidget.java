@@ -49,7 +49,7 @@ public class TimerWidget extends AppWidgetProvider {
             return;
         }
 
-        WidgetBean widgetBean = (WidgetBean) intent.getSerializableExtra("data");
+        WidgetBean widgetBean = (WidgetBean) intent.getSerializableExtra(WidgetBean.KEY_DATA);
         switch(intent.getAction()) {
             case Actions.WIDGET_DELETE:
 

@@ -2,22 +2,19 @@
  * Created by pain.xie on 2018/4/24.
  */
 import {
-  StyleSheet,
-  AppState,
-  View,
-  TouchableOpacity,
   DeviceEventEmitter,
-  FlatList,
-  Image,
-  Text,
-  NativeModules
 } from 'react-native';
 import Stores from '../stores';
 import {useStrict, toJS} from 'mobx';
 import {EDIT_MODEL} from "../common/Constants";
-import MaskRootSibling, {removeFormSibling} from '../component/MaskRootSibling';
+import {removeFormSibling} from '../component/MaskRootSibling';
+
+const EVENT_SELECT = "event_select";
+const EVENT_DETAIL = "event_detail";
+const EVENT_NORMAL = "event_normal";
 
 export default class AndroidEmitUtil {
+
 
   static init() {
     this.addSelectListener();
@@ -29,13 +26,15 @@ export default class AndroidEmitUtil {
    * 添加选择监听
    */
   static addSelectListener() {
-    this.selectEmitter = DeviceEventEmitter.addListener('select', (data) => {
-      console.log('pain.xie', 'select', data);
+    this.selectEmitter = DeviceEventEmitter.addListener(EVENT_SELECT, (data) => {
+      console.log('pain.xie', EVENT_SELECT, data);
       this.goHomeScene();
-      Stores.dataStore.appWidgetId = data.appWidgetId;
-      let dataSource = toJS(Stores.dataStore.dataSource);
-      if(dataSource.length !== 0) {
-        Stores.dataStore.selectMode = true;
+      if (Stores.dataStore.loadDataComplete) {
+        this.goSelect(data);``
+      } else {
+        setTimeout(() => {
+          this.goSelect(data);
+        }, 500);
       }
     })
   }
@@ -44,10 +43,10 @@ export default class AndroidEmitUtil {
    * 添加详情监听
    */
   static addDetailListener() {
-    this.detailEmitter = DeviceEventEmitter.addListener('detail', (data) => {
-      console.log('pain.xie', 'detail', data);
+    this.detailEmitter = DeviceEventEmitter.addListener(EVENT_DETAIL, (data) => {
+      console.log('pain.xie', EVENT_DETAIL, data);
       this.goHomeScene();
-      if(Stores.dataStore.loadDataComplete) {
+      if (Stores.dataStore.loadDataComplete) {
         this.goDetailScene(data);
       } else {
         setTimeout(() => {
@@ -57,12 +56,38 @@ export default class AndroidEmitUtil {
     })
   }
 
+  /**
+   * 正常进入首页监听
+   */
+  static addNormalListener() {
+    this.normalEmitter = DeviceEventEmitter.addListener(EVENT_NORMAL, (data) => {
+      console.log('pain.xie', EVENT_NORMAL);
+      Stores.dataStore.selectMode = false;
+    })
+  }
+
+  /**
+   * 导航至首页选择
+   * @param data
+   */
+  static goSelect(data) {
+    Stores.dataStore.appWidgetId = data.appWidgetId;
+    let dataSource = toJS(Stores.dataStore.dataSource);
+    if (dataSource.length !== 0) {
+      Stores.dataStore.selectMode = true;
+    }
+  }
+
+  /**
+   * 导航至详情页面
+   * @param data
+   */
   static goDetailScene(data) {
     let dataSource = toJS(Stores.dataStore.dataSource);
     Stores.dataStore.selectMode = false;
     console.log('pain.xie:', 'addDetailListener', dataSource);
-    for (let item of dataSource ) {
-      if(item.id === data.id) {
+    for (let item of dataSource) {
+      if (item.id === data.id) {
         Stores.dataStore.currentItemData = item;
         Stores.editStore.model = EDIT_MODEL.update;
         Stores.navigation.navigate({routeName: 'DetailScene'});
@@ -70,17 +95,17 @@ export default class AndroidEmitUtil {
     }
   }
 
-  static addNormalListener() {
-    this.normalEmitter = DeviceEventEmitter.addListener('cancel', (data) => {
-      Stores.dataStore.selectMode = false;
-    })
-  }
-
+  /**
+   * 如果不在首页 退回到首页
+   */
   static goHomeScene() {
     removeFormSibling();
     Stores.navigation.goBack({routeName: 'HomeScene'});
   }
 
+  /**
+   * 移除监听
+   */
   static remove() {
     this.selectEmitter && this.selectEmitter.remove();
     this.detailEmitter && this.detailEmitter.remove();

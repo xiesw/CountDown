@@ -46,22 +46,7 @@ public class MainActivity extends ReactActivity {
 
         Log.e("pain.xie", "onCreate");
         Intent intent = getIntent();
-        ReactContext context = getReactInstanceManager().getCurrentReactContext();
-        if(intent.getAction() != null) {
-            switch(intent.getAction()) {
-                case Actions.APP_SELECT:
-                    sendSelectEvent(context, intent);
-                    break;
-
-                case Actions.APP_DETAIL:
-                    sendDetailEvent(context, intent);
-                    break;
-
-                default:
-                    EventEmitter.cancel(context);
-                    break;
-            }
-        }
+        handleIntent(intent);
     }
 
     @Override
@@ -79,6 +64,14 @@ public class MainActivity extends ReactActivity {
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.e("pain.xie", "onNewIntent");
+        handleIntent(intent);
+    }
+
+    /**
+     * 处理intent
+     * @param intent
+     */
+    private void handleIntent(Intent intent) {
         ReactContext context = getReactInstanceManager().getCurrentReactContext();
         if(intent.getAction() != null) {
             switch(intent.getAction()) {
@@ -91,12 +84,17 @@ public class MainActivity extends ReactActivity {
                     break;
 
                 default:
-
+                    EventEmitter.normal(context);
                     break;
             }
         }
     }
 
+    /**
+     * 向js发送选择item广播
+     * @param context
+     * @param intent
+     */
     private void sendSelectEvent(ReactContext context, Intent intent) {
         final int appWidgetId = intent.getIntExtra(WidgetBean.KEY_APPWIDGETID, AppWidgetManager
                 .INVALID_APPWIDGET_ID);
@@ -105,7 +103,7 @@ public class MainActivity extends ReactActivity {
         if(context == null) {
             mSelectReceiver = new SelectReceiver();
             IntentFilter filter = new IntentFilter();
-            filter.addAction("com.alreadyLoading");
+            filter.addAction(Actions.BROADCAST_INIT);
             mSelectReceiver.setAppWidgetId(appWidgetId);
             registerReceiver(mSelectReceiver, filter);
         } else {
@@ -113,7 +111,11 @@ public class MainActivity extends ReactActivity {
         }
     }
 
-
+    /**
+     * 向js发送详情广播
+     * @param context
+     * @param intent
+     */
     private void sendDetailEvent(ReactContext context, Intent intent) {
         final String id = intent.getStringExtra(WidgetBean.KEY_ID);
 
@@ -121,7 +123,7 @@ public class MainActivity extends ReactActivity {
         if(context == null) {
             mDetailReceiver = new DetailReceiver();
             IntentFilter filter = new IntentFilter();
-            filter.addAction("com.alreadyLoading");
+            filter.addAction(Actions.BROADCAST_INIT);
             mDetailReceiver.setId(id);
             registerReceiver(mDetailReceiver, filter);
         } else {
@@ -146,13 +148,14 @@ public class MainActivity extends ReactActivity {
         }
     }
 
+    // reactContext初始化完成广播
     class SelectReceiver extends BroadcastReceiver {
 
         int appWidgetId;
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("com.alreadyLoading")) {
+            if(intent.getAction().equals(Actions.BROADCAST_INIT)) {
                 ReactContext reactContext = getReactInstanceManager().getCurrentReactContext();
                 Log.e("pain.xie SelectReceiver", reactContext + "");
                 if(reactContext != null) {
@@ -175,13 +178,14 @@ public class MainActivity extends ReactActivity {
         }
     }
 
+    // reactContext初始化完成广播
     class DetailReceiver extends BroadcastReceiver {
 
         String id;
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("com.alreadyLoading")) {
+            if(intent.getAction().equals(Actions.BROADCAST_INIT)) {
                 ReactContext reactContext = getReactInstanceManager().getCurrentReactContext();
                 Log.e("pain.xie DetailReceiver", reactContext + "");
                 if(reactContext != null) {

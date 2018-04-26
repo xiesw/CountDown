@@ -15,4 +15,7 @@ public class Actions {
     // app Actions
     public static final String APP_DETAIL = "android.intent.action.APP_DETAIL";
     public static final String APP_SELECT = "android.intent.action.APP_SELECT";
+
+    // bd Actions
+    public static final String BROADCAST_INIT = "android.init.action.BROADCAST_INIT";
 }

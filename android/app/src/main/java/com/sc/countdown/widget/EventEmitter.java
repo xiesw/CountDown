@@ -13,6 +13,9 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
  */
 
 public class EventEmitter {
+    private static final String EVENT_SELECT = "event_select";
+    private static final String EVENT_DETAIL = "event_detail";
+    private static final String EVENT_NORMAL = "event_normal";
 
     /**
      * 向js发送广播 进入选择状态
@@ -22,7 +25,7 @@ public class EventEmitter {
 
         final WritableMap map = Arguments.createMap();
         map.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        sendEvent(context, "select", map);
+        sendEvent(context, EVENT_SELECT, map);
     }
 
     /**
@@ -33,15 +36,15 @@ public class EventEmitter {
 
         final WritableMap map = Arguments.createMap();
         map.putString(WidgetBean.KEY_ID, id);
-        sendEvent(context, "detail", map);
+        sendEvent(context, EVENT_DETAIL, map);
     }
 
     /**
      * 向js发送广播 正常进入界面
      */
-    static public void cancel(ReactContext context) {
+    static public void normal(ReactContext context) {
         Log.e("pain.xie", "EventEmitter cancel");
-        sendEvent(context, "cancel", Arguments.createMap());
+        sendEvent(context, EVENT_NORMAL, Arguments.createMap());
     }
 
     static private void sendEvent(ReactContext reactContext, String eventName, WritableMap params) {
