@@ -17,31 +17,31 @@ public class EventEmitter {
     /**
      * 向js发送广播 进入选择状态
      */
-    static public void select(int appWidgetId) {
+    static public void select(ReactContext context, int appWidgetId) {
         Log.e("pain.xie", "EventEmitter select");
 
         final WritableMap map = Arguments.createMap();
         map.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        sendEvent(RNWidgetUtil.reactApplicationContext, "select", map);
+        sendEvent(context, "select", map);
     }
 
     /**
      * 向js发送广播 进入详情状态
      */
-    static public void detail(String id) {
+    static public void detail(ReactContext context, String id) {
         Log.e("pain.xie", "EventEmitter detail");
 
         final WritableMap map = Arguments.createMap();
         map.putString(WidgetBean.KEY_ID, id);
-        sendEvent(RNWidgetUtil.reactApplicationContext, "detail", map);
+        sendEvent(context, "detail", map);
     }
 
     /**
      * 向js发送广播 正常进入界面
      */
-    static public void cancel() {
+    static public void cancel(ReactContext context) {
         Log.e("pain.xie", "EventEmitter cancel");
-        sendEvent(RNWidgetUtil.reactApplicationContext, "cancel", Arguments.createMap());
+        sendEvent(context, "cancel", Arguments.createMap());
     }
 
     static private void sendEvent(ReactContext reactContext, String eventName, WritableMap params) {

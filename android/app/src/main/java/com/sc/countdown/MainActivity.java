@@ -12,16 +12,16 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.react.ReactActivity;
+import com.facebook.react.bridge.ReactContext;
 import com.sc.countdown.widget.Actions;
 import com.sc.countdown.widget.EventEmitter;
-import com.sc.countdown.widget.RNWidgetUtil;
 import com.sc.countdown.widget.WidgetBean;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends ReactActivity {
 
-    private static final String EXITACTION = "action2exit";
-    private ExitReceiver exitReceiver = new ExitReceiver();
+    private SelectReceiver mSelectReceiver;
+    private DetailReceiver mDetailReceiver;
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -36,88 +36,171 @@ public class MainActivity extends ReactActivity {
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle
             persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         MobclickAgent.setSessionContinueMillis(1000);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);
 
+        Log.e("pain.xie", "onCreate");
+        Intent intent = getIntent();
+        ReactContext context = getReactInstanceManager().getCurrentReactContext();
+        if(intent.getAction() != null) {
+            switch(intent.getAction()) {
+                case Actions.APP_SELECT:
+                    sendSelectEvent(context, intent);
+                    break;
+
+                case Actions.APP_DETAIL:
+                    sendDetailEvent(context, intent);
+                    break;
+
+                default:
+                    EventEmitter.cancel(context);
+                    break;
+            }
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(EXITACTION);
-        registerReceiver(exitReceiver, filter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("xieshangwu", "onResume");
-        Intent intent = getIntent();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e("pain.xie", "onNewIntent");
+        ReactContext context = getReactInstanceManager().getCurrentReactContext();
         if(intent.getAction() != null) {
             switch(intent.getAction()) {
                 case Actions.APP_SELECT:
-                    final int appWidgetId = intent.getIntExtra(AppWidgetManager
-                            .EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-
-                    Log.e("xieshangwu", "onStart appWidgetId:" + appWidgetId);
-                    if(RNWidgetUtil.reactApplicationContext == null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                EventEmitter.select(appWidgetId);
-                            }
-                        }, 500);
-                    } else {
-                        EventEmitter.select(appWidgetId);
-                    }
+                    sendSelectEvent(context, intent);
                     break;
-                case Actions.APP_DETAIL:
-                    final String id = intent.getStringExtra(WidgetBean.KEY_ID);
 
-                    Log.e("xieshangwu", "onStart id:" + id);
-                    if(RNWidgetUtil.reactApplicationContext == null) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                EventEmitter.detail(id);
-                            }
-                        }, 500);
-                    } else {
-                        EventEmitter.detail(id);
-                    }
+                case Actions.APP_DETAIL:
+                    sendDetailEvent(context, intent);
                     break;
 
                 default:
-                    if(RNWidgetUtil.reactApplicationContext != null) {
-                        EventEmitter.cancel();
-                    }
+
                     break;
             }
         }
-        MobclickAgent.onResume(this);
+    }
+
+    private void sendSelectEvent(ReactContext context, Intent intent) {
+        final int appWidgetId = intent.getIntExtra(WidgetBean.KEY_APPWIDGETID, AppWidgetManager
+                .INVALID_APPWIDGET_ID);
+
+        Log.e("pain.xie", "onStart appWidgetId:" + appWidgetId);
+        if(context == null) {
+            mSelectReceiver = new SelectReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("com.alreadyLoading");
+            mSelectReceiver.setAppWidgetId(appWidgetId);
+            registerReceiver(mSelectReceiver, filter);
+        } else {
+            EventEmitter.select(context, appWidgetId);
+        }
+    }
+
+
+    private void sendDetailEvent(ReactContext context, Intent intent) {
+        final String id = intent.getStringExtra(WidgetBean.KEY_ID);
+
+        Log.e("pain.xie", "onStart id:" + id);
+        if(context == null) {
+            mDetailReceiver = new DetailReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("com.alreadyLoading");
+            mDetailReceiver.setId(id);
+            registerReceiver(mDetailReceiver, filter);
+        } else {
+            EventEmitter.detail(context, id);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
-        unregisterReceiver(exitReceiver);
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(mSelectReceiver != null) {
+            unregisterReceiver(mSelectReceiver);
+        }
+        if(mDetailReceiver != null) {
+            unregisterReceiver(mDetailReceiver);
+        }
     }
 
-    class ExitReceiver extends BroadcastReceiver {
+    class SelectReceiver extends BroadcastReceiver {
+
+        int appWidgetId;
+
         @Override
         public void onReceive(Context context, Intent intent) {
-            //收到广播时，finish
-            moveTaskToBack(true);
+            if(intent.getAction().equals("com.alreadyLoading")) {
+                ReactContext reactContext = getReactInstanceManager().getCurrentReactContext();
+                Log.e("pain.xie SelectReceiver", reactContext + "");
+                if(reactContext != null) {
+                    EventEmitter.select(reactContext, appWidgetId);
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ReactContext rc = getReactInstanceManager().getCurrentReactContext();
+                            Log.e("pain.xie postDelayed", rc + "");
+                            EventEmitter.select(rc, appWidgetId);
+                        }
+                    }, 500);
+                }
+            }
+        }
+
+        public void setAppWidgetId(int appWidgetId) {
+            this.appWidgetId = appWidgetId;
+        }
+    }
+
+    class DetailReceiver extends BroadcastReceiver {
+
+        String id;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("com.alreadyLoading")) {
+                ReactContext reactContext = getReactInstanceManager().getCurrentReactContext();
+                Log.e("pain.xie DetailReceiver", reactContext + "");
+                if(reactContext != null) {
+                    EventEmitter.detail(reactContext, id);
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ReactContext rc = getReactInstanceManager().getCurrentReactContext();
+                            Log.e("pain.xie postDelayed", rc + "");
+                            EventEmitter.detail(rc, id);
+                        }
+                    }, 1000);
+                }
+            }
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
 }

@@ -11,6 +11,7 @@ import Global from "../common/Global";
 import {observer, Provider} from 'mobx-react'
 import {addNavigationHelpers} from "react-navigation";
 import {useStrict, toJS} from 'mobx';
+import AndroidEmitUtil from "../util/AndroidEmitUtil";
 
 type Props = {};
 
@@ -23,6 +24,7 @@ export default class App extends Component<Props> {
     console.disableYellowBox = true;
     this.navigationStore = Stores.navigation;
     Global.init();
+    AndroidEmitUtil.init();
   }
 
   render() {

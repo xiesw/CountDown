@@ -57,7 +57,7 @@ export default class HomeScene extends BaseScene {
 
   constructor(props) {
     super(props);
-    AndroidEmitUtil.init();
+    //AndroidEmitUtil.init();
   }
 
   componentDidMount() {

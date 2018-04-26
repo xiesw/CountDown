@@ -15,12 +15,22 @@ import com.facebook.react.bridge.ReadableMap;
 public class RNWidgetUtil extends ReactContextBaseJavaModule {
 
     // pain.todo context 优化
-    public static ReactApplicationContext reactApplicationContext;
+    ReactApplicationContext reactApplicationContext;
 
     public RNWidgetUtil(ReactApplicationContext reactContext) {
         super(reactContext);
         Log.e("xieshangwu", "RNWidgetUtil init");
         this.reactApplicationContext = reactContext;
+        sendContextBroadcast(reactContext);
+    }
+
+    /**
+     * 发送reactContext初始化完成broadcast
+     */
+    private void sendContextBroadcast(ReactApplicationContext reactContext) {
+        Intent intent = new Intent();
+        intent.setAction("com.alreadyLoading");      //设置Action
+        reactContext.sendBroadcast(intent);
     }
 
     @Override

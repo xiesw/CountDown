@@ -45,7 +45,7 @@ export default class UserStore {
             this.username = data.username;
             this.password = data.password;
           } else {
-            reject('data is empty');
+            reject('userData is empty');
           }
         }
       })

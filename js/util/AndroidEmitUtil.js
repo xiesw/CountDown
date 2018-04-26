@@ -15,6 +15,7 @@ import {
 import Stores from '../stores';
 import {useStrict, toJS} from 'mobx';
 import {EDIT_MODEL} from "../common/Constants";
+import MaskRootSibling, {removeFormSibling} from '../component/MaskRootSibling';
 
 export default class AndroidEmitUtil {
 
@@ -30,8 +31,12 @@ export default class AndroidEmitUtil {
   static addSelectListener() {
     this.selectEmitter = DeviceEventEmitter.addListener('select', (data) => {
       console.log('pain.xie', 'select', data);
+      this.goHomeScene();
       Stores.dataStore.appWidgetId = data.appWidgetId;
-      Stores.dataStore.selectMode = true;
+      let dataSource = toJS(Stores.dataStore.dataSource);
+      if(dataSource.length !== 0) {
+        Stores.dataStore.selectMode = true;
+      }
     })
   }
 
@@ -41,23 +46,39 @@ export default class AndroidEmitUtil {
   static addDetailListener() {
     this.detailEmitter = DeviceEventEmitter.addListener('detail', (data) => {
       console.log('pain.xie', 'detail', data);
-      let dataSource = toJS(Stores.dataStore.dataSource);
-      console.log('pain.xie:', 'addDetailListener', dataSource);
-      for (let item of dataSource ) {
-        if(item.id === data.id) {
-          Stores.dataStore.currentItemData = item;
-          Stores.editStore.model = EDIT_MODEL.update;
-          Stores.navigation.navigate({routeName: 'DetailScene'});
-        }
+      this.goHomeScene();
+      if(Stores.dataStore.loadDataComplete) {
+        this.goDetailScene(data);
+      } else {
+        setTimeout(() => {
+          this.goDetailScene(data);
+        }, 500);
       }
-
     })
+  }
+
+  static goDetailScene(data) {
+    let dataSource = toJS(Stores.dataStore.dataSource);
+    Stores.dataStore.selectMode = false;
+    console.log('pain.xie:', 'addDetailListener', dataSource);
+    for (let item of dataSource ) {
+      if(item.id === data.id) {
+        Stores.dataStore.currentItemData = item;
+        Stores.editStore.model = EDIT_MODEL.update;
+        Stores.navigation.navigate({routeName: 'DetailScene'});
+      }
+    }
   }
 
   static addNormalListener() {
     this.normalEmitter = DeviceEventEmitter.addListener('cancel', (data) => {
       Stores.dataStore.selectMode = false;
     })
+  }
+
+  static goHomeScene() {
+    removeFormSibling();
+    Stores.navigation.goBack({routeName: 'HomeScene'});
   }
 
   static remove() {
