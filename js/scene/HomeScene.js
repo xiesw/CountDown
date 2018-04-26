@@ -66,6 +66,7 @@ export default class HomeScene extends BaseScene {
   }
 
   componentWillUnmount() {
+    this.props.dataStore.selectMode = false;
     AndroidEmitUtil.remove();
   }
 
@@ -89,18 +90,15 @@ export default class HomeScene extends BaseScene {
     this.props.navigation.navigate('EditScene',);
     AnalyticsUtil.onEvent(APP_EVENT.Add);
 
-    // this.props.navigation.navigate('SelectScene');
-
     // let title = '测试';
     // let url = 'http://www.palxie.xyz';
     // this.props.navigation.navigate('WebViewScene', {url, title})
   }
 
   onClickItem(data) {
-    console.log('pain.xie:', toJS(Stores.dataStore.dataSource));
     if (this.props.dataStore.selectMode) {
       let RnWidgetUtil = NativeModules.RNWidgetUtil;
-      data.appWidgetId = AndroidEmitUtil.getId();
+      data.appWidgetId = Stores.dataStore.appWidgetId;
       RnWidgetUtil.onSelect(data);
       this.props.dataStore.selectMode = false;
       ToastUtil.show("已选择");

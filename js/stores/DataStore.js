@@ -35,6 +35,7 @@ export default class DataStore {
 
   // 是否为widget选择模式
   @observable selectMode = false;
+  @observable appWidgetId;
   @action
   clear() {
     this.currentItemData = {};

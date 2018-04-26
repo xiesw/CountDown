@@ -32,14 +32,9 @@ public class WidgetUtil {
     private static String GRAY = "#A5A5A5";
 
     /**
-     * 设置widget界面
-     *
-     * @param c
-     * @param context
-     * @param widgetBean
+     * 设置/更新widget界面
      */
     public static void updateWidget(Class c, Context context, WidgetBean widgetBean) {
-        Log.e("xieshangwu", "updateWidget");
         int appWidgetId = widgetBean.appWidgetId;
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.timer_widget);
         if(TextUtils.isEmpty(widgetBean.id)) {
@@ -59,14 +54,11 @@ public class WidgetUtil {
             int day = getDay(timestamp);
 
             remoteViews.setTextViewText(R.id.day, day + "");
-            remoteViews.setTextViewText(R.id.unit, "天");
             remoteViews.setTextColor(R.id.day, getColor(timestamp));
-            remoteViews.setTextColor(R.id.unit, getColor(timestamp));
 
             Intent intent = new Intent(context, MainActivity.class);
             intent.setAction(Actions.APP_DETAIL);
             intent.putExtra(WidgetBean.KEY_ID, widgetBean.id);
-            Log.e("xieshangwu updateWidget", widgetBean.id);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
@@ -76,10 +68,13 @@ public class WidgetUtil {
         AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, remoteViews);
     }
 
-    public static void updateWidgetByEidt(Class c, Context context, WidgetBean widgetBean) {
+    /**
+     * 编辑后更新widget
+     */
+    public static void updateWidgetByEdit(Class c, Context context, WidgetBean widgetBean) {
         String id = widgetBean.id;
-        ComponentName name = new ComponentName(context.getPackageName(), c.getName());
-        int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
+        ComponentName componentName = new ComponentName(context.getPackageName(), c.getName());
+        int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(componentName);
         for(int appWidgetId : appWidgetIds) {
             String savedId = SpUtil.getString(WidgetBean.KEY_ID + appWidgetId);
             if(id.equals(savedId)) {
@@ -89,15 +84,23 @@ public class WidgetUtil {
         }
     }
 
+    /**
+     * 保存展示的数据
+     */
     private static void saveData(WidgetBean widgetBean) {
         SpUtil.putInt(WidgetBean.KEY_APPWIDGETID + widgetBean.appWidgetId, widgetBean.appWidgetId);
         SpUtil.putString(WidgetBean.KEY_ID + widgetBean.appWidgetId, widgetBean.id);
         SpUtil.putString(WidgetBean.KEY_NAME + widgetBean.appWidgetId, widgetBean.name);
         SpUtil.putLong(WidgetBean.KEY_TIMESTAMP + widgetBean.appWidgetId, widgetBean.timestamp);
         SpUtil.putString(WidgetBean.KEY_COLOR + widgetBean.appWidgetId, widgetBean.color);
+
+        Log.e("pain.xie saveData:", widgetBean.toString());
     }
 
-    public static WidgetBean getWidgetBean(int appWidgetId) {
+    /**
+     * 根据appWidgetId取出保存的的数据
+     */
+    protected static WidgetBean getWidgetBean(int appWidgetId) {
         WidgetBean widgetBean = new WidgetBean();
         int widgetId = SpUtil.getInt(WidgetBean.KEY_APPWIDGETID + appWidgetId, -1);
         widgetBean.appWidgetId = appWidgetId;
@@ -106,29 +109,27 @@ public class WidgetUtil {
             widgetBean.name = SpUtil.getString(WidgetBean.KEY_NAME + appWidgetId);
             widgetBean.timestamp = SpUtil.getLong(WidgetBean.KEY_TIMESTAMP + appWidgetId);
             widgetBean.color = SpUtil.getString(WidgetBean.KEY_COLOR + appWidgetId);
-            Log.e("xieshangwu", widgetBean.toString());
         }
+        Log.e("pain.xie getWidgetBean:", widgetBean.toString());
         return widgetBean;
     }
 
     /**
-     * 获取剩余时间
-     *
-     * @param timestamp
-     * @return
+     * 获取剩余天数
      */
     private static int getDay(long timestamp) {
         long time = System.currentTimeMillis();
-
         int day = (int) ((timestamp - time) / (1000 * 60 * 60 * 24));
         if(timestamp > time) {
             day++;
         }
-
         return Math.abs(day);
     }
 
-    public static int getColor(long timestamp) {
+    /**
+     * 获得字体的颜色
+     */
+    private static int getColor(long timestamp) {
         if(timestamp > System.currentTimeMillis()) {
             return Color.parseColor(ORANGE);
         } else {
@@ -137,9 +138,9 @@ public class WidgetUtil {
     }
 
     /**
-     * 返回背景颜色
+     * 返回标题背景颜色
      */
-    public static int getTitleColor(long timestamp, String color) {
+    private static int getTitleColor(long timestamp, String color) {
         try {
             if(!TextUtils.isEmpty(color)) {
                 if(color.equalsIgnoreCase(RED)) {
@@ -159,7 +160,6 @@ public class WidgetUtil {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         if(timestamp > System.currentTimeMillis()) {
             return R.drawable.widget_text_bg;
         } else {

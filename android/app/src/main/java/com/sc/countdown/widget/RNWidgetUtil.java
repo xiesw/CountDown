@@ -1,6 +1,5 @@
 package com.sc.countdown.widget;
 
-import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.util.Log;
 
@@ -14,6 +13,7 @@ import com.facebook.react.bridge.ReadableMap;
  */
 
 public class RNWidgetUtil extends ReactContextBaseJavaModule {
+
     // pain.todo context 优化
     public static ReactApplicationContext reactApplicationContext;
 
@@ -28,29 +28,30 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
         return "RNWidgetUtil";
     }
 
+    /**
+     * js 调用app 选择
+     */
     @ReactMethod
     public void onSelect(ReadableMap map) {
-        int appWidgetId = map.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
-        String id = map.getString("id");
-        String name = map.getString("name");
-        double d = map.getDouble("timestamp");
-        long timestamp = (long) d;
-        String color = map.getString("color");
-
-        Intent intent = new Intent();
-        WidgetBean widgetBean = new WidgetBean(appWidgetId, id, name, timestamp, color);
-        intent.putExtra("data", widgetBean);
-        intent.setAction(Actions.WIDGET_SELECT);
-
-        Log.e("xieshangwu", widgetBean.toString());
-
-        reactApplicationContext.sendBroadcast(intent);
+        int appWidgetId = map.getInt(WidgetBean.KEY_APPWIDGETID);
+        sendBroadcast(Actions.WIDGET_SELECT, map, appWidgetId);
     }
 
+    /**
+     * ja 调用app 更新
+     */
     @ReactMethod
     public void onUpdate(ReadableMap map) {
-
         int appWidgetId = -1;
+        sendBroadcast(Actions.WIDGET_UPDATE, map, appWidgetId);
+    }
+
+    /**
+     * 向weiget发送广播
+     * @param map
+     * @param appWidgetId
+     */
+    private void sendBroadcast(String action, ReadableMap map, int appWidgetId) {
         String id = map.getString("id");
         String name = map.getString("name");
         double d = map.getDouble("timestamp");
@@ -60,14 +61,9 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
         Intent intent = new Intent();
         WidgetBean widgetBean = new WidgetBean(appWidgetId, id, name, timestamp, color);
         intent.putExtra("data", widgetBean);
-        intent.setAction(Actions.WIDGET_UPDATE);
-
-        Log.e("xieshangwu", widgetBean.toString());
+        intent.setAction(action);
 
         reactApplicationContext.sendBroadcast(intent);
     }
 
-    @ReactMethod
-    public void onDetail(ReadableMap map) {
-    }
 }

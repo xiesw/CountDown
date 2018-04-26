@@ -14,29 +14,43 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class EventEmitter {
 
+    /**
+     * 向js发送广播 进入选择状态
+     */
     static public void select(int appWidgetId) {
+        Log.e("pain.xie", "EventEmitter select");
+
         final WritableMap map = Arguments.createMap();
         map.putInt(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        Log.e("xieshangwu", "EventEmitter select");
         sendEvent(RNWidgetUtil.reactApplicationContext, "select", map);
     }
 
+    /**
+     * 向js发送广播 进入详情状态
+     */
     static public void detail(String id) {
+        Log.e("pain.xie", "EventEmitter detail");
+
         final WritableMap map = Arguments.createMap();
         map.putString(WidgetBean.KEY_ID, id);
-        Log.e("xieshangwu", "EventEmitter detail");
         sendEvent(RNWidgetUtil.reactApplicationContext, "detail", map);
     }
 
+    /**
+     * 向js发送广播 正常进入界面
+     */
     static public void cancel() {
-        Log.e("xieshangwu", "EventEmitter cancel");
+        Log.e("pain.xie", "EventEmitter cancel");
         sendEvent(RNWidgetUtil.reactApplicationContext, "cancel", Arguments.createMap());
     }
 
-
     static private void sendEvent(ReactContext reactContext, String eventName, WritableMap params) {
-        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
+        try {
+            reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit(eventName, params);
+        } catch(Exception e) {
+            Log.e("pain.xie", "reactContext is null");
+        }
     }
 
 

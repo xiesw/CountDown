@@ -15,7 +15,6 @@ import BackupScene from "../scene/BackupScene";
 import RestoreScene from "../scene/RestoreScene";
 import LoginScene from "../scene/LoginScene";
 import WebViewScene from "../scene/WebViewScene";
-import SelectScene from "../scene/SelectScene";
 
 
 // 默认的导航栏样式
@@ -62,7 +61,8 @@ function getNavigationOptions(navigation) {
     headerStyle: Object.assign({}, CommonHeaderStyle, headerStyle),
     headerTitleStyle: Object.assign({}, CommonHeaderTitleStyle, headerTitleStyle),
     headerBackTitle: null,
-    headerRight: headerRight || <View/>
+    headerRight: headerRight || <View/>,
+    mode: 'modal'
   };
 
   return options;
@@ -80,11 +80,11 @@ const RouterStack = StackNavigator(
     RestoreScene: {screen: RestoreScene},
     LoginScene: {screen: LoginScene},
     WebViewScene: {screen: WebViewScene},
-    SelectScene: {screen: SelectScene},
   },
   {
     navigationOptions: ({navigation}) => getNavigationOptions(navigation),
-  }
+    headerMode:'float'
+  },
 );
 
 export {RouterStack};

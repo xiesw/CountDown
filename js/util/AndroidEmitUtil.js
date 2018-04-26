@@ -24,23 +24,30 @@ export default class AndroidEmitUtil {
     this.addNormalListener();
   }
 
+  /**
+   * 添加选择监听
+   */
   static addSelectListener() {
     this.selectEmitter = DeviceEventEmitter.addListener('select', (data) => {
-      this.appWidgetId = data.appWidgetId;
-      console.log('pain.xie', data);
+      console.log('pain.xie', 'select', data);
+      Stores.dataStore.appWidgetId = data.appWidgetId;
       Stores.dataStore.selectMode = true;
     })
   }
 
+  /**
+   * 添加详情监听
+   */
   static addDetailListener() {
     this.detailEmitter = DeviceEventEmitter.addListener('detail', (data) => {
-      this.id = data.id;
+      console.log('pain.xie', 'detail', data);
       let dataSource = toJS(Stores.dataStore.dataSource);
+      console.log('pain.xie:', 'addDetailListener', dataSource);
       for (let item of dataSource ) {
-        if(item.id === this.id) {
+        if(item.id === data.id) {
           Stores.dataStore.currentItemData = item;
           Stores.editStore.model = EDIT_MODEL.update;
-          Stores.navigation.reset({routeName: 'DetailScene'});
+          Stores.navigation.navigate({routeName: 'DetailScene'});
         }
       }
 
@@ -49,13 +56,8 @@ export default class AndroidEmitUtil {
 
   static addNormalListener() {
     this.normalEmitter = DeviceEventEmitter.addListener('cancel', (data) => {
-      console.log('pain.xie:', "js cancel");
       Stores.dataStore.selectMode = false;
     })
-  }
-
-  static getId() {
-    return this.appWidgetId;
   }
 
   static remove() {
