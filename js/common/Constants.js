@@ -41,6 +41,38 @@ export const APP_EVENT = {
   GitHub: 'GitHub',
   Backup: 'Backup',
   Restore: 'Restore',
-  WidgetDetail:'WidgetDetail',
-  NewWidget:'NewWidget'
+  WidgetDetail: 'WidgetDetail',
+  NewWidget: 'NewWidget'
 };
+
+// 2018节假日
+export const Festival = [
+  {
+    name: '元旦',
+    date: '2018/1/1'
+  },
+  {
+    name: '春节',
+    date: '2018/2/15'
+  },
+  {
+    name: '清明',
+    date: '2018/4/5'
+  },
+  {
+    name: '劳动节',
+    date: '2018/4/29'
+  },
+  {
+    name: '端午节',
+    date: '2018/6/18'
+  },
+  {
+    name: '中秋节',
+    date: '2018/9/24'
+  },
+  {
+    name: '国庆节',
+    date: '2018/10/1'
+  },
+];
