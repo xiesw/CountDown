@@ -36,9 +36,9 @@ export default class Global {
   static init() {
     global.theme = Theme;
     global.validaterRegs = regs;
-    this.setStatusBar();
     this.loadUserInfo();
     this.loadAppInfo();
+    this.setStatusBar();
     this.initialEnv();
     this.initBmob();
     this.initAndroidBack();
@@ -46,12 +46,11 @@ export default class Global {
 
   /**
    * 设置android状态栏(未实现)
-   * todo
    */
   static setStatusBar() {
     if (Platform.OS === "android") {
-      StatusBar.setBarStyle("dark-content");
-      StatusBar.setBackgroundColor('rgba(0,0,0,0.2)');
+      let RnAppUtil = NativeModules.RNAppUtil;
+      RnAppUtil.setStatusBar();
     }
   }
 
