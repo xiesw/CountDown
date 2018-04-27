@@ -39,7 +39,6 @@ export default class DetailScene extends BaseScene {
       millisecond: '',
       dateText: ''
     };
-    this.handleData();
   }
 
   handleData() {
@@ -72,6 +71,7 @@ export default class DetailScene extends BaseScene {
   }
 
   componentDidMount() {
+    this.handleData();
     AppState.addEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
     this.startTime();
     AnalyticsUtil.onEvent(APP_EVENT.DetailScene);

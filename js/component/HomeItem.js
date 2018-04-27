@@ -24,16 +24,16 @@ export default class HomeItem extends Component {
     this.state = {
       name: '',
       color: 'white',
-      stateColor: '',
+      stateColor: 'white',
       date: '',
       time: '',
       unit: '',
       top: false
     };
-    this.handleData();
   }
 
   componentDidMount() {
+    this.handleData();
     this.startTime();
     AppState.addEventListener('change', (nextAppState) => this.handleAppStateChange(nextAppState));
   }
