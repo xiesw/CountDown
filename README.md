@@ -75,7 +75,7 @@ CountDown
 
 ### 6. app预览:   
 
-<img src="http://ovxz7mlox.bkt.clouddn.com/Group.png" width="640"/>
+<img src="http://ovxz7mlox.bkt.clouddn.com/120.png" width="640"/>
 
 #### Download    
 [release](https://github.com/xiesw/CountDown/releases)  
@@ -107,11 +107,14 @@ note:
         walle打包 ok
         统计系统 ok
         多渠道统计 ok
-        上架
+        上架  ok
     1.2 
+        小部件 ok
+    1.3 
         沉沁式状态栏
         设置时间组件
-        重复功能
         loading
+        节假日
+        
 ```
 

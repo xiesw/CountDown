@@ -6,8 +6,9 @@ import {
 } from 'react-native';
 import Stores from '../stores';
 import {useStrict, toJS} from 'mobx';
-import {EDIT_MODEL} from "../common/Constants";
+import {APP_EVENT, EDIT_MODEL} from "../common/Constants";
 import {removeFormSibling} from '../component/MaskRootSibling';
+import AnalyticsUtil from '../util/um/AnalyticsUtil'
 
 const EVENT_SELECT = "event_select";
 const EVENT_DETAIL = "event_detail";
@@ -86,6 +87,7 @@ export default class AndroidEmitUtil {
     let dataSource = toJS(Stores.dataStore.dataSource);
     Stores.dataStore.selectMode = false;
     console.log('pain.xie:', 'addDetailListener', dataSource);
+    AnalyticsUtil.onEvent(APP_EVENT.WidgetDetail);
     for (let item of dataSource) {
       if (item.id === data.id) {
         Stores.dataStore.currentItemData = item;

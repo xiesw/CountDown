@@ -40,5 +40,7 @@ export const APP_EVENT = {
   Login: 'Login',
   GitHub: 'GitHub',
   Backup: 'Backup',
-  Restore: 'Restore'
+  Restore: 'Restore',
+  WidgetDetail:'WidgetDetail',
+  NewWidget:'NewWidget'
 };

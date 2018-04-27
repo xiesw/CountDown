@@ -101,6 +101,7 @@ export default class HomeScene extends BaseScene {
       data.appWidgetId = Stores.dataStore.appWidgetId;
       RnWidgetUtil.onSelect(data);
       this.props.dataStore.selectMode = false;
+      AnalyticsUtil.onEvent(APP_EVENT.NewWidget);
       ToastUtil.show("已选择");
     } else {
       Stores.dataStore.currentItemData = data;

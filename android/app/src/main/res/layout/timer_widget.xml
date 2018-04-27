@@ -18,8 +18,10 @@
             android:background="@drawable/widget_text_bg"
             android:gravity="center"
             android:text="@string/text_select"
+            android:singleLine="true"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:elevation="1dp"
             />
         
         <ImageView
@@ -36,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:visibility="gone"
             >
@@ -46,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="1356"
                 android:textColor="#F2661C"
                 android:textSize="18sp"
                 />
