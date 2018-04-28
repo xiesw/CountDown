@@ -15,7 +15,9 @@ import BackupScene from "../scene/BackupScene";
 import RestoreScene from "../scene/RestoreScene";
 import LoginScene from "../scene/LoginScene";
 import WebViewScene from "../scene/WebViewScene";
-
+import {getCurrentRoute} from "../stores/NavigationStore";
+import Stores from "../stores";
+import AndroidStatusBarUtil from "../util/AndroidStatusBarUtil";
 
 // 默认的导航栏样式
 const CommonHeaderStyle = {
@@ -83,7 +85,20 @@ const RouterStack = StackNavigator(
   },
   {
     navigationOptions: ({navigation}) => getNavigationOptions(navigation),
-    headerMode:'float'
+    headerMode: 'float',
+    onTransitionStart: () => {
+      let state = getCurrentRoute(Stores.navigation.navigationState);
+      console.log('pain.xie:', state);
+      if (state.routeName === "SettingScene") {
+        AndroidStatusBarUtil.setStyle("#FB565A", false);
+      } else if (state.routeName === "DetailScene") {
+        AndroidStatusBarUtil.setStyle("#51B7F4", false);
+      } else if (state.routeName === "EditScene") {
+        AndroidStatusBarUtil.setStyle("#A5A5A5", true);
+      } else {
+        AndroidStatusBarUtil.setStyle("#FFFFFF", true);
+      }
+    }
   },
 );
 

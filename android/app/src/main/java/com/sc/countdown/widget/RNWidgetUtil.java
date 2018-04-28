@@ -18,7 +18,7 @@ public class RNWidgetUtil extends ReactContextBaseJavaModule {
 
     public RNWidgetUtil(ReactApplicationContext reactContext) {
         super(reactContext);
-        Log.e("xieshangwu", "RNWidgetUtil init");
+        Log.e("pain.xie", "RNWidgetUtil init");
         this.reactApplicationContext = reactContext;
         sendContextBroadcast(reactContext);
     }

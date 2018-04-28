@@ -16,6 +16,7 @@ import {EnvHost} from "../net/Env";
 import bmob from '../net/bmob/bmob';
 import Stores from '../stores/index';
 import AndroidBackUtils from "../util/AndroidBackUtils";
+import AndroidStatusBarUtil from "../util/AndroidStatusBarUtil";
 
 global.evn = {
   isDebug: true,
@@ -48,10 +49,7 @@ export default class Global {
    * 设置android状态栏(未实现)
    */
   static setStatusBar() {
-    if (Platform.OS === "android") {
-      let RnAppUtil = NativeModules.RNAppUtil;
-      RnAppUtil.setStatusBar();
-    }
+    AndroidStatusBarUtil.setStyle("#FFFFFF", true);
   }
 
   /**

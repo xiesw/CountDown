@@ -25,6 +25,9 @@ export default class DetailScene extends BaseScene {
 
   static navigationOptions = {
     headerTitle: '详情',
+    headerStyle: {
+      backgroundColor:"#51B7F4"
+    }
   };
 
   constructor(props) {

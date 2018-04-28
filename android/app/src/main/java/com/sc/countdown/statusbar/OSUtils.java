@@ -5,10 +5,7 @@ import android.os.Build;
 import java.io.IOException;
 
 /**
- * //todo 描述
- *
- * @author lixingyun
- * @since 2017-04-06
+ * 检测miui, flyme, androidM, androidL工具
  */
 
 public class OSUtils {
@@ -51,8 +48,17 @@ public class OSUtils {
         }
     }
 
+    /**
+     * 是否6.0以上版本
+     */
     public static boolean isOSM() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
+    /**
+     * 是否5.0以上版本
+     */
+    public static boolean isOSL() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
 }

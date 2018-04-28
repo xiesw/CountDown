@@ -1,13 +1,14 @@
 package com.sc.countdown;
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.sc.countdown.statusbar.StatusBarUtil;
@@ -18,6 +19,9 @@ import com.sc.countdown.utils.ConfigUtil;
  */
 
 public class RNAppUtil extends ReactContextBaseJavaModule {
+    static public final String KEY_COLOR = "color";
+    static public final String KEY_DARK_MODE = "darkMode";
+
     ReactApplicationContext reactApplicationContext;
 
     public RNAppUtil(ReactApplicationContext reactContext) {
@@ -34,13 +38,17 @@ public class RNAppUtil extends ReactContextBaseJavaModule {
     /**
      * 设置状态栏
      */
+
     @ReactMethod
-    public void setStatusBar() {
+    public void setStatusBar(ReadableMap map) {
+        final String color = map.getString(KEY_COLOR);
+        final boolean mode = map.getBoolean(KEY_DARK_MODE);
+        Log.e("pain.xie", color + mode);
         final Activity activity = getCurrentActivity();
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                StatusBarUtil.setStatusBar(activity, Color.parseColor("#FFFFFF"));
+                StatusBarUtil.setStatusBar(activity, color, mode);
             }
         });
     }

@@ -7,7 +7,8 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text
+  Text,
+  NativeModules
 } from 'react-native';
 import BaseScene from "./BaseScene";
 import DescribeView from "../component/setting/DescribeView";
@@ -19,6 +20,7 @@ import {getWidth} from "../util/Utils";
 import {inject, observer} from 'mobx-react';
 import AnalyticsUtil from '../util/um/AnalyticsUtil'
 import {APP_EVENT} from "../common/Constants";
+import Utils from "../util/Utils";
 
 @inject('userStore')
 @observer
@@ -26,13 +28,13 @@ export default class SettingScene extends BaseScene {
 
   static navigationOptions = {
     headerTitle: '设置',
+    headerStyle: {
+      backgroundColor:"#FB565A"
+    }
   };
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
   }
 
   /**
