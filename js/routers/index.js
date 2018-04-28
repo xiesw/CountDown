@@ -87,17 +87,16 @@ const RouterStack = StackNavigator(
     navigationOptions: ({navigation}) => getNavigationOptions(navigation),
     headerMode: 'float',
     onTransitionStart: () => {
-      let state = getCurrentRoute(Stores.navigation.navigationState);
-      console.log('pain.xie:', state);
-      if (state.routeName === "SettingScene") {
-        AndroidStatusBarUtil.setStyle("#FB565A", false);
-      } else if (state.routeName === "DetailScene") {
-        AndroidStatusBarUtil.setStyle("#51B7F4", false);
-      } else if (state.routeName === "EditScene") {
-        AndroidStatusBarUtil.setStyle("#A5A5A5", true);
-      } else {
-        AndroidStatusBarUtil.setStyle("#FFFFFF", true);
-      }
+      // let state = getCurrentRoute(Stores.navigation.navigationState);
+      // if (state.routeName === "SettingScene") {
+      //   AndroidStatusBarUtil.setStyle("#FB565A", false);
+      // } else if (state.routeName === "DetailScene") {
+      //   AndroidStatusBarUtil.setStyle("#51B7F4", false);
+      // } else if (state.routeName === "EditScene") {
+      //   AndroidStatusBarUtil.setStyle("#A5A5A5", true);
+      // } else {
+      //   AndroidStatusBarUtil.setStyle("#FFFFFF", true);
+      // }
     }
   },
 );

@@ -64,7 +64,7 @@ public class StatusBarUtil {
      * @param dark
      */
     private static void setOSMStatusDrakIcon(Activity activity, boolean dark) {
-        if(OSUtils.isOSL()) {
+        if(OSUtils.isOSM()) {
             View decorView = activity.getWindow().getDecorView();
             if(dark) {
                 decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

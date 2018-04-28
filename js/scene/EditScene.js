@@ -36,9 +36,6 @@ export default class EditScene extends BaseScene {
 
   static navigationOptions = {
     headerTitle: '编辑',
-    headerStyle: {
-      backgroundColor:"#A5A5A5"
-    }
   };
 
   constructor(props) {

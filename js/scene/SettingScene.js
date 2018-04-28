@@ -28,9 +28,6 @@ export default class SettingScene extends BaseScene {
 
   static navigationOptions = {
     headerTitle: '设置',
-    headerStyle: {
-      backgroundColor:"#FB565A"
-    }
   };
 
   constructor(props) {
