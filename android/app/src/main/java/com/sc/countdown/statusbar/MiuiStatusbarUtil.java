@@ -51,7 +51,7 @@ public class MiuiStatusbarUtil {
                     }
                 }
             } catch(Exception e) {
-
+                e.printStackTrace();
             }
         }
         return result;

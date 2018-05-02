@@ -21,6 +21,7 @@ import com.sc.countdown.utils.ConfigUtil;
 public class RNAppUtil extends ReactContextBaseJavaModule {
     static public final String KEY_COLOR = "color";
     static public final String KEY_DARK_MODE = "darkMode";
+    private static final String TAG = "RNAppUtil";
 
     ReactApplicationContext reactApplicationContext;
 
@@ -38,19 +39,31 @@ public class RNAppUtil extends ReactContextBaseJavaModule {
     /**
      * 设置状态栏
      */
-
     @ReactMethod
     public void setStatusBar(ReadableMap map) {
-        final String color = map.getString(KEY_COLOR);
-        final boolean mode = map.getBoolean(KEY_DARK_MODE);
-        Log.e("pain.xie", color + mode);
         final Activity activity = getCurrentActivity();
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                StatusBarUtil.setStatusBar(activity, color, mode);
-            }
-        });
+        if (activity == null) {
+            Log.w(TAG, "StatusBarModule: Ignored status bar change, current activity is null.");
+            return;
+        }
+
+        final String color = map.getString(KEY_COLOR);
+        if(map.hasKey(KEY_DARK_MODE)) {
+            final boolean mode = map.getBoolean(KEY_DARK_MODE);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    StatusBarUtil.setStatusBar(activity, color, mode);
+                }
+            });
+        } else {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    StatusBarUtil.setStatusBar(activity, color);
+                }
+            });
+        }
     }
 
     /**

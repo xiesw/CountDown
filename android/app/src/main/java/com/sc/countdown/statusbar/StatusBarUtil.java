@@ -11,16 +11,35 @@ import android.view.WindowManager;
 
 /**
  * Created by xieshangwu on 2018/4/27
- * https://www.jianshu.com/p/7f5a9969be53
+ * 参考https://www.jianshu.com/p/7f5a9969be53
  */
 public class StatusBarUtil {
 
+    private static final String TAG = "StatusBarUtil";
+
     /**
      * 设置状态栏颜色及字体图标显示样式
-     *  miui 和flyme 5.0以上, 其他机型android6.0以上
-     * @param activity
+     * miui 和flyme 5.0以上, 其他机型android5.0以上
+     * @param activity 当前activity
+     * @param color 状态栏颜色
+     */
+    public static void setStatusBar(Activity activity, String color) {
+        try {
+            int colorValue = Color.parseColor(color);
+            // 根据状态栏是否偏黑色来设置 图标文字颜色
+            boolean isBlack = FlymeStatusbarUtil.isBlackColor(colorValue, 200);
+            setStatusBar(activity, color, !isBlack);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置状态栏颜色及字体图标显示样式
+     * miui 和flyme 5.0以上, 其他机型android5.0以上
+     * @param activity 当前activity
      * @param color    状态栏颜色
-     * @param darkMode 状态栏文字图标颜色 true:黑色  false:白色
+     * @param darkMode 状态栏文字图标颜色 true:黑色  false:白色 (6.0以上有效)
      */
     public static void setStatusBar(Activity activity, String color, boolean darkMode) {
         try {
@@ -33,8 +52,8 @@ public class StatusBarUtil {
                 MiuiStatusbarUtil.setStatusBarDarkIcon(activity, darkMode);
                 setStatusBarColor(activity, colorValue);
 
-            } else if(OSUtils.isOSM()) {
-                setOSMStatusDrakIcon(activity, darkMode);
+            } else if(OSUtils.isOSL()) {
+                setOSMStatusDarkIcon(activity, darkMode);
                 setStatusBarColor(activity, colorValue);
             }
         } catch(Exception e) {
@@ -46,24 +65,28 @@ public class StatusBarUtil {
     /**
      * 修改状态栏颜色
      *
-     * @param activity
-     * @param color
+     * @param activity 当前activity
+     * @param color 状态栏颜色
      */
     private static void setStatusBarColor(Activity activity, int color) {
 
         if(OSUtils.isOSL()) {
             Window window = activity.getWindow();
-            //      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            // 5.0 5.1无法设置黑色图标 防止纯白状态栏无法看见图标文字
+            if(!OSUtils.isOSM()) {
+                color = addGrey(color);
+            }
             window.setStatusBarColor(color);
         }
     }
 
     /**
      * android6.0以上状态栏图标文字颜色
-     * @param activity
-     * @param dark
+     * @param activity 当前activity
+     * @param dark 状态栏文字图标颜色 true:黑色  false:白色 (6.0以上有效)
      */
-    private static void setOSMStatusDrakIcon(Activity activity, boolean dark) {
+    private static void setOSMStatusDarkIcon(Activity activity, boolean dark) {
         if(OSUtils.isOSM()) {
             View decorView = activity.getWindow().getDecorView();
             if(dark) {
@@ -75,12 +98,25 @@ public class StatusBarUtil {
     }
 
     /**
+     *  将颜色添加一个灰度
+     * @param color 状态栏颜色
+     * @return int 带灰色的颜色
+     */
+    private static int addGrey(int color) {
+        double greyValue = 0.9;
+        int blue = (int) ((color & 0x000000FF) * greyValue);
+        int green = (int) (((color & 0x0000FF00) >> 8) * greyValue);
+        int red = (int) (((color & 0x00FF0000) >> 16) * greyValue);
+
+        return Color.rgb(red, green, blue);
+    }
+
+    /**
      * 修改状态栏为全透明
-     *
-     * @param activity
+     * @param activity 当前activity
      */
     @TargetApi(19)
-    public static void transparencyBar(Activity activity) {
+    private static void transparencyBar(Activity activity) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

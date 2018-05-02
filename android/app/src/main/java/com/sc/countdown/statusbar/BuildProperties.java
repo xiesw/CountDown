@@ -11,13 +11,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-/**
- * //todo 描述
- *
- * @author lixingyun
- * @since 2017-04-06
- */
-
 public class BuildProperties {
 
     private final Properties properties;

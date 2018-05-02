@@ -18,32 +18,31 @@ public class OSUtils {
 
     /**
      * 是不是FlyME
-     *
-     * @return
      */
     public static boolean isFlyme() {
         try {
             final BuildProperties buildProperties = BuildProperties.newInstance();
-            if (buildProperties.containsKey(KEY_FLYME_ICON_FALG)
+            if(buildProperties.containsKey(KEY_FLYME_ICON_FALG)
                     || buildProperties.containsKey(KEY_FLYME_SETUP_FALG)
                     || buildProperties.containsKey(KEY_FLYME_PUBLISH_FALG)) {
-
                 return true;
-
             }
-
-        } catch (final Exception e) {
+        } catch(final Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
 
+    /**
+     * 是不是MIUI
+     */
     public static boolean isMIUI() {
         try {
             final BuildProperties prop = BuildProperties.newInstance();
             return prop.getProperty(KEY_MIUI_VERSION_CODE, null) != null
                     || prop.getProperty(KEY_MIUI_VERSION_NAME, null) != null
                     || prop.getProperty(KEY_MIUI_INTERNAL_STORAGE, null) != null;
-        } catch (final IOException e) {
+        } catch(final IOException e) {
             return false;
         }
     }
