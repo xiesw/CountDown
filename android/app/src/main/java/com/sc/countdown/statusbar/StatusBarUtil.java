@@ -16,6 +16,8 @@ import android.view.WindowManager;
 public class StatusBarUtil {
 
     private static final String TAG = "StatusBarUtil";
+    // 排除有问题的厂商
+    private static final String[] excludeBRAND = {"Zuk"};
 
     /**
      * 设置状态栏颜色及字体图标显示样式
@@ -74,7 +76,7 @@ public class StatusBarUtil {
             Window window = activity.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // 5.0 5.1无法设置黑色图标 防止纯白状态栏无法看见图标文字
-            if(!OSUtils.isOSM()) {
+            if(!OSUtils.isOSM() || isExclude()) {
                 color = addGrey(color);
             }
             window.setStatusBarColor(color);
@@ -125,6 +127,19 @@ public class StatusBarUtil {
             window.setStatusBarColor(Color.TRANSPARENT);
 
         }
+    }
+
+    /**
+     * 是否在排除列表外
+     */
+    private static boolean isExclude() {
+        String brand = Build.BRAND;
+        for(String str : excludeBRAND) {
+            if(str.equalsIgnoreCase(brand)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

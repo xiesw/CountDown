@@ -46,7 +46,7 @@ export default class Global {
   }
 
   /**
-   * 设置android状态栏(未实现)
+   * 设置android状态栏
    */
   static setStatusBar() {
     AndroidStatusBarUtil.setStyle("#FFFFFF", true);

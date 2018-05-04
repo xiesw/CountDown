@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -47,6 +48,17 @@ public class MainActivity extends ReactActivity {
         Log.e("pain.xie", "onCreate");
         Intent intent = getIntent();
         handleIntent(intent);
+
+        // pain.todo 清理
+        test();
+    }
+
+    private void test() {
+        Log.e("pain.xie BRAND: ", Build.BRAND);
+        Log.e("pain.xie BOARD: ", Build.BOARD);
+        Log.e("pain.xie MODEL: ", Build.MODEL);
+        Log.e("pain.xie PRODUCT: ", Build.PRODUCT);
+        Log.e("pain.xie MANUFACTURER: ", Build.MANUFACTURER);
     }
 
     @Override
