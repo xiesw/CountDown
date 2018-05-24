@@ -28,6 +28,7 @@ import AnalyticsUtil from '../util/um/AnalyticsUtil'
 import {APP_EVENT} from "../common/Constants";
 import ToastUtil from "../util/ToastUtil";
 import AndroidEmitUtil from "../util/AndroidEmitUtil";
+import DatePicker from "../component/DatePicker";
 
 @inject('dataStore')
 @observer
@@ -86,9 +87,11 @@ export default class HomeScene extends BaseScene {
    * 添加新条目
    */
   add() {
-    Stores.editStore.model = EDIT_MODEL.new;
-    this.props.navigation.navigate('EditScene',);
-    AnalyticsUtil.onEvent(APP_EVENT.Add);
+    DatePicker.show();
+
+    // Stores.editStore.model = EDIT_MODEL.new;
+    // this.props.navigation.navigate('EditScene',);
+    // AnalyticsUtil.onEvent(APP_EVENT.Add);
 
     // let title = '测试';
     // let url = 'http://www.palxie.xyz';
